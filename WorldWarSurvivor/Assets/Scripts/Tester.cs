@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Tester : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public Grid grid;
+
+    public Vector2Int startPoint;
+
+    public Vector2Int endPoint;
+    
+    public Material passMaterial;
+
+    [ContextMenu("Create")]
+    public void Create()
     {
-        
+        grid.CreateGrid();
     }
 
-    // Update is called once per frame
-    void Update()
+    [ContextMenu("SearchPass")]
+    public void SearchPass()
     {
-        
+        foreach (var item in AStarPathfinding.GetPath(grid, startPoint, endPoint))
+        {
+            item.GetComponentInChildren<MeshRenderer>().material = passMaterial;
+        }
     }
+
 }

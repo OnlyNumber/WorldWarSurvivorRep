@@ -24,7 +24,7 @@ public class Grid : MonoBehaviour
                 UnityEngine.Vector3 cellPosition = offset + new UnityEngine.Vector3(x * CellSquareSize, 0, y * CellSquareSize);
                 var cell = Instantiate(cellPrefab, cellPosition, UnityEngine.Quaternion.identity);
 
-                cell.Initialize(new Vector2Int(x,y));
+                cell.Initialize(new Vector2Int(x, y));
                 _currentCells.Add(cell);
             }
         }
@@ -32,10 +32,15 @@ public class Grid : MonoBehaviour
 
     public Cell GetCell(int x, int y)
     {
-        Debug.Log("Coordinate" + _currentCells[(y) * GridSize.x + x].Coordinate);
+        if (x < 0 || x >= GridSize.x || y < 0 || y >= GridSize.y)
+            return null;
 
-        return _currentCells[x * GridSize.x + y];
+        return _currentCells[y * GridSize.x + x];
     }
 
+    public Cell GetCell(Vector2Int coordinate)
+    {
+        return GetCell(coordinate.x, coordinate.y);
+    }
 
 }
