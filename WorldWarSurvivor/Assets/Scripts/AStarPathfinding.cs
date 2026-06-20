@@ -28,18 +28,7 @@ public static class AStarPathfinding
         HashSet<PathCell> availableCells = new();
 
         PathCell currentCell = CalculateCost(searchingGrid.GetCell(startPoint.x, startPoint.y), endPoint, null, allCreatedCells);
-        notavailableCells.Add(currentCell);
-
-        foreach (var item in GetNeighbourCells(searchingGrid, startPoint, allCreatedCells, notavailableCells))
-        {
-            if (notavailableCells.Contains(item) || searchingGrid.GetCell(item.Coordinate).IsObstacle)
-                    continue;
-            CalculateCost(searchingGrid.GetCell(item.Coordinate), endPoint, currentCell, allCreatedCells);
-            availableCells.Add(item);
-        }
-
-        availableCells.Remove(currentCell);
-
+        availableCells.Add(currentCell);
 
         int NoInfinity = 1000;
         int index = 0;
@@ -53,7 +42,6 @@ public static class AStarPathfinding
                 Debug.Log("Infinit error");
                 break;
             }
-
 
             if (availableCells.Count == 0)
                 break;
@@ -87,7 +75,7 @@ public static class AStarPathfinding
             getCells.Add(searchingGrid.GetCell(currentCell.Coordinate));
             currentCell = currentCell.MyLastCell;
 
-        }while(currentCell != null);
+        } while (currentCell != null);
 
         getCells.Reverse();
 
@@ -108,7 +96,8 @@ public static class AStarPathfinding
                 int checkY = startPoint.y + y;
 
                 if (checkX < 0 || checkX >= searchingGrid.GridSize.x ||
-                     checkY < 0 || checkY >= searchingGrid.GridSize.y)
+                     checkY < 0 || checkY >= searchingGrid.GridSize.y ||
+                     searchingGrid.GetCell(new Vector2Int(checkX, checkY)).IsObstacle)
                     continue;
 
                 neighbourCells.Add(allCreatedCells[checkX, checkY]);
@@ -168,6 +157,56 @@ public static class AStarPathfinding
         cell.PassedCost.text = pathCell.PassedCost.ToString();
 
         return pathCell;
+    }
+
+    public static HashSet<Cell> FindPossiblePositions(Grid searchingGrid, Vector2Int startPoint, int maxSteps)
+    {
+        HashSet<Cell> visitedCells = new();
+        HashSet<Cell> accesibleCells = new();
+        Queue<Cell> availableCells = new();
+
+        Cell currentCell = null;
+        int currentStep = 0;
+
+        availableCells.Enqueue(searchingGrid.GetCell(startPoint));
+
+        do
+        {
+            if (availableCells.Count == 0)
+            {
+                foreach (var item in accesibleCells)
+                    availableCells.Enqueue(item);
+
+                accesibleCells.Clear();
+                currentStep++;
+            }
+
+            if (availableCells.Count == 0 && accesibleCells.Count == 0)
+                break;
+
+            currentCell = availableCells.Dequeue();
+            visitedCells.Add(currentCell);
+
+            for (int x = -1; x <= 1; x++)
+                for (int y = -1; y <= 1; y++)
+                {
+                    int checkX = currentCell.Coordinate.x + x;
+                    int checkY = currentCell.Coordinate.y + y;
+
+                    var neighbourCell = searchingGrid.GetCell(new Vector2Int(checkX, checkY));
+
+                    if (neighbourCell == null ||
+                     visitedCells.Contains(neighbourCell) ||
+                      accesibleCells.Contains(neighbourCell) ||
+                       neighbourCell.IsObstacle)
+                        continue;
+
+                    accesibleCells.Add(neighbourCell);
+                }
+
+        } while (currentStep <= maxSteps);
+
+        return visitedCells;
     }
 }
 

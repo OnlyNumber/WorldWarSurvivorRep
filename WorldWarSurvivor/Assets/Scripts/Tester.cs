@@ -13,6 +13,9 @@ public class Tester : MonoBehaviour
     
     public Material passMaterial;
 
+    public int steps = 3;
+
+
     [ContextMenu("Create")]
     public void Create()
     {
@@ -23,6 +26,15 @@ public class Tester : MonoBehaviour
     public void SearchPass()
     {
         foreach (var item in AStarPathfinding.GetPath(grid, startPoint, endPoint))
+        {
+            item.GetComponentInChildren<MeshRenderer>().material = passMaterial;
+        }
+    }
+    
+    [ContextMenu("FindPossiblWays")]
+    public void FindPossiblWays()
+    {
+        foreach (var item in AStarPathfinding.FindPossiblePositions(grid, startPoint, steps))
         {
             item.GetComponentInChildren<MeshRenderer>().material = passMaterial;
         }
