@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tester : MonoBehaviour
@@ -7,14 +8,24 @@ public class Tester : MonoBehaviour
 
     public Grid grid;
 
-    public Vector2Int startPoint;
+    public Vector2Int spawnPoint;
 
     public Vector2Int endPoint;
-    
+
     public Material passMaterial;
 
     public int steps = 3;
 
+    public GridObject gridObectPrefab;
+
+    public GridObject currentGridObject;
+
+    private void Start()
+    {
+        Create();
+
+        SpawnGridObject();
+    }
 
     [ContextMenu("Create")]
     public void Create()
@@ -22,22 +33,16 @@ public class Tester : MonoBehaviour
         grid.CreateGrid();
     }
 
-    [ContextMenu("SearchPass")]
-    public void SearchPass()
+    [ContextMenu("SpawnGridObject")]
+    public void SpawnGridObject()
     {
-        foreach (var item in AStarPathfinding.GetPath(grid, startPoint, endPoint))
-        {
-            item.GetComponentInChildren<MeshRenderer>().material = passMaterial;
-        }
-    }
-    
-    [ContextMenu("FindPossiblWays")]
-    public void FindPossiblWays()
-    {
-        foreach (var item in AStarPathfinding.FindPossiblePositions(grid, startPoint, steps))
-        {
-            item.GetComponentInChildren<MeshRenderer>().material = passMaterial;
-        }
+        currentGridObject = Instantiate(gridObectPrefab);
+        grid.SpawnGridObject(spawnPoint, currentGridObject);
     }
 
+    [ContextMenu("MoveGridObject")]
+    public void MoveGridObject()
+    {
+        (currentGridObject as Human).Move(grid.GetCell(endPoint));
+    }
 }

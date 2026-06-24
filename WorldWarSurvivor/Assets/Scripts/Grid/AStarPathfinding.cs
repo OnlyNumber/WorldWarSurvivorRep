@@ -8,7 +8,7 @@ public static class AStarPathfinding
 {
 
 
-    public static List<Cell> GetPath(Grid searchingGrid, Vector2Int startPoint, Vector2Int endPoint)
+    public static List<Cell> FindPath(Grid searchingGrid, Vector2Int startPoint, Vector2Int endPoint)
     {
         PathCell[,] allCreatedCells = new PathCell[searchingGrid.GridSize.x, searchingGrid.GridSize.y];
 
