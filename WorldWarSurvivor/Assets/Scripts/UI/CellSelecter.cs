@@ -9,15 +9,30 @@ public class CellSelecter : MonoBehaviour
 
     public GridObject currentObject;
 
-    public int currentActionIndex;
+    private int _currentActionIndex;
 
-    private List<Action<Cell>> currentAction;
+    public int CurrentActionIndex
+    {
+        set
+        {
+            _currentActionIndex = value;
+            OnChangingAction?.Invoke();
+        }
+        get => _currentActionIndex;
+    }
+
+    private List<(Action<Cell>, HashSet<Cell>)> currentAction;
 
     public static CellSelecter Instance;
 
     private LayerMask UILayer;
 
     private SelectRegime selectRegime;
+
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material passMaterial;
+
+    public Action OnChangingAction;
 
     private void Start()
     {
@@ -30,6 +45,7 @@ public class CellSelecter : MonoBehaviour
         Instance = this;
         UILayer = LayerMask.NameToLayer("UI");
 
+        OnChangingAction += MarkAccesibleCells;
     }
 
     private void Update()
@@ -49,7 +65,8 @@ public class CellSelecter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            selectRegime = SelectRegime.TargetSelect;
+            selectRegime = SelectRegime.GridObjectSelect;
+            ClearAccessibleCells();
             ClearSelectedGridObject();
         }
     }
@@ -65,10 +82,15 @@ public class CellSelecter : MonoBehaviour
         if (currentObject == null)
             return;
 
-        currentObject.GetActions(out List<Action<Cell>> actions, out List<string> actionText);
-
+        currentObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
         currentAction = actions;
+
         ActionWindow.Instance.CreateButtons(actionText);
+
+        foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
+        {
+            accessibleCell.GetComponentInChildren<MeshRenderer>().material = passMaterial;
+        }
 
         selectRegime = SelectRegime.TargetSelect;
 
@@ -81,14 +103,51 @@ public class CellSelecter : MonoBehaviour
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
 
-        currentAction[currentActionIndex].Invoke(cell);
+        if (!currentAction[CurrentActionIndex].Item2.Contains(cell))
+            return;
+
+        currentAction[CurrentActionIndex].Item1.Invoke(cell);
+        //In future add delay before refreshing data
+        MarkAccesibleCells();
+
+
     }
 
+    private void ClearAccessibleCells()
+    {
+        foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
+        {
+            accessibleCell.GetComponentInChildren<MeshRenderer>().material = defaultMaterial;
+        }
+    }
+
+    private void ClearSelectedGridObject()
+    {
+        currentObject = null;
+        currentAction.Clear();
+        ActionWindow.Instance.ClearActionWindow();
+
+    }
+
+    private void MarkAccesibleCells()
+    {
+        ClearAccessibleCells();
+
+        currentObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
+        currentAction = actions;
+
+
+        foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
+        {
+            accessibleCell.GetComponentInChildren<MeshRenderer>().material = passMaterial;
+        }
+    }
+
+    #region Check UI
     public bool IsPointerOverUIElement()
     {
         return IsPointerOverUIElement(GetEventSystemRaycastResults());
     }
-
 
     //Returns 'true' if we touched or hovering on Unity UI element.
     private bool IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
@@ -102,7 +161,6 @@ public class CellSelecter : MonoBehaviour
         return false;
     }
 
-
     //Gets all event system raycast results of current mouse or touch position.
     static List<RaycastResult> GetEventSystemRaycastResults()
     {
@@ -113,17 +171,11 @@ public class CellSelecter : MonoBehaviour
         return raysastResults;
     }
 
-    private void ClearSelectedGridObject()
-    {
-        currentObject = null;
-        currentAction.Clear();
-        ActionWindow.Instance.ClearActionWindow();
+    #endregion
 
-    }
-
-    public enum SelectRegime
-    {
-        GridObjectSelect,
-        TargetSelect
-    }
+}
+public enum SelectRegime
+{
+    GridObjectSelect,
+    TargetSelect
 }

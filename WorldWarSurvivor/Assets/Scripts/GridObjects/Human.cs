@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Human : GridObject
@@ -37,12 +36,13 @@ public class Human : GridObject
 
         ActionWindow.Instance.CreateCharacteristics(CharacteristicText);
     }
-    public override void GetActions(out List<Action<Cell>> actions, out List<string> actionText)
+
+    public override void GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText)
     {
         actions = new()
         {
-            Move,
-            Attack
+            (Move,AccessibleCellsForMove()),
+            (Attack,AccessibleCellsForAttack())
         };
 
         actionText = new()
@@ -52,6 +52,11 @@ public class Human : GridObject
         };
     }
 
+    public HashSet<Cell> AccessibleCellsForMove()
+    {
+        return AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps);
+    }
+
     public void Move(Cell endPosition)
     {
         var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
@@ -59,14 +64,24 @@ public class Human : GridObject
         StartCoroutine(MovingAnimation(path));
     }
 
+    // In future move this functional to the weapon
+    public HashSet<Cell> AccessibleCellsForAttack()
+    {
+        HashSet<Cell> targets = new();
+
+        foreach (var item in AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps))
+        {
+            if (item.gridObject is Human)
+                targets.Add(item);
+        }
+        
+        return targets;
+    }
+
     public void Attack(Cell attackingCell)
     {
-        Debug.Log("Weapon attacking this cell " + attackingCell.Coordinate);
-
         if (attackingCell.gridObject != null)
-        {
             attackingCell.gridObject.HealthSystem.ChangeHealth(-currentWeapon.Damage);
-        }
     }
 
     private IEnumerator MovingAnimation(List<Cell> cells)

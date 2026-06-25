@@ -57,6 +57,7 @@ public class Grid : MonoBehaviour
         var cell = GetCell(coordinate);
 
         cell.gridObject = gridObject;
+        cell.IsObstacle = gridObject.IsObstacle;
 
         gridObject.transform.position = cell.transform.position;
 
@@ -65,11 +66,15 @@ public class Grid : MonoBehaviour
 
     public void ChangeCellOfGridObject(Cell fromCell, Cell toCell)
     {
+        fromCell.IsObstacle = false;
         toCell.gridObject = fromCell.gridObject;
         fromCell.gridObject = null;
 
-        if (toCell.gridObject != null)
-            toCell.gridObject.MyCurrentCell = toCell;
+        if (toCell.gridObject == null)
+            return;
+
+        toCell.gridObject.MyCurrentCell = toCell;
+        toCell.IsObstacle = toCell.gridObject.IsObstacle;
     }
 
 }

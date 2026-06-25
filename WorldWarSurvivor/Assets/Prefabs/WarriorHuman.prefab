@@ -47,9 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyCurrentCell: {fileID: 0}
+  <IsObstacle>k__BackingField: 1
   currentWeapon: {fileID: 5028879031059171517}
   speed: 1
-  maxSteps: 0
+  maxSteps: 4
 --- !u!1001 &5884771574709461671
 PrefabInstance:
   m_ObjectHideFlags: 0

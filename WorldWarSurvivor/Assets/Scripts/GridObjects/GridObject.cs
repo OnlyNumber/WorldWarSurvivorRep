@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +9,13 @@ public class GridObject : MonoBehaviour
     protected Grid myGrid;
 
     public HealthSystem HealthSystem = new();
+
+    [field: SerializeField]
+    public bool IsObstacle
+    {
+        private set;
+        get;
+    }
 
     public virtual void Initialize(Grid grid, Cell cell)
     {
@@ -23,7 +29,7 @@ public class GridObject : MonoBehaviour
         
     }
 
-    public virtual void GetActions(out List<Action<Cell>> actions, out List<string> actionText)
+    public virtual void GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText)
     {
         actions = new();
         actionText = new();

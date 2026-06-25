@@ -35,7 +35,7 @@ public class ActionWindow : MonoBehaviour
 
             int buttonIndex = i;
             button.ActionText.text = text[i];
-            button.Button.onClick.AddListener(() => CellSelecter.Instance.currentActionIndex = buttonIndex);
+            button.Button.onClick.AddListener(() => CellSelecter.Instance.CurrentActionIndex = buttonIndex);
 
             currentButtons.Add(button);
         }
