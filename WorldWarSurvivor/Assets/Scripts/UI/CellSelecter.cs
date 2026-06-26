@@ -50,6 +50,9 @@ public class CellSelecter : MonoBehaviour
 
     private void Update()
     {
+        if (TurnController.IsNowAnimation)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             switch (selectRegime)
@@ -109,8 +112,6 @@ public class CellSelecter : MonoBehaviour
         currentAction[CurrentActionIndex].Item1.Invoke(cell);
         //In future add delay before refreshing data
         MarkAccesibleCells();
-
-
     }
 
     private void ClearAccessibleCells()

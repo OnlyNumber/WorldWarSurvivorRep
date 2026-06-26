@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Human : GridObject
@@ -13,6 +14,19 @@ public class Human : GridObject
 
     public int maxSteps;
 
+    [SerializeField] private HumanAnimator humanAnimator;
+
+    private void Start() 
+    {
+        humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
+    }
+    
+    private void EndAttack()
+    {
+        TurnController.RemoveMovingObject(this);
+        humanAnimator.PlayAnimation(Animations.Idle);
+    }
+
     public override void Initialize(Grid grid, Cell cell)
     {
         base.Initialize(grid, cell);
@@ -24,8 +38,6 @@ public class Human : GridObject
     public override void ShowActions()
     {
         base.ShowActions();
-
-        Debug.Log("Show action of human");
 
         string Health = "Health " + HealthSystem.CurrentHealth.ToString();
 
@@ -74,12 +86,16 @@ public class Human : GridObject
             if (item.gridObject is Human)
                 targets.Add(item);
         }
-        
+
         return targets;
     }
 
     public void Attack(Cell attackingCell)
     {
+
+        TurnController.AddMovingObject(this);
+        humanAnimator.PlayAnimation(Animations.Attack);
+
         if (attackingCell.gridObject != null)
             attackingCell.gridObject.HealthSystem.ChangeHealth(-currentWeapon.Damage);
     }
@@ -87,11 +103,21 @@ public class Human : GridObject
     private IEnumerator MovingAnimation(List<Cell> cells)
     {
         int index = 0;
+
+        TurnController.AddMovingObject(this);
+
+        humanAnimator.PlayAnimation(Animations.Walk);
+
         do
         {
             var cellPosition = cells[index].transform.position;
 
             transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
+
+            Vector3 direction = (cellPosition - transform.position).normalized;
+            if (direction != Vector3.zero)
+                transform.rotation = Quaternion.LookRotation(direction);
+
 
             if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
                 index++;
@@ -99,6 +125,9 @@ public class Human : GridObject
             yield return null;
 
         } while (index < cells.Count);
+
+        humanAnimator.PlayAnimation(Animations.Idle);
+        TurnController.RemoveMovingObject(this);
 
     }
 

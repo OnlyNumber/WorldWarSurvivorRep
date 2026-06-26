@@ -22,7 +22,7 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < GridSize.x; x++)
             {
                 Vector3 cellPosition = offset + new Vector3(x * CellSquareSize, 0, y * CellSquareSize);
-                var cell = Instantiate(cellPrefab, cellPosition, Quaternion.identity);
+                var cell = Instantiate(cellPrefab, cellPosition, Quaternion.identity, transform);
 
                 cell.Initialize(new Vector2Int(x, y));
                 _currentCells.Add(cell);
