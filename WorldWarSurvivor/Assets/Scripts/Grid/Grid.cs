@@ -22,7 +22,7 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < GridSize.x; x++)
             {
                 Vector3 cellPosition = offset + new Vector3(x * CellSquareSize, 0, y * CellSquareSize);
-                var cell = Instantiate(cellPrefab, cellPosition, Quaternion.identity);
+                var cell = Instantiate(cellPrefab, cellPosition, Quaternion.identity, transform);
 
                 cell.Initialize(new Vector2Int(x, y));
                 _currentCells.Add(cell);
@@ -52,16 +52,21 @@ public class Grid : MonoBehaviour
         return GetCell((int)coordinate.x, (int)coordinate.z);
     }
 
-    public void SpawnGridObject(Vector2Int coordinate, GridObject gridObject)
+    public void SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab)
     {
         var cell = GetCell(coordinate);
 
-        cell.gridObject = gridObject;
-        cell.IsObstacle = gridObject.IsObstacle;
+        if (cell.gridObject != null)
+            return;
 
-        gridObject.transform.position = cell.transform.position;
+        var currentObject = Instantiate(gridObjectPrefab);
 
-        gridObject.Initialize(this, cell);
+        cell.gridObject = currentObject;
+        cell.IsObstacle = currentObject.IsObstacle;
+
+        currentObject.transform.position = cell.transform.position;
+
+        currentObject.Initialize(this, cell);
     }
 
     public void ChangeCellOfGridObject(Cell fromCell, Cell toCell)
