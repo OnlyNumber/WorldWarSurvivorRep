@@ -9,7 +9,9 @@ public class CellSelecter : MonoBehaviour
 
     public GridObject currentObject;
 
-    private int _currentActionIndex;
+    private int _lastActionIndex = 0;
+
+    private int _currentActionIndex = 0;
 
     public int CurrentActionIndex
     {
@@ -53,28 +55,28 @@ public class CellSelecter : MonoBehaviour
         if (TurnController.IsNowAnimation)
             return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && currentObject != null)
         {
-            switch (selectRegime)
-            {
-                case SelectRegime.GridObjectSelect:
-                    CellSelect();
-                    break;
-                case SelectRegime.TargetSelect:
-                    CellSelectForAction();
-                    break;
-            }
+            //switch (selectRegime)
+            //{
+            /*case SelectRegime.GridObjectSelect:
+                CellSelect();
+                break;*/
+            //case SelectRegime.TargetSelect:
+            CellSelectForAction();
+            //   break;
+            //}
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /*if (Input.GetKeyDown(KeyCode.Escape))
         {
             selectRegime = SelectRegime.GridObjectSelect;
-            ClearAccessibleCells();
+            ClearAccessibleCells(CurrentActionIndex);
             ClearSelectedGridObject();
-        }
+        }*/
     }
 
-    public void CellSelect()
+    private void CellSelect()
     {
         if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || IsPointerOverUIElement())
             return;
@@ -82,10 +84,15 @@ public class CellSelecter : MonoBehaviour
         var cell = grid.GetCellFromWorldPosition(hit.point);
 
         currentObject = cell.ShowCell();
-        if (currentObject == null)
+        ShowCell(currentObject);
+    }
+
+    private void ShowCell(GridObject gridObject)
+    {
+        if (gridObject == null)
             return;
 
-        currentObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
+        gridObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
         currentAction = actions;
 
         ActionWindow.Instance.CreateButtons(actionText);
@@ -94,9 +101,12 @@ public class CellSelecter : MonoBehaviour
         {
             accessibleCell.GetComponentInChildren<MeshRenderer>().material = passMaterial;
         }
+    }
 
-        selectRegime = SelectRegime.TargetSelect;
-
+    public void SetCurrentObject(GridObject gridObject)
+    {
+        currentObject = gridObject;
+        ShowCell(currentObject);
     }
 
     public void CellSelectForAction()
@@ -114,9 +124,12 @@ public class CellSelecter : MonoBehaviour
         MarkAccesibleCells();
     }
 
-    private void ClearAccessibleCells()
+    private void ClearAccessibleCells(int index)
     {
-        foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
+        if (currentAction[index].Item2 == null || currentAction[index].Item2.Count == 0)
+            return;
+
+        foreach (var accessibleCell in currentAction[index].Item2)
         {
             accessibleCell.GetComponentInChildren<MeshRenderer>().material = defaultMaterial;
         }
@@ -132,11 +145,15 @@ public class CellSelecter : MonoBehaviour
 
     private void MarkAccesibleCells()
     {
-        ClearAccessibleCells();
+        ClearAccessibleCells(_lastActionIndex);
+
+        _lastActionIndex = CurrentActionIndex;
 
         currentObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
         currentAction = actions;
 
+        if (currentAction[CurrentActionIndex].Item2 == null || currentAction[CurrentActionIndex].Item2.Count == 0)
+            return;
 
         foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
         {

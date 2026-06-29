@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngineInternal;
 
 public static class AStarPathfinding
 {
@@ -159,7 +157,7 @@ public static class AStarPathfinding
         return pathCell;
     }
 
-    public static HashSet<Cell> FindPossiblePositions(Grid searchingGrid, Vector2Int startPoint, int maxSteps)
+    public static HashSet<Cell> FindPossiblePositions(Grid searchingGrid, Vector2Int startPoint, int maxSteps, bool isWithObstacle)
     {
         HashSet<Cell> visitedCells = new();
         HashSet<Cell> accesibleCells = new();
@@ -185,6 +183,8 @@ public static class AStarPathfinding
                 break;
 
             currentCell = availableCells.Dequeue();
+            if (currentStep >= maxSteps)
+                break;
             visitedCells.Add(currentCell);
 
             for (int x = -1; x <= 1; x++)
@@ -198,8 +198,9 @@ public static class AStarPathfinding
                     if (neighbourCell == null ||
                      visitedCells.Contains(neighbourCell) ||
                       accesibleCells.Contains(neighbourCell) ||
-                       neighbourCell.IsObstacle)
+                       neighbourCell.IsObstacle && isWithObstacle)
                         continue;
+
 
                     accesibleCells.Add(neighbourCell);
                 }
@@ -208,6 +209,8 @@ public static class AStarPathfinding
 
         return visitedCells;
     }
+
+
 }
 
 

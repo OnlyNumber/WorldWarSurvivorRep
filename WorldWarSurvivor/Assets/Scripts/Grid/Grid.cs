@@ -52,16 +52,21 @@ public class Grid : MonoBehaviour
         return GetCell((int)coordinate.x, (int)coordinate.z);
     }
 
-    public void SpawnGridObject(Vector2Int coordinate, GridObject gridObject)
+    public void SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab)
     {
         var cell = GetCell(coordinate);
 
-        cell.gridObject = gridObject;
-        cell.IsObstacle = gridObject.IsObstacle;
+        if (cell.gridObject != null)
+            return;
 
-        gridObject.transform.position = cell.transform.position;
+        var currentObject = Instantiate(gridObjectPrefab);
 
-        gridObject.Initialize(this, cell);
+        cell.gridObject = currentObject;
+        cell.IsObstacle = currentObject.IsObstacle;
+
+        currentObject.transform.position = cell.transform.position;
+
+        currentObject.Initialize(this, cell);
     }
 
     public void ChangeCellOfGridObject(Cell fromCell, Cell toCell)

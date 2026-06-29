@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Human : GridObject
+public class Human : ActingObject
 {
     private const float DistanceBetweenPoints = 0.1f;
 
@@ -16,14 +15,25 @@ public class Human : GridObject
 
     [SerializeField] private HumanAnimator humanAnimator;
 
-    private void Start() 
+    private float MaxAmountOfEnergy;
+
+    private float CurrentAmountOfEnergy;
+
+    private void Start()
     {
         humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
     }
-    
+
     private void EndAttack()
     {
         TurnController.RemoveMovingObject(this);
+        humanAnimator.PlayAnimation(Animations.Idle);
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.2f);
         humanAnimator.PlayAnimation(Animations.Idle);
     }
 
@@ -39,11 +49,13 @@ public class Human : GridObject
     {
         base.ShowActions();
 
-        string Health = "Health " + HealthSystem.CurrentHealth.ToString();
+        string Health = "Health " + HealthSystem.CurrentHealth.ToString() + " / " + HealthSystem.MaxHealth.ToString();
+        string Energy = "Energy " + CurrentAmountOfEnergy.ToString() + " / " + MaxAmountOfEnergy.ToString();
 
         List<string> CharacteristicText = new()
         {
-            Health
+            Health,
+            Energy
         };
 
         ActionWindow.Instance.CreateCharacteristics(CharacteristicText);
@@ -66,7 +78,10 @@ public class Human : GridObject
 
     public HashSet<Cell> AccessibleCellsForMove()
     {
-        return AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps);
+        var cells = AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, true);
+        cells.Remove(MyCurrentCell);
+
+        return cells;
     }
 
     public void Move(Cell endPosition)
@@ -80,12 +95,17 @@ public class Human : GridObject
     public HashSet<Cell> AccessibleCellsForAttack()
     {
         HashSet<Cell> targets = new();
+        Debug.Log("AccessibleCellsForAttack");
 
-        foreach (var item in AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps))
+        foreach (var item in AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, false))
         {
             if (item.gridObject is Human)
+            {
                 targets.Add(item);
+            }
         }
+
+        targets.Remove(MyCurrentCell);
 
         return targets;
     }

@@ -40,9 +40,4 @@ public class Tester : MonoBehaviour
         grid.SpawnGridObject(spawnPoint, currentGridObject);
     }
 
-    [ContextMenu("MoveGridObject")]
-    public void MoveGridObject()
-    {
-        (currentGridObject as Human).Move(grid.GetCell(endPoint));
-    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActionWindow : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class ActionWindow : MonoBehaviour
     public List<ActionButton> currentButtons = new();
     public List<CharacteristicText> currentCharacteristics = new();
 
+    public Button EndTurnButton;
 
     public static ActionWindow Instance;
+
 
     private void Start()
     {
@@ -25,6 +28,7 @@ public class ActionWindow : MonoBehaviour
         }
 
         Instance = this;
+        EndTurnButton.onClick.AddListener(EndTurn);
     }
 
     public void CreateButtons(List<string> text)
@@ -70,5 +74,8 @@ public class ActionWindow : MonoBehaviour
         currentCharacteristics.Clear();
     }
 
-
+    public void EndTurn()
+    {
+        TurnController.SetNextTurn();
+    }
 }

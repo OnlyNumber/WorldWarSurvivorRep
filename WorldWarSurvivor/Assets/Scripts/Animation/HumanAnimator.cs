@@ -51,6 +51,8 @@ public class HumanAnimator : MonoBehaviour
 
     private IEnumerator CheckAnimations(Animations animation, float animationLength)
     {
+
+
         float timer = 0;
         float checkDelay = 0;
 
@@ -59,27 +61,26 @@ public class HumanAnimator : MonoBehaviour
         foreach (var item in animationActions[animation])
             actions.Add(item);
 
+        Debug.Log("CheckAnimations " + actions.Count);
+
         do
         {
             timer += Time.deltaTime;
             checkDelay += Time.deltaTime;
 
-            if (checkDelay >= CheckDelay)
+            for (int i = 0; i < actions.Count; i++)
             {
-                for (int i = 0; i < actions.Count; i++)
+                if (actions[i].Item1 > timer / animationLength)
                 {
-                    if (actions[i].Item1 > animationLength / timer)
-                    {
-                        actions[i].Item2.Invoke();
-                        actions.Remove(actions[i]);
+                    actions[i].Item2.Invoke();
+                    actions.Remove(actions[i]);
 
-                        if (i - 1 >= 0)
-                            i = i - 1;
-                    }
+                    if (i - 1 >= 0)
+                        i = i - 1;
                 }
-
-                checkDelay = 0;
             }
+
+            checkDelay = 0;
 
             yield return null;
 
@@ -109,7 +110,8 @@ public class HumanAnimator : MonoBehaviour
 
     public void Dispose()
     {
-        StopCoroutine(checkAnimation);
+        if (checkAnimation != null)
+            StopCoroutine(checkAnimation);
     }
 
     private void OnDestroy()
