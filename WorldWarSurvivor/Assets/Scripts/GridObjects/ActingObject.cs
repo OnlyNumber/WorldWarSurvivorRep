@@ -13,7 +13,7 @@ public class ActingObject : GridObject
 
     public Action OnActivateTurn;
 
-    public override void Initialize(Grid grid, Cell cell)
+    public override void Initialize(BoardGrid grid, BoardCell cell)
     {
         base.Initialize(grid, cell);
 

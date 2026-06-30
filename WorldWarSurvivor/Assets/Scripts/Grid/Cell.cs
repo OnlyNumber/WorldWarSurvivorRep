@@ -4,8 +4,6 @@ public class Cell : MonoBehaviour
 {
     public Vector2Int Coordinate;
 
-    public GridObject gridObject;
-
     public bool IsObstacle;
 
     #region removeLater
@@ -19,16 +17,5 @@ public class Cell : MonoBehaviour
         Coordinate = coordintes;
     }
 
-    public GridObject ShowCell()
-    {
-        if (gridObject != null)
-            gridObject.ShowActions();
-
-        return gridObject;
-    }
-
-    public void CloseCell()
-    {
-        
-    }
+    
 }

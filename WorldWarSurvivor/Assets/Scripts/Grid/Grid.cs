@@ -2,15 +2,15 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class Grid <T> : MonoBehaviour where T : Cell
 {
     public const float CellSquareSize = 1;
 
     [SerializeField]
-    private Cell cellPrefab;
+    private T cellPrefab;
     public Vector2Int GridSize;
 
-    private List<Cell> _currentCells = new();
+    private List<T> _currentCells = new();
 
     [ContextMenu("CreateGrid")]
     public void CreateGrid()
@@ -30,7 +30,7 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public Cell GetCell(int x, int y)
+    public T GetCell(int x, int y)
     {
         if (x < 0 || x >= GridSize.x || y < 0 || y >= GridSize.y)
             return null;
@@ -38,11 +38,12 @@ public class Grid : MonoBehaviour
         return _currentCells[y * GridSize.x + x];
     }
 
-    public Cell GetCell(Vector2Int coordinate)
+    public T GetCell(Vector2Int coordinate)
     {
         return GetCell(coordinate.x, coordinate.y);
     }
 
+/*
     public Cell GetCellFromWorldPosition(Vector3 position)
     {
         Vector3 coordinate = position;
@@ -81,5 +82,5 @@ public class Grid : MonoBehaviour
         toCell.gridObject.MyCurrentCell = toCell;
         toCell.IsObstacle = toCell.gridObject.IsObstacle;
     }
-
+*/
 }

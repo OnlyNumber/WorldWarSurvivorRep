@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class CellSelecter : MonoBehaviour
 {
-    public Grid grid;
+    public BoardGrid grid;
 
     public GridObject currentObject;
 
@@ -23,7 +23,7 @@ public class CellSelecter : MonoBehaviour
         get => _currentActionIndex;
     }
 
-    private List<(Action<Cell>, HashSet<Cell>)> currentAction;
+    private List<(Action<BoardCell>, HashSet<BoardCell>)> currentAction;
 
     public static CellSelecter Instance;
 
@@ -94,7 +94,7 @@ public class CellSelecter : MonoBehaviour
 
         gridObject.ShowActions();
 
-        gridObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
+        gridObject.GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText);
         currentAction = actions;
 
         foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
@@ -152,7 +152,7 @@ public class CellSelecter : MonoBehaviour
 
         _lastActionIndex = CurrentActionIndex;
 
-        currentObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
+        currentObject.GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText);
         currentAction = actions;
 
         if (currentAction[CurrentActionIndex].Item2 == null || currentAction[CurrentActionIndex].Item2.Count == 0)

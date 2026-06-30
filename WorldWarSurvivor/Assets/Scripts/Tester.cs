@@ -6,7 +6,7 @@ using UnityEngine;
 public class Tester : MonoBehaviour
 {
 
-    public Grid grid;
+    public BoardGrid grid;
 
     public Vector2Int spawnPoint;
 

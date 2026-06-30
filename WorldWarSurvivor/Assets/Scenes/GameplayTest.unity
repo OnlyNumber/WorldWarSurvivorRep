@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 220379358}
-  - component: {fileID: 220379357}
+  - component: {fileID: 220379359}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -139,21 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &220379357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220379356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c658577cf9a95384fbdfa52e15bf9bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellPrefab: {fileID: 2395703354764658906, guid: 278fabcf2218c034fa71c6d30448355c,
-    type: 3}
-  GridSize: {x: 8, y: 4}
 --- !u!4 &220379358
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +154,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &220379359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220379356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49eb1f17a1ac27c4c8b8e7d7e223ef53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellPrefab: {fileID: 771044296747280652, guid: 278fabcf2218c034fa71c6d30448355c,
+    type: 3}
+  GridSize: {x: 12, y: 8}
 --- !u!1 &289476077
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9edecf33c00604fab135242cda3b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 220379357}
+  grid: {fileID: 0}
   spawnPoint: {x: 0, y: 0}
   endPoint: {x: 6, y: 2}
   passMaterial: {fileID: 2100000, guid: 036cd50b65c45fe43a2f9605b96f46f4, type: 2}
@@ -1112,8 +1112,6 @@ MonoBehaviour:
     type: 3}
   CharacteristicTextPrefab: {fileID: 699322029241068819, guid: 690fcbba35d0f5a4e914a8a7c2fefaf8,
     type: 3}
-  currentButtons: []
-  currentCharacteristics: []
   EndTurnButton: {fileID: 762568997}
 --- !u!1 &1046378597
 GameObject:
@@ -1255,7 +1253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debd6c23bd0ebea4ca44392b50943189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 220379357}
+  grid: {fileID: 220379359}
   spawnPoint: {x: 0, y: 0}
   gridObectPrefab: {fileID: 712181420705685888, guid: 16ed555b5d8deb84c87c9014d94d39a1,
     type: 3}
@@ -1303,7 +1301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917415c22db424247a295e0ad7033042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 220379357}
+  grid: {fileID: 220379359}
   currentObject: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: b0d95737f07e55b4b9186c8444c5f3b9, type: 2}
   passMaterial: {fileID: 2100000, guid: 036cd50b65c45fe43a2f9605b96f46f4, type: 2}
