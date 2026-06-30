@@ -1,11 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Human : ActingObject
 {
     private const float DistanceBetweenPoints = 0.1f;
+
+    private const int WalkCost = 10;
+
+    private const int AttackCost = 30;
 
     public Weapon currentWeapon;
 
@@ -15,27 +21,23 @@ public class Human : ActingObject
 
     [SerializeField] private HumanAnimator humanAnimator;
 
-    private float MaxAmountOfEnergy;
+    private int MaxAmountOfEnergy = 100;
 
-    private float CurrentAmountOfEnergy;
+    private int CurrentAmountOfEnergy;
+
+
 
     private void Start()
     {
+        CurrentAmountOfEnergy = MaxAmountOfEnergy;
+
         humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
+
+        OnActivateTurn += ()=> CurrentAmountOfEnergy = MaxAmountOfEnergy;
     }
 
-    private void EndAttack()
-    {
-        TurnController.RemoveMovingObject(this);
-        humanAnimator.PlayAnimation(Animations.Idle);
-        StartCoroutine(Wait());
-    }
 
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(0.2f);
-        humanAnimator.PlayAnimation(Animations.Idle);
-    }
+
 
     public override void Initialize(Grid grid, Cell cell)
     {
@@ -47,6 +49,8 @@ public class Human : ActingObject
 
     public override void ShowActions()
     {
+        ActionWindow.Instance.ClearActionWindow();
+
         base.ShowActions();
 
         string Health = "Health " + HealthSystem.CurrentHealth.ToString() + " / " + HealthSystem.MaxHealth.ToString();
@@ -58,6 +62,9 @@ public class Human : ActingObject
             Energy
         };
 
+        GetActions(out var actions, out var text);
+
+        ActionWindow.Instance.CreateButtons(text, CheckActionCost());
         ActionWindow.Instance.CreateCharacteristics(CharacteristicText);
     }
 
@@ -76,6 +83,9 @@ public class Human : ActingObject
         };
     }
 
+
+    #region Actions
+
     public HashSet<Cell> AccessibleCellsForMove()
     {
         var cells = AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, true);
@@ -87,6 +97,8 @@ public class Human : ActingObject
     public void Move(Cell endPosition)
     {
         var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
+        CurrentAmountOfEnergy -= (path.Count - 1) * WalkCost;
+
         myGrid.ChangeCellOfGridObject(MyCurrentCell, endPosition);
         StartCoroutine(MovingAnimation(path));
     }
@@ -95,7 +107,6 @@ public class Human : ActingObject
     public HashSet<Cell> AccessibleCellsForAttack()
     {
         HashSet<Cell> targets = new();
-        Debug.Log("AccessibleCellsForAttack");
 
         foreach (var item in AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, false))
         {
@@ -112,12 +123,20 @@ public class Human : ActingObject
 
     public void Attack(Cell attackingCell)
     {
+        CurrentAmountOfEnergy -= AttackCost;
 
         TurnController.AddMovingObject(this);
         humanAnimator.PlayAnimation(Animations.Attack);
 
         if (attackingCell.gridObject != null)
             attackingCell.gridObject.HealthSystem.ChangeHealth(-currentWeapon.Damage);
+    }
+
+    private void EndAttack()
+    {
+        TurnController.RemoveMovingObject(this);
+        humanAnimator.PlayAnimation(Animations.Idle);
+        StartCoroutine(Utilities.WaitAndRun(() => humanAnimator.PlayAnimation(Animations.Idle), 0.2f));
     }
 
     private IEnumerator MovingAnimation(List<Cell> cells)
@@ -149,6 +168,19 @@ public class Human : ActingObject
         humanAnimator.PlayAnimation(Animations.Idle);
         TurnController.RemoveMovingObject(this);
 
+    }
+
+    #endregion
+
+    public List<bool> CheckActionCost()
+    {
+        List<bool> checkActionList = new()
+        {
+            CurrentAmountOfEnergy > WalkCost,
+            CurrentAmountOfEnergy > AttackCost
+        };
+
+        return checkActionList;
     }
 
     private void DeathCheck()

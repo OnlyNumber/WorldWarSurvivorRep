@@ -53,7 +53,7 @@ public static class TurnController
         {
 
             checkInfinity++;
-            if(checkInfinity > 1000)
+            if (checkInfinity > 1000)
             {
                 Debug.Log("This happened ");
                 break;
@@ -84,11 +84,21 @@ public static class TurnController
 
     public static ActingObject GetNextActingObject()
     {
+        if (currentQueue.Count == 0)
+            SortAndCreateQueue();
+
         return currentQueue.Dequeue();
     }
 
     public static void SetNextTurn()
     {
-        CellSelecter.Instance.SetCurrentObject(GetNextActingObject());
+        ActionWindow.Instance.ClearActionWindow();
+
+        var obj = GetNextActingObject();
+
+        obj.ActivateTurn();
+
+        CellSelecter.Instance.SetCurrentObject(obj);
+
     }
 }

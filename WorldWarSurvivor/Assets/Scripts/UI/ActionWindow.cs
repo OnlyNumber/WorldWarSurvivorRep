@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,15 +7,15 @@ public class ActionWindow : MonoBehaviour
     [SerializeField] private RectTransform actionButtonsPlace;
     [SerializeField] private RectTransform InfoTextPlace;
 
-    public ActionButton ActionButtonPrefab;
-    public CharacteristicText CharacteristicTextPrefab;
-    public List<ActionButton> currentButtons = new();
-    public List<CharacteristicText> currentCharacteristics = new();
+    [SerializeField] private ActionButton ActionButtonPrefab;
+    [SerializeField] private CharacteristicText CharacteristicTextPrefab;
+
+    private List<ActionButton> currentButtons = new();
+    private List<CharacteristicText> currentCharacteristics = new();
 
     public Button EndTurnButton;
 
     public static ActionWindow Instance;
-
 
     private void Start()
     {
@@ -31,7 +29,7 @@ public class ActionWindow : MonoBehaviour
         EndTurnButton.onClick.AddListener(EndTurn);
     }
 
-    public void CreateButtons(List<string> text)
+    public void CreateButtons(List<string> text, List<bool> isAvailableButton)
     {
         for (int i = 0; i < text.Count; i++)
         {
@@ -40,6 +38,7 @@ public class ActionWindow : MonoBehaviour
             int buttonIndex = i;
             button.ActionText.text = text[i];
             button.Button.onClick.AddListener(() => CellSelecter.Instance.CurrentActionIndex = buttonIndex);
+            button.Button.interactable = isAvailableButton[i];
 
             currentButtons.Add(button);
         }
@@ -54,11 +53,15 @@ public class ActionWindow : MonoBehaviour
             int index = i;
             characteristicsText.InfoText.text = text[i];
             currentCharacteristics.Add(characteristicsText);
-
         }
     }
 
-    public void ClearActionWindow()
+    public void UpdateCharacteristics()
+    {
+        
+    }
+
+    public void ClearButtons()
     {
         if (currentButtons.Count == 0)
             return;
@@ -67,11 +70,20 @@ public class ActionWindow : MonoBehaviour
             Destroy(item.gameObject);
 
         currentButtons.Clear();
+    }
 
+    public void ClearCharacteristics()
+    {
         foreach (var item in currentCharacteristics)
             Destroy(item.gameObject);
 
         currentCharacteristics.Clear();
+    }
+
+    public void ClearActionWindow()
+    {
+        ClearButtons();
+        ClearCharacteristics();
     }
 
     public void EndTurn()

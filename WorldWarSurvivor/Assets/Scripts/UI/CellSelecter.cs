@@ -92,10 +92,10 @@ public class CellSelecter : MonoBehaviour
         if (gridObject == null)
             return;
 
+        gridObject.ShowActions();
+
         gridObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
         currentAction = actions;
-
-        ActionWindow.Instance.CreateButtons(actionText);
 
         foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
         {
@@ -122,6 +122,9 @@ public class CellSelecter : MonoBehaviour
         currentAction[CurrentActionIndex].Item1.Invoke(cell);
         //In future add delay before refreshing data
         MarkAccesibleCells();
+
+        currentObject.ShowActions();
+
     }
 
     private void ClearAccessibleCells(int index)

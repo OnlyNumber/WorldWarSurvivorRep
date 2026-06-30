@@ -17,7 +17,7 @@ public class GamePreparer : MonoBehaviour
 
         CreateBand();
 
-        TurnController.SetNextTurn();
+        StartCoroutine(Utilities.WaitAndRun(() => TurnController.SetNextTurn(), 0.2f));
     }
 
     [ContextMenu("Create")]

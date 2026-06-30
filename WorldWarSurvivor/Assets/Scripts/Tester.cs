@@ -36,8 +36,8 @@ public class Tester : MonoBehaviour
     [ContextMenu("SpawnGridObject")]
     public void SpawnGridObject()
     {
-        currentGridObject = Instantiate(gridObectPrefab);
-        grid.SpawnGridObject(spawnPoint, currentGridObject);
+        //currentGridObject = Instantiate(gridObectPrefab);
+        grid.SpawnGridObject(spawnPoint, gridObectPrefab);
     }
 
 }
