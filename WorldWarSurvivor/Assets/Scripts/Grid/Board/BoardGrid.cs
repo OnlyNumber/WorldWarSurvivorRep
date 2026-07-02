@@ -9,7 +9,7 @@ public class BoardGrid : Grid<BoardCell>
         Vector3 coordinate = position;
 
         coordinate /= CellSquareSize;
-
+        
         return (BoardCell)GetCell((int)coordinate.x, (int)coordinate.z);
     }
 

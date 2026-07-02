@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Grid <T> : MonoBehaviour where T : Cell
 {
-    public const float CellSquareSize = 1;
+    [SerializeField] protected float CellSquareSize = 1;
 
     [SerializeField]
-    private T cellPrefab;
+    protected T cellPrefab;
+    
     public Vector2Int GridSize;
 
-    private List<T> _currentCells = new();
+    protected List<T> currentCells = new();
 
-    [ContextMenu("CreateGrid")]
-    public void CreateGrid()
+    public virtual void CreateGrid()
     {
         Vector3 offset = Vector3.one * CellSquareSize / 2;
 
@@ -25,7 +25,7 @@ public class Grid <T> : MonoBehaviour where T : Cell
                 var cell = Instantiate(cellPrefab, cellPosition, Quaternion.identity, transform);
 
                 cell.Initialize(new Vector2Int(x, y));
-                _currentCells.Add(cell);
+                currentCells.Add(cell);
             }
         }
     }
@@ -35,52 +35,11 @@ public class Grid <T> : MonoBehaviour where T : Cell
         if (x < 0 || x >= GridSize.x || y < 0 || y >= GridSize.y)
             return null;
 
-        return _currentCells[y * GridSize.x + x];
+        return currentCells[y * GridSize.x + x];
     }
 
     public T GetCell(Vector2Int coordinate)
     {
         return GetCell(coordinate.x, coordinate.y);
     }
-
-/*
-    public Cell GetCellFromWorldPosition(Vector3 position)
-    {
-        Vector3 coordinate = position;
-
-        coordinate /= CellSquareSize;
-
-        return GetCell((int)coordinate.x, (int)coordinate.z);
-    }
-
-    public void SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab)
-    {
-        var cell = GetCell(coordinate);
-
-        if (cell.gridObject != null)
-            return;
-
-        var currentObject = Instantiate(gridObjectPrefab);
-
-        cell.gridObject = currentObject;
-        cell.IsObstacle = currentObject.IsObstacle;
-
-        currentObject.transform.position = cell.transform.position;
-
-        currentObject.Initialize(this, cell);
-    }
-
-    public void ChangeCellOfGridObject(Cell fromCell, Cell toCell)
-    {
-        fromCell.IsObstacle = false;
-        toCell.gridObject = fromCell.gridObject;
-        fromCell.gridObject = null;
-
-        if (toCell.gridObject == null)
-            return;
-
-        toCell.gridObject.MyCurrentCell = toCell;
-        toCell.IsObstacle = toCell.gridObject.IsObstacle;
-    }
-*/
 }
