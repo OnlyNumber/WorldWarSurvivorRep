@@ -12,23 +12,22 @@ public class Item : MonoBehaviour
 
     public GrabbingItem grabbingItem;
 
+    public Direciton direciton = Direciton.Right;
+
     public RectTransform DebugPoint;
 
     public List<Vector3> GetItemPlacePositions(Vector3 ItemPosition)
     {
         List<Vector3> positions = new();
-
-        Vector3 offset = (new Vector3(-Size.x, Size.y) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
-
-        Debug.Log(offset);
+        Vector3 offset;
+        
+        offset = (new Vector3(-Size.x, Size.y) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
 
         for (int x = 0; x < Size.x; x++)
         {
             for (int y = 0; y < Size.y; y++)
             {
                 positions.Add(offset + new Vector3(GridCellSize * x, GridCellSize * -y, 0));
-                var r = Instantiate(DebugPoint, GameObject.Find("Canvas").transform);
-                r.position = offset + new Vector3(GridCellSize * x, GridCellSize * -y, 0);
             }
         }
 
@@ -41,6 +40,15 @@ public class Item : MonoBehaviour
     }
 
 }
+
+public enum Direciton
+{
+    Up,
+    Right,
+    Down,
+    Left
+}
+
 
 public enum ItemType
 {

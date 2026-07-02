@@ -7,10 +7,10 @@ public class BoardGrid : Grid<BoardCell>
     public BoardCell GetCellFromWorldPosition(Vector3 position)
     {
         Vector3 coordinate = position;
-
+        
         coordinate /= CellSquareSize;
         
-        return (BoardCell)GetCell((int)coordinate.x, (int)coordinate.z);
+        return GetCell((int)coordinate.x, (int)coordinate.z);
     }
 
     public void SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab)
