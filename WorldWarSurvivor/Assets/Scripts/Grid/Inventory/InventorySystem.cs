@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -9,11 +10,21 @@ public class InventorySystem : MonoBehaviour
 
     public List<InventoryGrid> inventoryGrids = new();
 
-    //public Item CurrentItem;
-
     public InventoryGrid LastGrid;
 
     public Vector3 LastPlacePosition;
+
+    public InventoryItem currentItem;
+
+
+    [SerializeField] private Image prefab;
+
+    private List<Image> markedCells = new();
+
+    [SerializeField] private Color NotPlaceable;
+    [SerializeField] private Color Placeable;
+    [SerializeField] private Color NotDisturb;
+
 
     private void Start()
     {
@@ -26,8 +37,20 @@ public class InventorySystem : MonoBehaviour
         Instance = this;
     }
 
-    public void PickUpItem(Item inventoryItem)
+    private void Update()
     {
+        if (currentItem == null)
+            return;
+
+        MarkPlacementPositions();
+    }
+
+    public void PickUpItem(InventoryItem inventoryItem)
+    {
+        currentItem = inventoryItem;
+
+        CreateMarkingCells();
+
         LastPlacePosition = inventoryItem.grabbingItem.MyRectTransform.position;
 
         foreach (var item in inventoryGrids)
@@ -44,7 +67,7 @@ public class InventorySystem : MonoBehaviour
 
     }
 
-    public void DropItem(Item inventoryItem)
+    public void DropItem(InventoryItem inventoryItem)
     {
         InventoryGrid gridForPlace = null;
 
@@ -57,21 +80,73 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        if (gridForPlace == null)
-            return;
+        if (gridForPlace == null || !gridForPlace.TyrPlaceItem(inventoryItem, inventoryItem.grabbingItem.MyRectTransform.position))
+            if (LastGrid != null)
+                LastGrid.TyrPlaceItem(inventoryItem, LastPlacePosition);
 
-        if (!gridForPlace.TyrPlaceItem(inventoryItem, inventoryItem.grabbingItem.MyRectTransform.position))
-        {
-            Debug.Log("No place");
-            /*if (LastGrid != null)
-                LastGrid.TyrPlaceItem(inventoryItem, LastPlacePosition);*/
-
-        }
-        else
-            Debug.Log("placed");
-
+        ClearMarkingCells();
+        currentItem = null;
     }
 
+    private void CreateMarkingCells()
+    {
+        int count = currentItem.Size.x * currentItem.Size.y;
 
+        for (int i = 0; i < count; i++)
+        {
+            markedCells.Add(Instantiate(prefab, currentItem.grabbingItem.MyRectTransform));
+        }
+    }
+
+    private void ClearMarkingCells()
+    {
+        for (int i = 0; i < markedCells.Count; i++)
+        {
+            Destroy(markedCells[i].gameObject);
+        }
+
+        markedCells.Clear();
+    }
+
+    private void MarkPlacementPositions()
+    {
+        var positions = currentItem.GetItemPlacePositions(currentItem.grabbingItem.MyRectTransform.position);
+
+        for (int i = 0; i < markedCells.Count; i++)
+        {
+            var cell = CheckPlacementPosition(positions[i]);
+            markedCells[i].color = NotDisturb;
+
+            if (cell == null)
+                continue;
+
+            if (cell.IsOccupied)
+                markedCells[i].color = NotPlaceable;
+            else
+                markedCells[i].color = Placeable;
+
+            markedCells[i].rectTransform.position = cell.MyRectTransform.position;
+        }
+    }
+
+    public InventoryCell CheckPlacementPosition(Vector2 positionOfCheck)
+    {
+        InventoryGrid gridForPlace = null;
+
+        foreach (var item in inventoryGrids)
+        {
+            if (item.GetCellFromPosition(Input.mousePosition) != null)
+            {
+                gridForPlace = item;
+                break;
+            }
+        }
+
+        if (gridForPlace != null)
+            return gridForPlace.GetCellFromPosition(positionOfCheck);
+
+        return null;
+
+    }
 
 }

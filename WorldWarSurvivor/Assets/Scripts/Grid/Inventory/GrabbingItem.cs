@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,15 +10,45 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
 
     public RectTransform MyRectTransform;
 
-    public Action<Item> OnPickUp;
+    public Action<InventoryItem> OnPickUp;
 
-    public Action<Item> OnDrop;
+    public Action<InventoryItem> OnDrop;
 
+    public Action<InventoryItem> OnMoving;
+
+    private InventoryItem inventoryItem;
 
     private void Start()
     {
         MyRectTransform = GetComponent<RectTransform>();
+        inventoryItem = GetComponent<InventoryItem>();
         StartCoroutine(Utilities.WaitAndRun(Subscribe, 0.2f));
+    }
+
+    private void Update()
+    {
+        if (targetedObject)
+        {
+            MyRectTransform.position = Input.mousePosition + mouseOffset;
+            OnMoving?.Invoke(inventoryItem);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && targetedObject)
+        {
+            if (inventoryItem.direciton == Direciton.Right)
+            {
+                MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
+                inventoryItem.direciton = Direciton.Up;
+                mouseOffset = new Vector3(-mouseOffset.y, mouseOffset.x);
+            }
+            else
+            {
+                MyRectTransform.rotation = Quaternion.Euler(0, 0, 0);
+                inventoryItem.direciton = Direciton.Right;
+                mouseOffset = new Vector3(mouseOffset.y, -mouseOffset.x);
+            }
+
+        }
     }
 
     private void Subscribe()
@@ -36,18 +63,19 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
         targetedObject = !targetedObject;
 
         mouseOffset = MyRectTransform.position - Input.mousePosition;
-        
+
         if (targetedObject)
         {
-            OnPickUp?.Invoke(GetComponent<Item>());
+            transform.SetAsLastSibling();
+            OnPickUp?.Invoke(inventoryItem);
         }
         else
         {
-            OnDrop?.Invoke(GetComponent<Item>());
+            OnDrop?.Invoke(inventoryItem);
         }
-
-
     }
+
+
 
     public void OnPointerMove(PointerEventData eventData)
     {
@@ -55,5 +83,11 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
         {
             MyRectTransform.position = Input.mousePosition + mouseOffset;
         }
+    }
+
+    private void OnDestroy() 
+    {
+        OnPickUp += InventorySystem.Instance.PickUpItem;
+        OnDrop += InventorySystem.Instance.DropItem;
     }
 }

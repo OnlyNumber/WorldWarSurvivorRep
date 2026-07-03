@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class InventoryGrid : Grid<InventoryCell>
 {
-    public List<Item> InventoryItems;
+    public List<InventoryItem> InventoryItems;
 
     public RectTransform rectTransform;
 
@@ -55,7 +55,7 @@ public class InventoryGrid : Grid<InventoryCell>
         return GetCell((int)coordinate.x, Mathf.Abs((int)coordinate.y));
     }
 
-    public bool TyrPlaceItem(Item item, Vector2 position)
+    public bool TyrPlaceItem(InventoryItem item, Vector2 position)
     {
         List<InventoryCell> inventoryCells = new();
 
@@ -83,7 +83,7 @@ public class InventoryGrid : Grid<InventoryCell>
         return true;
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(InventoryItem item)
     {
         if (!InventoryItems.Contains(item))
         {
