@@ -10,12 +10,13 @@ public class InventorySystem : MonoBehaviour
 
     public List<InventoryGrid> inventoryGrids = new();
 
+    public EquipmentController currentEquipment;
+
     public InventoryGrid LastGrid;
 
     public Vector3 LastPlacePosition;
 
     public InventoryItem currentItem;
-
 
     [SerializeField] private Image prefab;
 
@@ -24,7 +25,6 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private Color NotPlaceable;
     [SerializeField] private Color Placeable;
     [SerializeField] private Color NotDisturb;
-
 
     private void Start()
     {
@@ -79,8 +79,10 @@ public class InventorySystem : MonoBehaviour
                 break;
             }
         }
+        var itemPosition = inventoryItem.grabbingItem.MyRectTransform.position;
 
-        if (gridForPlace == null || !gridForPlace.TyrPlaceItem(inventoryItem, inventoryItem.grabbingItem.MyRectTransform.position))
+        if ((gridForPlace == null || !gridForPlace.TyrPlaceItem(inventoryItem, itemPosition)) &&
+         !currentEquipment.TryPlaceItem(inventoryItem, itemPosition))
             if (LastGrid != null)
                 LastGrid.TyrPlaceItem(inventoryItem, LastPlacePosition);
 

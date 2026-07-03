@@ -36,7 +36,6 @@ public class InventoryItem : MonoBehaviour
 
     private void OnPickUp(InventoryItem item)
     {
-
         var color = Background.color;
 
         color.a = 0.3f;
