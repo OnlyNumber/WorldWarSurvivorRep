@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,15 +7,9 @@ public class InventoryItem : MonoBehaviour
 {
     public const float GridCellSize = 50;
 
-    public ItemType itemType;
-
-    public Vector2Int Size;
+    public InventoryItemInfo info;
 
     public GrabbingItem grabbingItem;
-
-    public Direciton direciton = Direciton.Right;
-
-    public RectTransform DebugPoint;
 
     public Image Background;
 
@@ -26,6 +21,16 @@ public class InventoryItem : MonoBehaviour
         grabbingItem.OnDrop += OnDrop;
 
     }
+
+    public void Initialize(InventoryItemInfo info)
+    {
+        this.info = info;
+
+        Background.rectTransform.sizeDelta = (Vector2)info.Size * GridCellSize;
+        ItemImage.rectTransform.sizeDelta = (Vector2)info.Size * GridCellSize;
+        ItemImage.sprite = info.ItemSprite;
+    }
+
 
     private void OnDestroy()
     {
@@ -59,14 +64,14 @@ public class InventoryItem : MonoBehaviour
     {
         List<Vector3> positions = new();
         Vector3 offset;
-        if (direciton == Direciton.Right || direciton == Direciton.Left)
+        if (info.direciton == Direciton.Right || info.direciton == Direciton.Left)
         {
 
-            offset = (new Vector3(-Size.x, Size.y) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
+            offset = (new Vector3(-info.Size.x, info.Size.y) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
 
-            for (int x = 0; x < Size.x; x++)
+            for (int x = 0; x < info.Size.x; x++)
             {
-                for (int y = 0; y < Size.y; y++)
+                for (int y = 0; y < info.Size.y; y++)
                 {
                     positions.Add(offset + new Vector3(GridCellSize * x, GridCellSize * -y, 0));
                 }
@@ -74,11 +79,11 @@ public class InventoryItem : MonoBehaviour
         }
         else
         {
-            offset = (new Vector3(-Size.y, Size.x) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
+            offset = (new Vector3(-info.Size.y, info.Size.x) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
 
-            for (int x = 0; x < Size.x; x++)
+            for (int x = 0; x < info.Size.x; x++)
             {
-                for (int y = 0; y < Size.y; y++)
+                for (int y = 0; y < info.Size.y; y++)
                 {
                     positions.Add(offset + new Vector3(GridCellSize * y, GridCellSize * -x, 0));
                     //var ppoint = Instantiate(DebugPoint);
@@ -93,10 +98,10 @@ public class InventoryItem : MonoBehaviour
 
     public void SetPositionReferencedByCell(Vector3 CellPosition)
     {
-        if (direciton == Direciton.Right || direciton == Direciton.Left)
-            grabbingItem.MyRectTransform.position = CellPosition + new Vector3(Size.x, -Size.y) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
+        if (info.direciton == Direciton.Right || info.direciton == Direciton.Left)
+            grabbingItem.MyRectTransform.position = CellPosition + new Vector3(info.Size.x, -info.Size.y) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
         else
-            grabbingItem.MyRectTransform.position = CellPosition + new Vector3(Size.y, -Size.x) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
+            grabbingItem.MyRectTransform.position = CellPosition + new Vector3(info.Size.y, -info.Size.x) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
 
     }
 

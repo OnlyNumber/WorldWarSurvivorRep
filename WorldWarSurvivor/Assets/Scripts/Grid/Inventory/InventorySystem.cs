@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,23 +7,34 @@ public class InventorySystem : MonoBehaviour
 {
     public static InventorySystem Instance;
 
+    #region Containers
+
     public List<InventoryGrid> inventoryGrids = new();
-
     public EquipmentController currentEquipment;
+    private InventoryGrid _unitInventoryGrid;
 
-    public InventoryGrid LastGrid;
+    #endregion
 
-    public Vector3 LastPlacePosition;
-
+    #region  Current Item
     public InventoryItem currentItem;
 
-    [SerializeField] private Image prefab;
+    private InventoryGrid _lastGrid;
+    private Vector3 _lastPlacePosition;
+    private Direciton _lastDireciton;
+
+    #endregion
+
+    #region  Marks
+    [SerializeField] private Image markPrefab;
 
     private List<Image> markedCells = new();
 
     [SerializeField] private Color NotPlaceable;
     [SerializeField] private Color Placeable;
     [SerializeField] private Color NotDisturb;
+    #endregion
+
+    [SerializeField] private InventoryItem emptyItemPrefab;
 
     private void Start()
     {
@@ -35,6 +45,8 @@ public class InventorySystem : MonoBehaviour
         }
 
         Instance = this;
+        _unitInventoryGrid = inventoryGrids[0];
+        _unitInventoryGrid.CreateGrid();
     }
 
     private void Update()
@@ -45,25 +57,49 @@ public class InventorySystem : MonoBehaviour
         MarkPlacementPositions();
     }
 
+    public void SpawnUnitItems(List<InventoryItemInfo> unitItems)
+    {
+        foreach (var item in unitItems)
+        {
+            var emptyItem = Instantiate(emptyItemPrefab);
+            emptyItem.Initialize(item);
+
+            emptyItem.transform.SetParent(InventoryWindow.Instance.ItemsTransform);
+            if (item.direciton == Direciton.Up)
+                emptyItem.transform.rotation = Quaternion.Euler(0, 0, 90);
+
+            emptyItem.SetPositionReferencedByCell(_unitInventoryGrid.GetCell(item.FirstCellPosition).MyRectTransform.position);
+            _unitInventoryGrid.TyrPlaceItem(emptyItem, emptyItem.grabbingItem.MyRectTransform.position);
+        }
+    }
+
+    public void ClearGrids()
+    {
+        foreach (var item in inventoryGrids)
+            item.ClearGrid();
+    }
+
+    public List<InventoryItemInfo> GetCurrentUnitItems() => _unitInventoryGrid.GetItemsInfo();
+
     public void PickUpItem(InventoryItem inventoryItem)
     {
         currentItem = inventoryItem;
-
+        _lastDireciton = currentItem.info.direciton;
         CreateMarkingCells();
 
-        LastPlacePosition = inventoryItem.grabbingItem.MyRectTransform.position;
+        _lastPlacePosition = inventoryItem.grabbingItem.MyRectTransform.position;
 
         foreach (var item in inventoryGrids)
         {
             if (item.InventoryItems.Contains(inventoryItem))
             {
-                LastGrid = item;
+                _lastGrid = item;
                 break;
             }
         }
 
-        if (LastGrid != null)
-            LastGrid.RemoveItem(inventoryItem);
+        if (_lastGrid != null)
+            _lastGrid.RemoveItem(inventoryItem);
 
     }
 
@@ -83,8 +119,20 @@ public class InventorySystem : MonoBehaviour
 
         if ((gridForPlace == null || !gridForPlace.TyrPlaceItem(inventoryItem, itemPosition)) &&
          !currentEquipment.TryPlaceItem(inventoryItem, itemPosition))
-            if (LastGrid != null)
-                LastGrid.TyrPlaceItem(inventoryItem, LastPlacePosition);
+        {
+            inventoryItem.info.direciton = _lastDireciton;
+
+            if (inventoryItem.info.direciton == Direciton.Up)
+                inventoryItem.grabbingItem.MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
+                else
+                inventoryItem.grabbingItem.MyRectTransform.rotation = Quaternion.Euler(0, 0, 0);
+
+
+            if (_lastGrid != null)
+                _lastGrid.TyrPlaceItem(inventoryItem, _lastPlacePosition);
+
+        }
+
 
         ClearMarkingCells();
         currentItem = null;
@@ -92,11 +140,11 @@ public class InventorySystem : MonoBehaviour
 
     private void CreateMarkingCells()
     {
-        int count = currentItem.Size.x * currentItem.Size.y;
+        int count = currentItem.info.Size.x * currentItem.info.Size.y;
 
         for (int i = 0; i < count; i++)
         {
-            markedCells.Add(Instantiate(prefab, currentItem.grabbingItem.MyRectTransform));
+            markedCells.Add(Instantiate(markPrefab, currentItem.grabbingItem.MyRectTransform));
         }
     }
 

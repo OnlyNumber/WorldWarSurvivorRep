@@ -64,9 +64,7 @@ public class InventoryGrid : Grid<InventoryCell>
             var cell = GetCellFromPosition(itemCellPosition);
 
             if (cell == null || cell.IsOccupied)
-            {
                 return false;
-            }
             else
                 inventoryCells.Add(cell);
         }
@@ -79,6 +77,9 @@ public class InventoryGrid : Grid<InventoryCell>
         InventoryItems.Add(item);
 
         item.SetPositionReferencedByCell(inventoryCells[0].MyRectTransform.position);
+
+        item.info.FirstCellPosition = GetCellFromPosition(item.GetItemPlacePositions(position)[0]).Coordinate;
+
 
         return true;
     }
@@ -98,6 +99,31 @@ public class InventoryGrid : Grid<InventoryCell>
         }
 
         InventoryItems.Remove(item);
+    }
+
+    public void ClearGrid()
+    {
+        foreach (var item in InventoryItems)
+            Destroy(item.gameObject);
+
+        InventoryItems.Clear();
+        
+        for (int x = 0; x < GridSize.x; x++)
+            for (int y = 0; y < GridSize.y; y++)
+                GetCell(x, y).IsOccupied = false;
+
+    }
+
+    public List<InventoryItemInfo> GetItemsInfo()
+    {
+        List<InventoryItemInfo> inventoryItemInfos = new();
+
+        foreach (var item in InventoryItems)
+        {
+            inventoryItemInfos.Add(item.info);
+        }
+
+        return inventoryItemInfos;
     }
 
 }

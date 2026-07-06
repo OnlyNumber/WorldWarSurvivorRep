@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 712181420705685888}
   - component: {fileID: 3992697489456467168}
   m_Layer: 0
-  m_Name: WarriorHuman
+  m_Name: EmptyWarriorHuman
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -52,13 +52,6 @@ MonoBehaviour:
   speed: 1
   maxSteps: 4
   humanAnimator: {fileID: 3992697489456467168}
-  items:
-  - inventoryItemSO: {fileID: 11400000, guid: 821cb8d35ca960a47973c15effb9870d, type: 2}
-    FirstCellPosition: {x: 0, y: 0}
-    direciton: 0
-  - inventoryItemSO: {fileID: 11400000, guid: 11ab31a4f50724b40beb78c77e15a989, type: 2}
-    FirstCellPosition: {x: 2, y: 2}
-    direciton: 1
 --- !u!114 &3992697489456467168
 MonoBehaviour:
   m_ObjectHideFlags: 0

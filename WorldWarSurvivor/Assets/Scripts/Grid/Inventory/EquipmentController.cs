@@ -12,7 +12,7 @@ public class EquipmentController : MonoBehaviour
     {
         foreach (var slot in equipmentSlots)
         {
-            if (slot.inventoryItem != null || inventoryItem.itemType != slot.SlotType)
+            if (slot.inventoryItem != null || inventoryItem.info.itemType != slot.SlotType)
                 continue;
 
             Vector3 min = new Vector3(slot.rectTransform.position.x - slot.SlotSize.x / 2, slot.rectTransform.position.y - slot.SlotSize.y / 2);

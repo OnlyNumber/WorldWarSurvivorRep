@@ -35,16 +35,16 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
 
         if (Input.GetKeyDown(KeyCode.E) && targetedObject)
         {
-            if (inventoryItem.direciton == Direciton.Right)
+            if (inventoryItem.info.direciton == Direciton.Right)
             {
                 MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
-                inventoryItem.direciton = Direciton.Up;
+                inventoryItem.info.direciton = Direciton.Up;
                 mouseOffset = new Vector3(-mouseOffset.y, mouseOffset.x);
             }
             else
             {
                 MyRectTransform.rotation = Quaternion.Euler(0, 0, 0);
-                inventoryItem.direciton = Direciton.Right;
+                inventoryItem.info.direciton = Direciton.Right;
                 mouseOffset = new Vector3(mouseOffset.y, -mouseOffset.x);
             }
 

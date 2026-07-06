@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Human : ActingObject
 {
@@ -25,6 +26,7 @@ public class Human : ActingObject
 
     private int CurrentAmountOfEnergy;
 
+    [SerializeField] public List<InventoryItemInfo> items = new();
 
 
     private void Start()
