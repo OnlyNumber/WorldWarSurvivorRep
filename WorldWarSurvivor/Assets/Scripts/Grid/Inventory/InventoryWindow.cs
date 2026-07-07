@@ -10,12 +10,12 @@ public class InventoryWindow : MonoBehaviour
     [SerializeField] private Image window;
 
     public Button CloseButton;
-    
+
     public RectTransform ItemsTransform;
 
-    private void Start() 
+    private void Start()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
         }
@@ -28,14 +28,17 @@ public class InventoryWindow : MonoBehaviour
     public void OpenWindow()
     {
         InventorySystem.Instance.SpawnUnitItems((CellSelecter.Instance.CurrentObject as Human).items);
-
+        InventorySystem.Instance.currentEquipment.InitializeItems((CellSelecter.Instance.CurrentObject as Human).equipmentInfo);
         window.gameObject.SetActive(true);
     }
 
     public void CloseWindow()
     {
         (CellSelecter.Instance.CurrentObject as Human).items = InventorySystem.Instance.GetCurrentUnitItems();
+        (CellSelecter.Instance.CurrentObject as Human).equipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
         InventorySystem.Instance.ClearGrids();
+        InventorySystem.Instance.ClearEquipment();
+
         window.gameObject.SetActive(false);
     }
 }

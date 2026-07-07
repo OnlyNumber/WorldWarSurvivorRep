@@ -61,17 +61,31 @@ public class InventorySystem : MonoBehaviour
     {
         foreach (var item in unitItems)
         {
-            var emptyItem = Instantiate(emptyItemPrefab);
-            emptyItem.Initialize(item);
+            if (!item.IsItemExist)
+                continue;
 
-            emptyItem.transform.SetParent(InventoryWindow.Instance.ItemsTransform);
-            if (item.direciton == Direciton.Up)
-                emptyItem.transform.rotation = Quaternion.Euler(0, 0, 90);
+            var emptyItem = SpawnItem(item);
 
             emptyItem.SetPositionReferencedByCell(_unitInventoryGrid.GetCell(item.FirstCellPosition).MyRectTransform.position);
             _unitInventoryGrid.TyrPlaceItem(emptyItem, emptyItem.grabbingItem.MyRectTransform.position);
         }
     }
+
+    public InventoryItem SpawnItem(InventoryItemInfo unitItemInfo)
+    {
+        if (unitItemInfo == null || !unitItemInfo.IsItemExist)
+            return null;
+
+        var emptyItem = Instantiate(emptyItemPrefab);
+        emptyItem.Initialize(unitItemInfo);
+
+        emptyItem.transform.SetParent(InventoryWindow.Instance.ItemsTransform);
+        if (unitItemInfo.direciton == Direciton.Up)
+            emptyItem.transform.rotation = Quaternion.Euler(0, 0, 90);
+
+        return emptyItem;
+    }
+
 
     public void ClearGrids()
     {
@@ -79,27 +93,36 @@ public class InventorySystem : MonoBehaviour
             item.ClearGrid();
     }
 
+    public void ClearEquipment()
+    {
+        currentEquipment.ClearEquipment();
+    }
+
     public List<InventoryItemInfo> GetCurrentUnitItems() => _unitInventoryGrid.GetItemsInfo();
+    public EquipmentInfo GetCurrentUnitEquipmentItems() => currentEquipment.GetItems();
 
     public void PickUpItem(InventoryItem inventoryItem)
     {
         currentItem = inventoryItem;
         _lastDireciton = currentItem.info.direciton;
-        CreateMarkingCells();
-
         _lastPlacePosition = inventoryItem.grabbingItem.MyRectTransform.position;
+        _lastGrid = null;
+
+        CreateMarkingCells();
 
         foreach (var item in inventoryGrids)
         {
             if (item.InventoryItems.Contains(inventoryItem))
             {
                 _lastGrid = item;
-                break;
+                _lastGrid.RemoveItem(inventoryItem);
+                return;
             }
         }
 
-        if (_lastGrid != null)
-            _lastGrid.RemoveItem(inventoryItem);
+        currentEquipment.RemoveItem(inventoryItem);
+
+
 
     }
 
@@ -124,12 +147,14 @@ public class InventorySystem : MonoBehaviour
 
             if (inventoryItem.info.direciton == Direciton.Up)
                 inventoryItem.grabbingItem.MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
-                else
+            else
                 inventoryItem.grabbingItem.MyRectTransform.rotation = Quaternion.Euler(0, 0, 0);
 
 
             if (_lastGrid != null)
                 _lastGrid.TyrPlaceItem(inventoryItem, _lastPlacePosition);
+            else
+                currentEquipment.TryPlaceItem(inventoryItem, _lastPlacePosition);
 
         }
 

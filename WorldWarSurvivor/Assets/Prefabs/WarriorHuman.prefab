@@ -59,6 +59,41 @@ MonoBehaviour:
   - inventoryItemSO: {fileID: 11400000, guid: 11ab31a4f50724b40beb78c77e15a989, type: 2}
     FirstCellPosition: {x: 2, y: 2}
     direciton: 1
+  equipmentInfo:
+    HeadItem:
+      inventoryItemSO: {fileID: 11400000, guid: ad2f18d8447d5174786c1ba3509753c7,
+        type: 2}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    BodyItem:
+      inventoryItemSO: {fileID: 0}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    AmuletItem1:
+      inventoryItemSO: {fileID: 0}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    AmuletItem2:
+      inventoryItemSO: {fileID: 0}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    QuickUseItem1:
+      inventoryItemSO: {fileID: 0}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    QuickUseItem2:
+      inventoryItemSO: {fileID: 11400000, guid: ac84e5da9520b2a4ea9691e042fa88b2,
+        type: 2}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    MainHandItem:
+      inventoryItemSO: {fileID: 0}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
+    OtherHandItem:
+      inventoryItemSO: {fileID: 0}
+      FirstCellPosition: {x: 0, y: 0}
+      direciton: 1
 --- !u!114 &3992697489456467168
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,6 @@ public class Tester : MonoBehaviour
     public void Create()
     {
         grid.CreateGrid();
-//        grid1.CreateGrid();
     }
 
 

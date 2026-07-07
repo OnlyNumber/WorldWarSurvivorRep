@@ -26,6 +26,7 @@ public class GamePreparer : MonoBehaviour
         grid.CreateGrid();
     }
 
+    [ContextMenu("CreateBand")]
     private void CreateBand()
     {
         grid.SpawnGridObject(spawnPoint, gridObectPrefab);

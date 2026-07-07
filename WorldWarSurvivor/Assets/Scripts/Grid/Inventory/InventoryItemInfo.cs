@@ -8,6 +8,8 @@ public class InventoryItemInfo
 
     public Vector2Int FirstCellPosition;
 
+    public bool IsItemExist => inventoryItemSO != null;
+
     public Sprite ItemSprite => inventoryItemSO.ItemImage;
 
     public ItemType itemType => inventoryItemSO.itemType;

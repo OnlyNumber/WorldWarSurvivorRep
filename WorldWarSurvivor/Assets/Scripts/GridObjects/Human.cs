@@ -28,6 +28,8 @@ public class Human : ActingObject
 
     [SerializeField] public List<InventoryItemInfo> items = new();
 
+    [SerializeField] public EquipmentInfo equipmentInfo;
+
 
     private void Start()
     {
