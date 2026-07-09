@@ -10,6 +10,8 @@ public class GamePreparer : MonoBehaviour
     public Vector2Int spawnPoint;
 
     public GridObject gridObectPrefab;
+    public GridObject enemygridObectPrefab;
+
 
     private void Start()
     {
@@ -30,5 +32,11 @@ public class GamePreparer : MonoBehaviour
     private void CreateBand()
     {
         grid.SpawnGridObject(spawnPoint, gridObectPrefab);
+    }
+
+    [ContextMenu("CreateEnemyBand")]
+    private void CreateEnemyBand()
+    {
+        grid.SpawnGridObject(spawnPoint, enemygridObectPrefab);
     }
 }

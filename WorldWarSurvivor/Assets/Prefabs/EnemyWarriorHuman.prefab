@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 712181420705685888}
   - component: {fileID: 3992697489456467168}
   m_Layer: 0
-  m_Name: WarriorHuman
+  m_Name: EnemyWarriorHuman
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyCurrentCell: {fileID: 0}
   <IsObstacle>k__BackingField: 1
-  IsFriend: 1
+  IsFriend: 0
   currentWeapon: {fileID: 5028879031059171517}
   speed: 1
   maxSteps: 4

@@ -37,7 +37,7 @@ public class Human : ActingObject
 
         humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
 
-        OnActivateTurn += ()=> CurrentAmountOfEnergy = MaxAmountOfEnergy;
+        OnActivateTurn += () => CurrentAmountOfEnergy = MaxAmountOfEnergy;
     }
 
 
@@ -101,7 +101,14 @@ public class Human : ActingObject
     public void Move(BoardCell endPosition)
     {
         var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
+        path.Remove(path[0]);
+        
         CurrentAmountOfEnergy -= (path.Count - 1) * WalkCost;
+
+        foreach (var item in path)
+        {
+            Debug.Log("Coordinate " + item.Coordinate);
+        }
 
         myGrid.ChangeCellOfGridObject(MyCurrentCell, endPosition);
         StartCoroutine(MovingAnimation(path));
