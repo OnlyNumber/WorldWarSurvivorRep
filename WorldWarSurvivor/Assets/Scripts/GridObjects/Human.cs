@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Human : ActingObject
 {
@@ -25,6 +26,9 @@ public class Human : ActingObject
 
     private int CurrentAmountOfEnergy;
 
+    [SerializeField] public List<InventoryItemInfo> items = new();
+
+    [SerializeField] public EquipmentInfo equipmentInfo;
 
 
     private void Start()
@@ -39,7 +43,7 @@ public class Human : ActingObject
 
 
 
-    public override void Initialize(Grid grid, Cell cell)
+    public override void Initialize(BoardGrid grid, BoardCell cell)
     {
         base.Initialize(grid, cell);
 
@@ -68,7 +72,7 @@ public class Human : ActingObject
         ActionWindow.Instance.CreateCharacteristics(CharacteristicText);
     }
 
-    public override void GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText)
+    public override void GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText)
     {
         actions = new()
         {
@@ -86,7 +90,7 @@ public class Human : ActingObject
 
     #region Actions
 
-    public HashSet<Cell> AccessibleCellsForMove()
+    public HashSet<BoardCell> AccessibleCellsForMove()
     {
         var cells = AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, true);
         cells.Remove(MyCurrentCell);
@@ -94,7 +98,7 @@ public class Human : ActingObject
         return cells;
     }
 
-    public void Move(Cell endPosition)
+    public void Move(BoardCell endPosition)
     {
         var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
         CurrentAmountOfEnergy -= (path.Count - 1) * WalkCost;
@@ -104,9 +108,9 @@ public class Human : ActingObject
     }
 
     // In future move this functional to the weapon
-    public HashSet<Cell> AccessibleCellsForAttack()
+    public HashSet<BoardCell> AccessibleCellsForAttack()
     {
-        HashSet<Cell> targets = new();
+        HashSet<BoardCell> targets = new();
 
         foreach (var item in AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, false))
         {
@@ -121,7 +125,7 @@ public class Human : ActingObject
         return targets;
     }
 
-    public void Attack(Cell attackingCell)
+    public void Attack(BoardCell attackingCell)
     {
         CurrentAmountOfEnergy -= AttackCost;
 
@@ -139,7 +143,7 @@ public class Human : ActingObject
         StartCoroutine(Utilities.WaitAndRun(() => humanAnimator.PlayAnimation(Animations.Idle), 0.2f));
     }
 
-    private IEnumerator MovingAnimation(List<Cell> cells)
+    private IEnumerator MovingAnimation(List<BoardCell> cells)
     {
         int index = 0;
 

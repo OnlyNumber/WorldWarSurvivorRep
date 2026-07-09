@@ -1041,7 +1041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7953099704775837335}
-  - component: {fileID: 2395703354764658906}
+  - component: {fileID: 771044296747280652}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -1067,7 +1067,7 @@ Transform:
   - {fileID: 3131501783563517373}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2395703354764658906
+--- !u!114 &771044296747280652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1076,15 +1076,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8256124879242387360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc308ce364afa84b95d788b470f1830, type: 3}
+  m_Script: {fileID: 11500000, guid: 257579ac2bf449e489b95ee05f249dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Coordinate: {x: 0, y: 0}
-  gridObject: {fileID: 0}
   IsObstacle: 0
   FullCost: {fileID: 4573768023770709636}
   PassedCost: {fileID: 8357780359996966484}
   NeedToGoCost: {fileID: 1837249519672278336}
+  gridObject: {fileID: 0}
 --- !u!1 &8594129244246568586
 GameObject:
   m_ObjectHideFlags: 0

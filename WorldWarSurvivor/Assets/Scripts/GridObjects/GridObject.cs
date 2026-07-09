@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GridObject : MonoBehaviour
 {
-    public Cell MyCurrentCell;
+    public BoardCell MyCurrentCell;
 
-    protected Grid myGrid;
+    protected BoardGrid myGrid;
 
     public HealthSystem HealthSystem = new();
 
@@ -17,7 +17,7 @@ public class GridObject : MonoBehaviour
         get;
     }
 
-    public virtual void Initialize(Grid grid, Cell cell)
+    public virtual void Initialize(BoardGrid grid, BoardCell cell)
     {
         MyCurrentCell = cell;
         myGrid = grid;
@@ -29,7 +29,7 @@ public class GridObject : MonoBehaviour
         
     }
 
-    public virtual void GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText)
+    public virtual void GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText)
     {
         actions = new();
         actionText = new();

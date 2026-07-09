@@ -13,7 +13,11 @@ public class ActionWindow : MonoBehaviour
     private List<ActionButton> currentButtons = new();
     private List<CharacteristicText> currentCharacteristics = new();
 
+    public InventoryWindow inventoryWindow;
+
     public Button EndTurnButton;
+    public Button InventoryButton;
+
 
     public static ActionWindow Instance;
 
@@ -27,6 +31,8 @@ public class ActionWindow : MonoBehaviour
 
         Instance = this;
         EndTurnButton.onClick.AddListener(EndTurn);
+        InventoryButton.onClick.AddListener(OpenInventory);
+
     }
 
     public void CreateButtons(List<string> text, List<bool> isAvailableButton)
@@ -58,7 +64,7 @@ public class ActionWindow : MonoBehaviour
 
     public void UpdateCharacteristics()
     {
-        
+
     }
 
     public void ClearButtons()
@@ -89,5 +95,10 @@ public class ActionWindow : MonoBehaviour
     public void EndTurn()
     {
         TurnController.SetNextTurn();
+    }
+
+    public void OpenInventory()
+    {
+        inventoryWindow.OpenWindow();
     }
 }

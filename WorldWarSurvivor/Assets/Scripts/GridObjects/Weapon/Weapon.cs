@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapon : UnitItem
+public class Weapon : MonoBehaviour
 {
     public int Damage;
 

@@ -5,9 +5,14 @@ using UnityEngine.EventSystems;
 
 public class CellSelecter : MonoBehaviour
 {
-    public Grid grid;
+    public BoardGrid grid;
 
-    public GridObject currentObject;
+    [field: SerializeField]
+    public GridObject CurrentObject
+    {
+        get;
+        private set;
+    }
 
     private int _lastActionIndex = 0;
 
@@ -23,7 +28,7 @@ public class CellSelecter : MonoBehaviour
         get => _currentActionIndex;
     }
 
-    private List<(Action<Cell>, HashSet<Cell>)> currentAction;
+    private List<(Action<BoardCell>, HashSet<BoardCell>)> currentAction;
 
     public static CellSelecter Instance;
 
@@ -55,7 +60,7 @@ public class CellSelecter : MonoBehaviour
         if (TurnController.IsNowAnimation)
             return;
 
-        if (Input.GetMouseButtonDown(0) && currentObject != null)
+        if (Input.GetMouseButtonDown(0) && CurrentObject != null)
         {
             //switch (selectRegime)
             //{
@@ -83,8 +88,8 @@ public class CellSelecter : MonoBehaviour
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
 
-        currentObject = cell.ShowCell();
-        ShowCell(currentObject);
+        CurrentObject = cell.ShowCell();
+        ShowCell(CurrentObject);
     }
 
     private void ShowCell(GridObject gridObject)
@@ -94,7 +99,7 @@ public class CellSelecter : MonoBehaviour
 
         gridObject.ShowActions();
 
-        gridObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
+        gridObject.GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText);
         currentAction = actions;
 
         foreach (var accessibleCell in currentAction[CurrentActionIndex].Item2)
@@ -105,8 +110,8 @@ public class CellSelecter : MonoBehaviour
 
     public void SetCurrentObject(GridObject gridObject)
     {
-        currentObject = gridObject;
-        ShowCell(currentObject);
+        CurrentObject = gridObject;
+        ShowCell(CurrentObject);
     }
 
     public void CellSelectForAction()
@@ -123,7 +128,7 @@ public class CellSelecter : MonoBehaviour
         //In future add delay before refreshing data
         MarkAccesibleCells();
 
-        currentObject.ShowActions();
+        CurrentObject.ShowActions();
 
     }
 
@@ -140,7 +145,7 @@ public class CellSelecter : MonoBehaviour
 
     private void ClearSelectedGridObject()
     {
-        currentObject = null;
+        CurrentObject = null;
         currentAction.Clear();
         ActionWindow.Instance.ClearActionWindow();
 
@@ -152,7 +157,7 @@ public class CellSelecter : MonoBehaviour
 
         _lastActionIndex = CurrentActionIndex;
 
-        currentObject.GetActions(out List<(Action<Cell>, HashSet<Cell>)> actions, out List<string> actionText);
+        CurrentObject.GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText);
         currentAction = actions;
 
         if (currentAction[CurrentActionIndex].Item2 == null || currentAction[CurrentActionIndex].Item2.Count == 0)

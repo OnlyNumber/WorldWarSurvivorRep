@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tester : MonoBehaviour
 {
 
-    public Grid grid;
+    public Grid<InventoryCell> grid;
+    public Grid<InventoryCell> grid1;
+
 
     public Vector2Int spawnPoint;
 
@@ -23,8 +22,6 @@ public class Tester : MonoBehaviour
     private void Start()
     {
         Create();
-
-        SpawnGridObject();
     }
 
     [ContextMenu("Create")]
@@ -33,11 +30,5 @@ public class Tester : MonoBehaviour
         grid.CreateGrid();
     }
 
-    [ContextMenu("SpawnGridObject")]
-    public void SpawnGridObject()
-    {
-        //currentGridObject = Instantiate(gridObectPrefab);
-        grid.SpawnGridObject(spawnPoint, gridObectPrefab);
-    }
 
 }

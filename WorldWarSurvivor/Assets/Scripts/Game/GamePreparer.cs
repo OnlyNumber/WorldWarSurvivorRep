@@ -5,7 +5,7 @@ using UnityEngine;
 //Task of this class start game. If i can t play game from start, that mean class doesn t work
 public class GamePreparer : MonoBehaviour
 {
-    public Grid grid;
+    public BoardGrid grid;
 
     public Vector2Int spawnPoint;
 
@@ -26,6 +26,7 @@ public class GamePreparer : MonoBehaviour
         grid.CreateGrid();
     }
 
+    [ContextMenu("CreateBand")]
     private void CreateBand()
     {
         grid.SpawnGridObject(spawnPoint, gridObectPrefab);
