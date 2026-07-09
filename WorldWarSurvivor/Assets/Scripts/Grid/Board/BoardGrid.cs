@@ -13,12 +13,12 @@ public class BoardGrid : Grid<BoardCell>
         return GetCell((int)coordinate.x, (int)coordinate.z);
     }
 
-    public void SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab)
+    public GridObject SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab)
     {
         var cell = (BoardCell)GetCell(coordinate);
 
         if (cell.gridObject != null)
-            return;
+            return null;
 
         var currentObject = Instantiate(gridObjectPrefab);
 
@@ -28,6 +28,8 @@ public class BoardGrid : Grid<BoardCell>
         currentObject.transform.position = cell.transform.position;
 
         currentObject.Initialize(this, cell);
+
+        return currentObject;
     }
 
     public void ChangeCellOfGridObject(BoardCell fromCell, BoardCell toCell)

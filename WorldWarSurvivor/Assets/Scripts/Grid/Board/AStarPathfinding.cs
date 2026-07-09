@@ -48,10 +48,7 @@ public static class AStarPathfinding
 
             List<PathCell> neighbours;
 
-            if (isTarget)
-                neighbours = GetNeighbourCells(searchingGrid, currentCell.Coordinate, allCreatedCells, notavailableCells, endPoint);
-            else
-                neighbours = GetNeighbourCells(searchingGrid, currentCell.Coordinate, allCreatedCells, notavailableCells, Vector2Int.one * -99);
+            neighbours = GetNeighbourCells(searchingGrid, currentCell.Coordinate, allCreatedCells, notavailableCells);
 
             foreach (var item in neighbours)
             {
@@ -74,7 +71,7 @@ public static class AStarPathfinding
         List<BoardCell> getCells = new();
         do
         {
-            getCells.Add((BoardCell)searchingGrid.GetCell(currentCell.Coordinate));
+            getCells.Add(searchingGrid.GetCell(currentCell.Coordinate));
             currentCell = currentCell.MyLastCell;
 
         } while (currentCell != null);
@@ -84,7 +81,7 @@ public static class AStarPathfinding
         return getCells;
     }
 
-    private static List<PathCell> GetNeighbourCells(BoardGrid searchingGrid, Vector2Int startPoint, PathCell[,] allCreatedCells, List<PathCell> notavailableCells, Vector2Int endPoint)
+    private static List<PathCell> GetNeighbourCells(BoardGrid searchingGrid, Vector2Int startPoint, PathCell[,] allCreatedCells, List<PathCell> notavailableCells)
     {
         List<PathCell> neighbourCells = new();
 
@@ -97,23 +94,11 @@ public static class AStarPathfinding
                 int checkX = startPoint.x + x;
                 int checkY = startPoint.y + y;
 
-                if (endPoint.x != checkX || endPoint.y != checkY)
-                {
-
-                    if (checkX < 0 || checkX >= searchingGrid.GridSize.x ||
-                         checkY < 0 || checkY >= searchingGrid.GridSize.y ||
-                         searchingGrid.GetCell(new Vector2Int(checkX, checkY)).IsObstacle)
-                        continue;
-                }
-                else
-                {
-                    Debug.Log(checkX + " " + checkY);
-                    Debug.Log(allCreatedCells[checkX, checkY].MyCell == null);
-                }
+                if (checkX < 0 || checkX >= searchingGrid.GridSize.x ||
+                     checkY < 0 || checkY >= searchingGrid.GridSize.y)
+                    continue;
 
                 neighbourCells.Add(allCreatedCells[checkX, checkY]);
-
-
             }
 
         return neighbourCells;

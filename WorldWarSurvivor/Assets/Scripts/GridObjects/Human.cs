@@ -77,7 +77,7 @@ public class Human : ActingObject
         actions = new()
         {
             (Move,AccessibleCellsForMove()),
-            (Attack,AccessibleCellsForAttack())
+            (Attack, Pizdez())
         };
 
         actionText = new()
@@ -87,6 +87,11 @@ public class Human : ActingObject
         };
     }
 
+    private HashSet<BoardCell> Pizdez()
+    {
+        Debug.Log(MyCurrentCell.Coordinate);
+        return currentWeapon.AccessibleCellsForAttack(myGrid, MyCurrentCell);
+    }
 
     #region Actions
 
@@ -102,45 +107,25 @@ public class Human : ActingObject
     {
         var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
         path.Remove(path[0]);
-        
-        CurrentAmountOfEnergy -= (path.Count - 1) * WalkCost;
 
-        foreach (var item in path)
-        {
-            Debug.Log("Coordinate " + item.Coordinate);
-        }
+        CurrentAmountOfEnergy -= (path.Count - 1) * WalkCost;
 
         myGrid.ChangeCellOfGridObject(MyCurrentCell, endPosition);
         StartCoroutine(MovingAnimation(path));
     }
 
-    // In future move this functional to the weapon
-    public HashSet<BoardCell> AccessibleCellsForAttack()
-    {
-        HashSet<BoardCell> targets = new();
-
-        foreach (var item in AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, false))
-        {
-            if (item.gridObject is Human)
-            {
-                targets.Add(item);
-            }
-        }
-
-        targets.Remove(MyCurrentCell);
-
-        return targets;
-    }
 
     public void Attack(BoardCell attackingCell)
     {
+        Debug.Log("Attack");
+
         CurrentAmountOfEnergy -= AttackCost;
 
         TurnController.AddMovingObject(this);
         humanAnimator.PlayAnimation(Animations.Attack);
 
         if (attackingCell.gridObject != null)
-            attackingCell.gridObject.HealthSystem.ChangeHealth(-currentWeapon.Damage);
+            currentWeapon.AttackCell(attackingCell);
     }
 
     private void EndAttack()

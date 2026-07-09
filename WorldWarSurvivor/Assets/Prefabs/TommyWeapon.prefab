@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
+  AttackRange: 2
+  AttackEnergyCost: 0
 --- !u!1001 &4269240120632760871
 PrefabInstance:
   m_ObjectHideFlags: 0

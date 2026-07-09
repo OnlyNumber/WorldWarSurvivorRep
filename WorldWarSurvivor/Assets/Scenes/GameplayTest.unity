@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917415c22db424247a295e0ad7033042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 0}
+  grid: {fileID: 5347924009230002571}
   <CurrentObject>k__BackingField: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: b0d95737f07e55b4b9186c8444c5f3b9, type: 2}
   passMaterial: {fileID: 2100000, guid: 036cd50b65c45fe43a2f9605b96f46f4, type: 2}
@@ -3195,8 +3195,6 @@ Transform:
   - {fileID: 4035444739596054656}
   - {fileID: 2116413704220175679}
   - {fileID: 8571172843093619964}
-  - {fileID: 4983333178905138335}
-  - {fileID: 4831501495425773203}
   - {fileID: 302623755626703902}
   - {fileID: 2991330043092030614}
   m_Father: {fileID: 0}
@@ -4231,22 +4229,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4605356881277337175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4983333178905138335}
-  m_Layer: 0
-  m_Name: ActionWindow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!224 &4617907483810225464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4468,22 +4450,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &4765183380515361490
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4831501495425773203}
-  m_Layer: 0
-  m_Name: InventoryWindow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &4766202889728034259
 Transform:
   m_ObjectHideFlags: 0
@@ -4590,21 +4556,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 0, z: 5}
   m_Center: {x: -2.5, y: -0.16157728, z: 2.5}
---- !u!4 &4831501495425773203
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4765183380515361490}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3399974509844511336}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4839151741895267313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4670,21 +4621,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4983333178905138335
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4605356881277337175}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3399974509844511336}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4985142098966726948
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4903,8 +4839,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryGrids:
-  - {fileID: 0}
-  currentEquipment: {fileID: 0}
+  - {fileID: 2118621095839965344}
+  currentEquipment: {fileID: 6262655963385207009}
   currentItem: {fileID: 0}
   markPrefab: {fileID: 1112468389279227217, guid: 9ee6333dd12903943bbf1a778ce7c8b5,
     type: 3}
@@ -5280,11 +5216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debd6c23bd0ebea4ca44392b50943189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 0}
-  spawnPoint: {x: 0, y: 0}
+  grid: {fileID: 5347924009230002571}
+  FriendSpawnPoint: {x: 0, y: 0}
+  EnemySpawnPoint: {x: 3, y: 2}
   gridObectPrefab: {fileID: 712181420705685888, guid: 16ed555b5d8deb84c87c9014d94d39a1,
     type: 3}
-  enemygridObectPrefab: {fileID: 712181420705685888, guid: 225164e0cbacf1e40b3d0c728e74ed32,
+  enemyGridObectPrefab: {fileID: 712181420705685888, guid: 225164e0cbacf1e40b3d0c728e74ed32,
     type: 3}
 --- !u!23 &5773593203670784167
 MeshRenderer:
