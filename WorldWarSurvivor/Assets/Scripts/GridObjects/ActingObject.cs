@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ActingObject : GridObject
 {
+
+    //TODO: LaterMoveToFactions;
+    public bool IsFriend;
+
     public int Initiative
     {
         get;

@@ -7,15 +7,20 @@ public class GamePreparer : MonoBehaviour
 {
     public BoardGrid grid;
 
-    public Vector2Int spawnPoint;
+    public Vector2Int FriendSpawnPoint;
+    public Vector2Int EnemySpawnPoint;
+
 
     public GridObject gridObectPrefab;
+    public GridObject enemyGridObectPrefab;
+
 
     private void Start()
     {
         Create();
 
         CreateBand();
+        CreateEnemyBand();
 
         StartCoroutine(Utilities.WaitAndRun(() => TurnController.SetNextTurn(), 0.2f));
     }
@@ -29,6 +34,12 @@ public class GamePreparer : MonoBehaviour
     [ContextMenu("CreateBand")]
     private void CreateBand()
     {
-        grid.SpawnGridObject(spawnPoint, gridObectPrefab);
+        TeamDefiner.CreateObject(grid, FriendSpawnPoint, gridObectPrefab);
+    }
+
+    [ContextMenu("CreateEnemyBand")]
+    private void CreateEnemyBand()
+    {
+        TeamDefiner.CreateObject(grid, EnemySpawnPoint, enemyGridObectPrefab);;
     }
 }

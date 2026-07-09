@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public static class TurnController
 
     public static bool IsNowAnimation => currentMovingObjects.Count > 0;
 
+    public static Action OnEndedAnimation;
+
     public static void AddMovingObject(ActingObject animatingObject)
     {
         currentMovingObjects.Add(animatingObject);
@@ -27,6 +30,11 @@ public static class TurnController
     public static void RemoveMovingObject(ActingObject animatingObject)
     {
         currentMovingObjects.Remove(animatingObject);
+
+        if(!IsNowAnimation)
+        {
+            OnEndedAnimation?.Invoke();
+        }
     }
 
     public static void AddActingObject(ActingObject animatingObject)
@@ -98,7 +106,14 @@ public static class TurnController
 
         obj.ActivateTurn();
 
-        CellSelecter.Instance.SetCurrentObject(obj);
+        CellSelecter.Instance.NoCurrentObject();
+
+        //Here will be choose who will control this object
+        if (obj.IsFriend)
+            CellSelecter.Instance.SetCurrentObject(obj);
+        else
+            EnemyController.Instance.SetCurrentObject(obj);
+        //RaidersAI.Insance.SetCurrentObject
 
     }
 }

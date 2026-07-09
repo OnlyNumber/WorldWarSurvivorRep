@@ -114,6 +114,11 @@ public class CellSelecter : MonoBehaviour
         ShowCell(CurrentObject);
     }
 
+    public void NoCurrentObject()
+    {
+        CurrentObject = null;
+    }
+
     public void CellSelectForAction()
     {
         if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || IsPointerOverUIElement())

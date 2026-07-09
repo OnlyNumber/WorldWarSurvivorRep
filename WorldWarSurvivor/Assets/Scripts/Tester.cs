@@ -3,31 +3,26 @@ using UnityEngine;
 public class Tester : MonoBehaviour
 {
 
-    public Grid<InventoryCell> grid;
-    public Grid<InventoryCell> grid1;
-
+    public BoardGrid grid;
 
     public Vector2Int spawnPoint;
 
     public Vector2Int endPoint;
 
-    public Material passMaterial;
-
-    public int steps = 3;
-
-    public GridObject gridObectPrefab;
-
-    public GridObject currentGridObject;
-
-    private void Start()
+    [ContextMenu("FindPath")]
+    public void FindPath()
     {
-        Create();
-    }
+        var path = AStarPathfinding.FindPath(grid, spawnPoint, endPoint, true);
 
-    [ContextMenu("Create")]
-    public void Create()
-    {
-        grid.CreateGrid();
+        if(path == null)
+        Debug.Log("what");
+
+        path.Remove(path[0]);
+
+        foreach (var item in path)
+        {
+            Debug.Log("Coordinate " + item.Coordinate);
+        }
     }
 
 
