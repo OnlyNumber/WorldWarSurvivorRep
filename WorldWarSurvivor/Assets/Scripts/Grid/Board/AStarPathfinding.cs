@@ -170,6 +170,7 @@ public static class AStarPathfinding
 
         do
         {
+
             if (availableCells.Count == 0)
             {
                 foreach (var item in accesibleCells)
@@ -177,14 +178,16 @@ public static class AStarPathfinding
 
                 accesibleCells.Clear();
                 currentStep++;
+
             }
 
             if (availableCells.Count == 0 && accesibleCells.Count == 0)
                 break;
 
-            currentCell = availableCells.Dequeue();
-            if (currentStep >= maxSteps)
+            if (currentStep > maxSteps)
                 break;
+
+            currentCell = availableCells.Dequeue();
             visitedCells.Add(currentCell);
 
             for (int x = -1; x <= 1; x++)
@@ -204,6 +207,7 @@ public static class AStarPathfinding
 
                     accesibleCells.Add(neighbourCell);
                 }
+
 
         } while (currentStep <= maxSteps);
 

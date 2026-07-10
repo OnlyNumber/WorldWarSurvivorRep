@@ -137,9 +137,15 @@ public class CellSelecter : MonoBehaviour
 
     }
 
+    public void ClearCurrentCells()
+    {
+        ClearAccessibleCells(CurrentActionIndex);
+    }
+
     private void ClearAccessibleCells(int index)
     {
-        if (currentAction[index].Item2 == null || currentAction[index].Item2.Count == 0)
+
+        if (currentAction == null || currentAction.Count == 0 || currentAction[index].Item2 == null || currentAction[index].Item2.Count == 0)
             return;
 
         foreach (var accessibleCell in currentAction[index].Item2)
