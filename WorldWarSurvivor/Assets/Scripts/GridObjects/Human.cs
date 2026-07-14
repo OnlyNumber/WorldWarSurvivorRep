@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Human : ActingObject
 {
@@ -17,8 +14,6 @@ public class Human : ActingObject
     public Weapon currentWeapon;
 
     public float speed;
-
-    public int maxSteps;
 
     [SerializeField] private HumanAnimator humanAnimator;
 
@@ -39,9 +34,6 @@ public class Human : ActingObject
 
         OnActivateTurn += () => CurrentAmountOfEnergy = MaxAmountOfEnergy;
     }
-
-
-
 
     public override void Initialize(BoardGrid grid, BoardCell cell)
     {
@@ -96,8 +88,12 @@ public class Human : ActingObject
 
     public HashSet<BoardCell> AccessibleCellsForMove()
     {
-        var cells = AStarPathfinding.FindPossiblePositions(myGrid, MyCurrentCell.Coordinate, maxSteps, true);
-        cells.Remove(MyCurrentCell);
+        HashSet<BoardCell> cells = new();
+
+        foreach (var item in AStarPathfinding.GetReachableTiles(MyCurrentCell.Coordinate, CurrentAmountOfEnergy, myGrid))
+        {
+            cells.Add(myGrid.GetCell(item));
+        }
 
         return cells;
     }

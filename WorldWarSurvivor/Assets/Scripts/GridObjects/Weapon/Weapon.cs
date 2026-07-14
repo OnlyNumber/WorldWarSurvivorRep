@@ -15,11 +15,11 @@ public class Weapon : MonoBehaviour
     {
         HashSet<BoardCell> targets = new();
 
-        foreach (var item in AStarPathfinding.FindPossiblePositions(boardGrid, boardCell.Coordinate, AttackRange, false))
+        foreach (var item in AStarPathfinding.GetReachableTiles(boardCell.Coordinate, AttackRange, boardGrid, false))
         {
-            if (item.gridObject is Human)
+            if (boardGrid.GetCell(item).gridObject is Human)
             {
-                targets.Add(item);
+                targets.Add(boardGrid.GetCell(item));
             }
         }
 
