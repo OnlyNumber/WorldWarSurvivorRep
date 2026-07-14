@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,11 +17,15 @@ public class InventoryItem : MonoBehaviour
 
     public Image ItemImage;
 
+    public Action<InventoryItem> OnPickUpAction;
+
+    public Action<InventoryItem> OnDropAction;
+
+    public Action<InventoryItem> OnMovingAction;
+
     private void Start()
     {
-        grabbingItem.OnPickUp += OnPickUp;
-        grabbingItem.OnDrop += OnDrop;
-
+        StartCoroutine(Utilities.WaitAndRun(Subscribe, 0.2f));
     }
 
     public void Initialize(InventoryItemInfo info)
@@ -31,13 +37,60 @@ public class InventoryItem : MonoBehaviour
         ItemImage.sprite = info.ItemSprite;
     }
 
-
-    private void OnDestroy()
+    private void Subscribe()
     {
-        grabbingItem.OnPickUp -= OnPickUp;
-        grabbingItem.OnDrop -= OnDrop;
+        OnPickUpAction += InventorySystem.Instance.PickUpItem;
+        OnDropAction += InventorySystem.Instance.DropItem;
 
+        grabbingItem.OnPickUp += OnPickUpActivation;
+        grabbingItem.OnDrop += OnDropActivation;
+        grabbingItem.OnMoving += OnMovingActivation;
     }
+
+    private void Unsubscribe()
+    {
+        OnPickUpAction -= InventorySystem.Instance.PickUpItem;
+        OnDropAction -= InventorySystem.Instance.DropItem;
+
+        grabbingItem.OnPickUp -= OnPickUpActivation;
+        grabbingItem.OnDrop -= OnDropActivation;
+        grabbingItem.OnMoving -= OnMovingActivation;
+    }
+
+    private void OnPickUpActivation()
+    {
+        OnPickUp(this);
+        OnPickUpAction?.Invoke(this);
+    }
+
+    private void OnDropActivation()
+    {
+        OnDrop(this);
+        OnDropAction?.Invoke(this);
+    }
+
+    private void OnMovingActivation()
+    {
+        RotateGraggbingObject();
+        OnMovingAction?.Invoke(this);
+    }
+
+    private void RotateGraggbingObject()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("RotateGraggbingObject");
+
+            if (info.direciton == Direciton.Right)
+                info.direciton = Direciton.Up;
+            else
+                info.direciton = Direciton.Right;
+
+            grabbingItem.Rotate(info.direciton);
+
+        }
+    }
+
 
     private void OnPickUp(InventoryItem item)
     {
@@ -103,6 +156,12 @@ public class InventoryItem : MonoBehaviour
         else
             grabbingItem.MyRectTransform.position = CellPosition + new Vector3(info.Size.y, -info.Size.x) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
 
+    }
+
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
     }
 
 }
