@@ -170,6 +170,7 @@ public static class AStarPathfinding
 
         do
         {
+
             if (availableCells.Count == 0)
             {
                 foreach (var item in accesibleCells)
@@ -177,14 +178,16 @@ public static class AStarPathfinding
 
                 accesibleCells.Clear();
                 currentStep++;
+
             }
 
             if (availableCells.Count == 0 && accesibleCells.Count == 0)
                 break;
 
-            currentCell = availableCells.Dequeue();
-            if (currentStep >= maxSteps)
+            if (currentStep > maxSteps)
                 break;
+
+            currentCell = availableCells.Dequeue();
             visitedCells.Add(currentCell);
 
             for (int x = -1; x <= 1; x++)
@@ -205,11 +208,105 @@ public static class AStarPathfinding
                     accesibleCells.Add(neighbourCell);
                 }
 
+
         } while (currentStep <= maxSteps);
 
         return visitedCells;
     }
 
+    private const int StraightCost = 10;
+    private const int DiagonalCost = 14;
+
+    /// <summary>
+    /// Повертає список координат, куди юнит може дійти.
+    /// </summary>
+    /// <param name="start">Стартова позиція юнита</param>
+    /// <param name="energy">Поточна кількість енергії</param>
+    /// <param name="grid">Хеш-таблиця з координатами перешкод</param>
+    public static List<Vector2Int> GetReachableTiles(Vector2Int start, int energy, BoardGrid grid, bool isWithObstacle = true)
+    {
+        // Словник для зберігання мінімальної енергії, витраченої на досягнення клітини
+        var costSoFar = new Dictionary<Vector2Int, int>();
+
+        // Використовуємо звичайний List замість PriorityQueue
+        var frontier = new List<Vector2Int>();
+
+        // Ініціалізація
+        frontier.Add(start);
+        costSoFar[start] = 0;
+
+        // 8 напрямків руху (4 прямих, 4 діагональних)
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            new Vector2Int(0, 1),   // Вгору
+            new Vector2Int(0, -1),  // Вниз
+            new Vector2Int(1, 0),   // Вправо
+            new Vector2Int(-1, 0),  // Вліво
+            new Vector2Int(1, 1),   // Вгору-вправо
+            new Vector2Int(-1, 1),  // Вгору-вліво
+            new Vector2Int(1, -1),  // Вниз-вправо
+            new Vector2Int(-1, -1)  // Вниз-вліво
+        };
+
+        while (frontier.Count > 0)
+        {
+            // Шукаємо елемент із найменшою накопиченою вартістю (імітація PriorityQueue)
+            int bestIndex = 0;
+            for (int i = 1; i < frontier.Count; i++)
+            {
+                if (costSoFar[frontier[i]] < costSoFar[frontier[bestIndex]])
+                {
+                    bestIndex = i;
+                }
+            }
+
+            // Забираємо цей елемент з "черги"
+            Vector2Int current = frontier[bestIndex];
+            frontier.RemoveAt(bestIndex);
+
+            int currentCost = costSoFar[current];
+
+            // Перевіряємо всі 8 напрямків навколо поточної клітини
+            foreach (var dir in directions)
+            {
+                Vector2Int next = current + dir; // В Unity структури Vector2Int можна додавати математично
+
+                // Якщо натрапили на перешкоду — ігноруємо клітину
+                if (grid.GetCell(next) == null || (grid.GetCell(next).IsObstacle && isWithObstacle))
+                    continue;
+
+                // Визначаємо вартість кроку (прямо чи навскіс)
+                bool isDiagonal = (dir.x != 0 && dir.y != 0);
+                int moveCost = isDiagonal ? DiagonalCost : StraightCost;
+
+                int newCost = currentCost + moveCost;
+
+                // Якщо енергії не вистачає, щоб наступити на цю клітину, пропускаємо
+                if (newCost > energy)
+                    continue;
+
+                // Якщо ми знайшли дешевший шлях до цієї клітини (або ще не відвідували її)
+                if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
+                {
+                    costSoFar[next] = newCost;
+
+                    // Додаємо в список для подальшої перевірки сусідів (якщо її там ще немає)
+                    if (!frontier.Contains(next))
+                    {
+                        frontier.Add(next);
+                    }
+                }
+            }
+        }
+
+        // Формуємо фінальний список доступних координат
+        var reachableTiles = new List<Vector2Int>(costSoFar.Keys);
+
+        // Видаляємо стартову клітину, бо юніт вже на ній стоїть
+        reachableTiles.Remove(start);
+
+        return reachableTiles;
+    }
 
 }
 

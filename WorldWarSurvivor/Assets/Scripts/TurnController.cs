@@ -100,6 +100,8 @@ public static class TurnController
 
     public static void SetNextTurn()
     {
+
+        CellSelecter.Instance.ClearCurrentCells();
         ActionWindow.Instance.ClearActionWindow();
 
         var obj = GetNextActingObject();

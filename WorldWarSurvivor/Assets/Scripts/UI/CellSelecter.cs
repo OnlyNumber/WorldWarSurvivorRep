@@ -83,7 +83,7 @@ public class CellSelecter : MonoBehaviour
 
     private void CellSelect()
     {
-        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || IsPointerOverUIElement())
+        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || UICheck.IsPointerOverUIElement())
             return;
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
@@ -121,7 +121,7 @@ public class CellSelecter : MonoBehaviour
 
     public void CellSelectForAction()
     {
-        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || IsPointerOverUIElement())
+        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || UICheck.IsPointerOverUIElement())
             return;
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
@@ -137,9 +137,15 @@ public class CellSelecter : MonoBehaviour
 
     }
 
+    public void ClearCurrentCells()
+    {
+        ClearAccessibleCells(CurrentActionIndex);
+    }
+
     private void ClearAccessibleCells(int index)
     {
-        if (currentAction[index].Item2 == null || currentAction[index].Item2.Count == 0)
+
+        if (currentAction == null || currentAction.Count == 0 || currentAction[index].Item2 == null || currentAction[index].Item2.Count == 0)
             return;
 
         foreach (var accessibleCell in currentAction[index].Item2)
@@ -173,36 +179,6 @@ public class CellSelecter : MonoBehaviour
             accessibleCell.GetComponentInChildren<MeshRenderer>().material = passMaterial;
         }
     }
-
-    #region Check UI
-    public bool IsPointerOverUIElement()
-    {
-        return IsPointerOverUIElement(GetEventSystemRaycastResults());
-    }
-
-    //Returns 'true' if we touched or hovering on Unity UI element.
-    private bool IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
-    {
-        for (int index = 0; index < eventSystemRaysastResults.Count; index++)
-        {
-            RaycastResult curRaysastResult = eventSystemRaysastResults[index];
-            if (curRaysastResult.gameObject.layer == (int)UILayer)
-                return true;
-        }
-        return false;
-    }
-
-    //Gets all event system raycast results of current mouse or touch position.
-    static List<RaycastResult> GetEventSystemRaycastResults()
-    {
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = Input.mousePosition;
-        List<RaycastResult> raysastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, raysastResults);
-        return raysastResults;
-    }
-
-    #endregion
 
 }
 public enum SelectRegime
