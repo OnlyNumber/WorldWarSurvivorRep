@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 8470979779769742608}
   - component: {fileID: 5084503622612210117}
   - component: {fileID: 2218517902055271739}
+  - component: {fileID: 2989337579173251822}
   m_Layer: 5
   m_Name: HumanButton
   m_TagString: Untagged
@@ -371,6 +372,21 @@ MonoBehaviour:
   HumanHealth: {fileID: 4186015956365346592}
   MeleeSkill: {fileID: 2300917428721334338}
   RangeSkill: {fileID: 7471976911124364597}
+  <GrabbingItem>k__BackingField: {fileID: 2989337579173251822}
+--- !u!114 &2989337579173251822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636263974260485963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18cd9990aecd8684c844fd289563635a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOffset: {x: 0, y: 0, z: 0}
+  MyRectTransform: {fileID: 1893253950996410013}
 --- !u!1 &4668497498254211382
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,12 +20,6 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
 
     public Action OnMoving;
 
-
-    private void Start()
-    {
-        MyRectTransform = GetComponent<RectTransform>();
-    }
-
     private void Update()
     {
         if (!TargetedObject)
@@ -72,6 +66,14 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
             MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
             mouseOffset = new Vector3(mouseOffset.y, -mouseOffset.x);
         }
+    }
+
+    private void OnDestroy()
+    {
+        OnPickUp = null;
+        OnDrop = null;
+        OnMoving = null;
+
     }
 }
 
