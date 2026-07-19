@@ -20,4 +20,9 @@ public static class SaveAndLoad
 
         return new();
     }
+    
+    public static void DeleteSave(string saveName)
+    {
+        PlayerPrefs.DeleteKey(saveName);
+    }
 }

@@ -159,7 +159,7 @@ public class ExpeditionControl : MonoBehaviour
 
     private void OpenInventory(HumanInventoryInfo HumanInventory)
     {
-        InventoryWindow.Instance.OpenWindow(HumanInventory);
+        InventoryWindow.Instance.OpenWindow(HumanInventory, BaseProgression.Instance.PlayerData.PlayerInventory);
     }
 
     #endregion

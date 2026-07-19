@@ -26,6 +26,8 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         SaveButton.onClick.AddListener(BaseProgression.Instance.SaveInfo);
+        ExitButton.onClick.AddListener(BaseProgression.Instance.DeleteInfo);
+
 
         CameraControl.MainCamera = MainMenuCamera;
         CameraControl.ChangeToCamera(MainMenuCamera);
@@ -43,6 +45,9 @@ public class MainMenu : MonoBehaviour
             return;
 
         var button = hit.collider.GetComponentInParent<MenuButton>();
+
+        if (button == null)
+            return;
 
         switch (button.Identifier)
         {

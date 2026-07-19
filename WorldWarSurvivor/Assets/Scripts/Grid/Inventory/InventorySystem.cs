@@ -46,7 +46,7 @@ public class InventorySystem : MonoBehaviour
         }
 
         Instance = this;
-        unitInventoryGrid.CreateGrid();
+        //unitInventoryGrid.CreateGrid();
     }
 
     private void Update()
@@ -57,29 +57,38 @@ public class InventorySystem : MonoBehaviour
         MarkPlacementPositions();
     }
 
-    public void OpenHumanInventory(HumanInventoryInfo humanInventoryInfo)
+    public void OpenHumanInventory(InventoryInfo humanInventoryInfo, InventoryInfo storageInventory = null)
     {
-        
-
-        foreach (var item in humanInventoryInfo.Items)
+        if (humanInventoryInfo != null)
         {
-            if (!item.IsItemExist)
-                continue;
-
-            var emptyItem = SpawnItem(item);
-
-            emptyItem.SetPositionReferencedByCell(unitInventoryGrid.GetCell(item.FirstCellPosition).MyRectTransform.position);
-            unitInventoryGrid.TyrPlaceItem(emptyItem, emptyItem.grabbingItem.MyRectTransform.position);
+            CreateGrid(unitInventoryGrid, humanInventoryInfo);
+            SpawnItems(unitInventoryGrid, humanInventoryInfo.Items);
         }
 
-        void CreateGrid(InventoryGrid inventoryGrid, HumanInventoryInfo humanInventoryInfo)
+        if (storageInventory != null)
         {
-            //inventoryGrid.CreateGrid();
+            CreateGrid(storageInventoryGrid, storageInventory);
+            SpawnItems(storageInventoryGrid, storageInventory.Items);
         }
 
-        void SpawnItems()
+
+        void CreateGrid(InventoryGrid inventoryGrid, InventoryInfo humanInventoryInfo)
         {
-            
+            inventoryGrid.CreateGrid(humanInventoryInfo.Size.x, humanInventoryInfo.Size.y);
+        }
+
+        void SpawnItems(InventoryGrid inventoryGrid, List<InventoryItemInfo> spawnItems)
+        {
+            foreach (var item in spawnItems)
+            {
+                if (!item.IsItemExist)
+                    continue;
+
+                var emptyItem = SpawnItem(item);
+
+                emptyItem.SetPositionReferencedByCell(inventoryGrid.GetCell(item.FirstCellPosition).MyRectTransform.position);
+                inventoryGrid.TyrPlaceItem(emptyItem, emptyItem.grabbingItem.MyRectTransform.position);
+            }
         }
     }
 
@@ -121,6 +130,9 @@ public class InventorySystem : MonoBehaviour
 
     public List<InventoryItemInfo> GetCurrentUnitItems() => unitInventoryGrid.GetItemsInfo();
     public EquipmentInfo GetCurrentUnitEquipmentItems() => currentEquipment.GetItems();
+
+    public List<InventoryItemInfo> GetCurrentStorageItems() => storageInventoryGrid.GetItemsInfo();
+
 
     public void PickUpItem(InventoryItem inventoryItem)
     {

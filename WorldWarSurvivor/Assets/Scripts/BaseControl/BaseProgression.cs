@@ -50,4 +50,9 @@ public class BaseProgression : MonoBehaviour
     {
         SaveAndLoad.Save(PlayerSavePath, PlayerData);
     }
+
+    public void DeleteInfo()
+    {
+        SaveAndLoad.DeleteSave(PlayerSavePath);
+    }
 }

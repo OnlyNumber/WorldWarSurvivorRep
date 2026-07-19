@@ -15,7 +15,7 @@ public class InventoryWindow : MonoBehaviour
 
     private HumanInventoryInfo CurrentHuman;
 
-    private InventoryInfo CurrentStorageWindow;
+    private InventoryInfo CurrentStorage;
 
 
     private void Start()
@@ -34,7 +34,9 @@ public class InventoryWindow : MonoBehaviour
     {
         CurrentHuman = humanInventory;
 
-        InventorySystem.Instance.OpenHumanInventory(CurrentHuman);
+        CurrentStorage = StorageInventory;
+
+        InventorySystem.Instance.OpenHumanInventory(CurrentHuman, StorageInventory);
         InventorySystem.Instance.currentEquipment.InitializeItems(CurrentHuman.EquipmentInfo);
         window.gameObject.SetActive(true);
     }
@@ -43,11 +45,16 @@ public class InventoryWindow : MonoBehaviour
     {
         CurrentHuman.Items = InventorySystem.Instance.GetCurrentUnitItems();
         CurrentHuman.EquipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
+
+        if (CurrentStorage != null)
+            CurrentStorage.Items = InventorySystem.Instance.GetCurrentStorageItems();
+
         InventorySystem.Instance.ClearGrids();
         InventorySystem.Instance.ClearEquipment();
 
 
         CurrentHuman = null;
+        CurrentStorage = null;
         window.gameObject.SetActive(false);
     }
 }

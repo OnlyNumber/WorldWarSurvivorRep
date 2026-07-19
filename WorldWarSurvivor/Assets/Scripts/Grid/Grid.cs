@@ -2,19 +2,26 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class Grid <T> : MonoBehaviour where T : Cell
+public class Grid<T> : MonoBehaviour where T : Cell
 {
     [SerializeField] protected float CellSquareSize = 1;
 
     [SerializeField]
     protected T cellPrefab;
-    
+
     public Vector2Int GridSize;
 
     protected List<T> currentCells = new();
 
-    public virtual void CreateGrid()
+    public virtual void CreateGrid(int sizeX = 1, int sizeY = 1)
     {
+        if (sizeX <= 0 || sizeY <= 0)
+            return;
+
+        GridSize.x = sizeX;
+        GridSize.y = sizeY;
+
+
         Vector3 offset = Vector3.one * CellSquareSize / 2;
 
         for (int y = 0; y < GridSize.y; y++)

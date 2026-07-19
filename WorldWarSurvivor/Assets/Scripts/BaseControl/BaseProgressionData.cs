@@ -1,14 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class BaseProgressionData
 {
     public List<HumanStats> Roster = new();
 
     public List<HumanStats> CurrentCommand = new();
 
-    public InventoryInfo PlayerInventory;
+    public InventoryInfo PlayerInventory = new();
 
-    public Vector2 InventorySize;
+    public BaseProgressionData()
+    {
+        PlayerInventory.Size.x = 10;
+        PlayerInventory.Size.y = 20;
+
+
+    }
 }

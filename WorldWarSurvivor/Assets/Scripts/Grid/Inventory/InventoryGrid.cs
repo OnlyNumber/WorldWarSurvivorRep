@@ -9,8 +9,14 @@ public class InventoryGrid : Grid<InventoryCell>
 
     public RectTransform rectTransform;
 
-    public override void CreateGrid()
+    public override void CreateGrid(int sizeX = 1, int sizeY = 1)
     {
+        if (sizeX <= 0 || sizeY <= 0)
+            return;
+
+        GridSize.x = sizeX;
+        GridSize.y = sizeY;
+
         Vector2 offset = Vector3.one * CellSquareSize / 2;
         offset.y -= CellSquareSize;
 
@@ -103,11 +109,14 @@ public class InventoryGrid : Grid<InventoryCell>
 
     public void ClearGrid()
     {
+        if (currentCells.Count == 0)
+            return;
+
         foreach (var item in InventoryItems)
             Destroy(item.gameObject);
 
         InventoryItems.Clear();
-        
+
         for (int x = 0; x < GridSize.x; x++)
             for (int y = 0; y < GridSize.y; y++)
                 GetCell(x, y).IsOccupied = false;
@@ -116,7 +125,6 @@ public class InventoryGrid : Grid<InventoryCell>
 
     public void ClearCells()
     {
-        
         for (int i = 0; i < currentCells.Count; i++)
         {
             Destroy(currentCells[i].gameObject);

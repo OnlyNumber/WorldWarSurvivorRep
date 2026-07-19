@@ -19,4 +19,10 @@ public class HumanStats
 
     public HumanInventoryInfo HumanInventoryInfo = new();
 
+    public HumanStats()
+    {
+        HumanInventoryInfo.Size.x = 8;
+        HumanInventoryInfo.Size.y = 6;
+    }
+
 }
