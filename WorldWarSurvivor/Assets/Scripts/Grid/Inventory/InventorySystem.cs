@@ -9,9 +9,10 @@ public class InventorySystem : MonoBehaviour
 
     #region Containers
 
-    public List<InventoryGrid> inventoryGrids = new();
+    //public List<InventoryGrid> inventoryGrids = new();
     public EquipmentController currentEquipment;
-    private InventoryGrid _unitInventoryGrid;
+    [SerializeField] private InventoryGrid unitInventoryGrid;
+    [SerializeField] private InventoryGrid storageInventoryGrid;
 
     #endregion
 
@@ -45,8 +46,7 @@ public class InventorySystem : MonoBehaviour
         }
 
         Instance = this;
-        _unitInventoryGrid = inventoryGrids[0];
-        _unitInventoryGrid.CreateGrid();
+        unitInventoryGrid.CreateGrid();
     }
 
     private void Update()
@@ -57,17 +57,29 @@ public class InventorySystem : MonoBehaviour
         MarkPlacementPositions();
     }
 
-    public void SpawnUnitItems(List<InventoryItemInfo> unitItems)
+    public void OpenHumanInventory(HumanInventoryInfo humanInventoryInfo)
     {
-        foreach (var item in unitItems)
+        
+
+        foreach (var item in humanInventoryInfo.Items)
         {
             if (!item.IsItemExist)
                 continue;
 
             var emptyItem = SpawnItem(item);
 
-            emptyItem.SetPositionReferencedByCell(_unitInventoryGrid.GetCell(item.FirstCellPosition).MyRectTransform.position);
-            _unitInventoryGrid.TyrPlaceItem(emptyItem, emptyItem.grabbingItem.MyRectTransform.position);
+            emptyItem.SetPositionReferencedByCell(unitInventoryGrid.GetCell(item.FirstCellPosition).MyRectTransform.position);
+            unitInventoryGrid.TyrPlaceItem(emptyItem, emptyItem.grabbingItem.MyRectTransform.position);
+        }
+
+        void CreateGrid(InventoryGrid inventoryGrid, HumanInventoryInfo humanInventoryInfo)
+        {
+            //inventoryGrid.CreateGrid();
+        }
+
+        void SpawnItems()
+        {
+            
         }
     }
 
@@ -89,8 +101,17 @@ public class InventorySystem : MonoBehaviour
 
     public void ClearGrids()
     {
+        List<InventoryGrid> inventoryGrids = new();
+
+        inventoryGrids.Add(unitInventoryGrid);
+        inventoryGrids.Add(storageInventoryGrid);
+
+
         foreach (var item in inventoryGrids)
             item.ClearGrid();
+
+        foreach (var item in inventoryGrids)
+            item.ClearCells();
     }
 
     public void ClearEquipment()
@@ -98,7 +119,7 @@ public class InventorySystem : MonoBehaviour
         currentEquipment.ClearEquipment();
     }
 
-    public List<InventoryItemInfo> GetCurrentUnitItems() => _unitInventoryGrid.GetItemsInfo();
+    public List<InventoryItemInfo> GetCurrentUnitItems() => unitInventoryGrid.GetItemsInfo();
     public EquipmentInfo GetCurrentUnitEquipmentItems() => currentEquipment.GetItems();
 
     public void PickUpItem(InventoryItem inventoryItem)
@@ -109,6 +130,11 @@ public class InventorySystem : MonoBehaviour
         _lastGrid = null;
 
         CreateMarkingCells();
+
+        List<InventoryGrid> inventoryGrids = new();
+
+        inventoryGrids.Add(unitInventoryGrid);
+        inventoryGrids.Add(storageInventoryGrid);
 
         foreach (var item in inventoryGrids)
         {
@@ -129,6 +155,10 @@ public class InventorySystem : MonoBehaviour
     public void DropItem(InventoryItem inventoryItem)
     {
         InventoryGrid gridForPlace = null;
+        List<InventoryGrid> inventoryGrids = new();
+
+        inventoryGrids.Add(unitInventoryGrid);
+        inventoryGrids.Add(storageInventoryGrid);
 
         foreach (var item in inventoryGrids)
         {
@@ -207,6 +237,10 @@ public class InventorySystem : MonoBehaviour
     public InventoryCell CheckPlacementPosition(Vector2 positionOfCheck)
     {
         InventoryGrid gridForPlace = null;
+        List<InventoryGrid> inventoryGrids = new();
+
+        inventoryGrids.Add(unitInventoryGrid);
+        inventoryGrids.Add(storageInventoryGrid);
 
         foreach (var item in inventoryGrids)
         {

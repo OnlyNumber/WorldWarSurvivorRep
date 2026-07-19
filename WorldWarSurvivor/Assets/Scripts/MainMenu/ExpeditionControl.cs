@@ -67,31 +67,23 @@ public class ExpeditionControl : MonoBehaviour
 
     public void Initialize()
     {
-        for (int i = 0; i < BaseProgression.Instance.Rostert.Count; i++)
+        for (int i = 0; i < BaseProgression.Instance.PlayerData.Roster.Count; i++)
         {
-            var generatedHuman = BaseProgression.Instance.Rostert[i];
-
-            var humanUI = Instantiate(HumanUIPrefab, RosterLists);
-
-            humanUI.CurrentLevel.text = generatedHuman.CurrentLevel.ToString();
-            humanUI.HumanHealth.text = generatedHuman.HumanHealth.ToString();
-
-            humanUI.MeleeSkill.text = generatedHuman.MeleeSkill.ToString();
-            humanUI.RangeSkill.text = generatedHuman.RangeSkill.ToString();
-
-
-            humanUI.GrabbingItem.OnPickUp += () => TakeItem(generatedHuman);
-
-            humanUI.GrabbingItem.OnDrop += () => TryAddHumanToCommand(generatedHuman, humanUI, GetPosition());
-
-            AllHumansUI.Add(generatedHuman, humanUI);
+            HumanStats generatedHuman = BaseProgression.Instance.PlayerData.Roster[i];
+            AllHumansUI.Add(generatedHuman, CreatePrefab(generatedHuman, RosterLists));
         }
 
-        for (int i = 0; i < BaseProgression.Instance.CurrentCommand.Count; i++)
+        for (int i = 0; i < BaseProgression.Instance.PlayerData.CurrentCommand.Count; i++)
         {
-            var generatedHuman = BaseProgression.Instance.CurrentCommand[i];
+            HumanStats generatedHuman = BaseProgression.Instance.PlayerData.CurrentCommand[i];
+            AllHumansUI.Add(generatedHuman, CreatePrefab(generatedHuman, CommandLists));
+        }
 
-            var humanUI = Instantiate(HumanUIPrefab, CommandLists);
+        HumanUIButton CreatePrefab(HumanStats generatedHuman, Transform parent)
+        {
+            HumanUIButton humanUI = Instantiate(HumanUIPrefab, parent);
+
+            humanUI.HumanImageButton.onClick.AddListener(() => OpenInventory(generatedHuman.HumanInventoryInfo));
 
             humanUI.CurrentLevel.text = generatedHuman.CurrentLevel.ToString();
             humanUI.HumanHealth.text = generatedHuman.HumanHealth.ToString();
@@ -103,12 +95,12 @@ public class ExpeditionControl : MonoBehaviour
 
             humanUI.GrabbingItem.OnDrop += () => TryAddHumanToCommand(generatedHuman, humanUI, GetPosition());
 
-
-            AllHumansUI.Add(generatedHuman, humanUI);
+            return humanUI;
         }
 
     }
 
+    #region Moving Human Button
     private Vector2 GetPosition()
     {
         return Input.mousePosition;
@@ -120,24 +112,24 @@ public class ExpeditionControl : MonoBehaviour
 
         humanUI.transform.SetParent(TransferParent);
 
-        if (BaseProgression.Instance.Rostert.Contains(stats))
+        if (BaseProgression.Instance.PlayerData.Roster.Contains(stats))
         {
-            _lastProgressionList = BaseProgression.Instance.Rostert;
-            BaseProgression.Instance.Rostert.Remove(stats);
+            _lastProgressionList = BaseProgression.Instance.PlayerData.Roster;
+            BaseProgression.Instance.PlayerData.Roster.Remove(stats);
         }
         else
         {
-            _lastProgressionList = BaseProgression.Instance.CurrentCommand;
-            BaseProgression.Instance.CurrentCommand.Remove(stats);
+            _lastProgressionList = BaseProgression.Instance.PlayerData.CurrentCommand;
+            BaseProgression.Instance.PlayerData.CurrentCommand.Remove(stats);
         }
     }
 
     private void TryAddHumanToCommand(HumanStats stats, HumanUIButton humanUI, Vector2 position)
     {
         if (UtilitiesUI.IsInsideOfSquareImage(CommandLists.position, CommandLists.rect, position))
-            SetHumanUI(BaseProgression.Instance.CurrentCommand, CommandLists);
+            SetHumanUI(BaseProgression.Instance.PlayerData.CurrentCommand, CommandLists);
         else if (UtilitiesUI.IsInsideOfSquareImage(RosterLists.position, RosterLists.rect, position))
-            SetHumanUI(BaseProgression.Instance.Rostert, RosterLists);
+            SetHumanUI(BaseProgression.Instance.PlayerData.Roster, RosterLists);
         else
             SetHumanUI(_lastProgressionList, _lastTransformList);
 
@@ -151,7 +143,8 @@ public class ExpeditionControl : MonoBehaviour
             LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
         }
     }
-
+    #endregion
+    
     private void ClearWindow()
     {
         foreach (var item in AllHumansUI)
@@ -162,4 +155,12 @@ public class ExpeditionControl : MonoBehaviour
         AllHumansUI.Clear();
     }
 
+    #region Inventory Activation
+
+    private void OpenInventory(HumanInventoryInfo HumanInventory)
+    {
+        InventoryWindow.Instance.OpenWindow(HumanInventory);
+    }
+
+    #endregion
 }

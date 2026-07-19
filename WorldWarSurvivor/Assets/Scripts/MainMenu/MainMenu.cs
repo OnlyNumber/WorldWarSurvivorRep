@@ -7,6 +7,9 @@ public class MainMenu : MonoBehaviour
 {
     public Button PlayButton;
 
+    public Button SaveButton;
+
+
     public Button ExitButton;
 
     public Camera MainMenuCamera;
@@ -22,6 +25,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        SaveButton.onClick.AddListener(BaseProgression.Instance.SaveInfo);
 
         CameraControl.MainCamera = MainMenuCamera;
         CameraControl.ChangeToCamera(MainMenuCamera);

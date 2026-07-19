@@ -21,9 +21,11 @@ public class Human : ActingObject
 
     private int CurrentAmountOfEnergy;
 
-    [SerializeField] public List<InventoryItemInfo> items = new();
+    public HumanInventoryInfo HumanInventory;
 
-    [SerializeField] public EquipmentInfo equipmentInfo;
+    //[SerializeField] public List<InventoryItemInfo> Items = new();
+
+    //[SerializeField] public EquipmentInfo EquipmentInfo;
 
 
     private void Start()

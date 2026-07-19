@@ -68,7 +68,7 @@ public class RecruitControl : MonoBehaviour
     {
         if (UtilitiesUI.IsInsideOfSquareImage(PurchaseButton.position, PurchaseButton.rect, position))
         {
-            BaseProgression.Instance.Rostert.Add(stats);
+            BaseProgression.Instance.PlayerData.Roster.Add(stats);
             Destroy(humanUI.gameObject);
         }
         else

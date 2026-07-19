@@ -6,15 +6,19 @@ using UnityEngine;
 
 public class BaseProgression : MonoBehaviour
 {
-    public static BaseProgression  Instance;
+    public const string PlayerSavePath = "PlayerData";
 
-    public List<HumanStats> Rostert = new();
+    public static BaseProgression Instance;
 
-    public List<HumanStats> CurrentCommand = new();
-    
+    public BaseProgressionData PlayerData;
+
+    //public List<HumanStats> Rostert = new();
+
+    //public List<HumanStats> CurrentCommand = new();
+
     public int CurrentCommandPrice;
 
-    [field: SerializeField] 
+    [field: SerializeField]
     public int MaxCommandPrice
     {
         get;
@@ -24,7 +28,7 @@ public class BaseProgression : MonoBehaviour
 
     private void Start()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
@@ -39,6 +43,11 @@ public class BaseProgression : MonoBehaviour
 
     private void LoadInfo()
     {
+        PlayerData = SaveAndLoad.Load<BaseProgressionData>(PlayerSavePath);
+    }
 
+    public void SaveInfo()
+    {
+        SaveAndLoad.Save(PlayerSavePath, PlayerData);
     }
 }

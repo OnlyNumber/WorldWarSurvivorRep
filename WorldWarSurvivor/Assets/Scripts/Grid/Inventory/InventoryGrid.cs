@@ -114,6 +114,17 @@ public class InventoryGrid : Grid<InventoryCell>
 
     }
 
+    public void ClearCells()
+    {
+        
+        for (int i = 0; i < currentCells.Count; i++)
+        {
+            Destroy(currentCells[i].gameObject);
+        }
+
+        currentCells.Clear();
+    }
+
     public List<InventoryItemInfo> GetItemsInfo()
     {
         List<InventoryItemInfo> inventoryItemInfos = new();

@@ -17,8 +17,6 @@ public class HumanStats
 
     public GameObject ModelPrefab;
 
-    public List<InventoryItemInfo> items = new();
-
-    public EquipmentInfo equipmentInfo;
+    public HumanInventoryInfo HumanInventoryInfo = new();
 
 }
