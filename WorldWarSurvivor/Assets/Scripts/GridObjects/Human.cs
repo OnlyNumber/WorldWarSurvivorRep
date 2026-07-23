@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Human : ActingObject
 {
+    public BoardCell MyCurrentCell;
+
     private const float DistanceBetweenPoints = 0.1f;
 
     private const int WalkCost = 10;
@@ -21,9 +23,11 @@ public class Human : ActingObject
 
     private int CurrentAmountOfEnergy;
 
-    [SerializeField] public List<InventoryItemInfo> items = new();
+    public HumanStats HumanStats;
 
-    [SerializeField] public EquipmentInfo equipmentInfo;
+    //[SerializeField] public List<InventoryItemInfo> Items = new();
+
+    //[SerializeField] public EquipmentInfo EquipmentInfo;
 
 
     private void Start()
@@ -104,8 +108,7 @@ public class Human : ActingObject
         path.Remove(path[0]);
 
         CurrentAmountOfEnergy -= path.Count * WalkCost;
-
-        myGrid.ChangeCellOfGridObject(MyCurrentCell, endPosition);
+        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition);
         StartCoroutine(MovingAnimation(path));
     }
 
@@ -178,5 +181,23 @@ public class Human : ActingObject
     {
         if (HealthSystem.CurrentHealth <= 0)
             Dispose();
+    }
+
+    public override void RemoveMyselfFromBoard()
+    {
+        MyCurrentCell.IsObstacle = false;
+        MyCurrentCell.gridObject = null;
+    }
+
+    public override bool SetCurrentCells(BoardCell cell)
+    {
+        if (cell == null)
+            return false;
+
+        MyCurrentCell = cell;
+        cell.IsObstacle = true;
+        transform.position = cell.transform.position;
+
+        return true;
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG;
+using DG.Tweening;
 
 public class CellSelecter : MonoBehaviour
 {
@@ -32,14 +34,16 @@ public class CellSelecter : MonoBehaviour
 
     public static CellSelecter Instance;
 
-    private LayerMask UILayer;
-
-    private SelectRegime selectRegime;
-
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material passMaterial;
 
     public Action OnChangingAction;
+
+    [SerializeField]
+    private GameObject currentTargetIndicatorPrefab;
+
+    private GameObject _currentIndicator;
+    Sequence currentSequence;
 
     private void Start()
     {
@@ -50,9 +54,18 @@ public class CellSelecter : MonoBehaviour
         }
 
         Instance = this;
-        UILayer = LayerMask.NameToLayer("UI");
 
         OnChangingAction += MarkAccesibleCells;
+
+        _currentIndicator = Instantiate(currentTargetIndicatorPrefab);
+        _currentIndicator.SetActive(false);
+
+        currentSequence = DOTween.Sequence();
+
+        currentSequence
+        .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y + 0.5f, 0.5f))
+        .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y - 0.5f, 0.5f))
+        .SetLoops(-1, LoopType.Restart);
     }
 
     private void Update()
@@ -111,11 +124,33 @@ public class CellSelecter : MonoBehaviour
     public void SetCurrentObject(GridObject gridObject)
     {
         CurrentObject = gridObject;
+
+
+        _currentIndicator.SetActive(true);
+        _currentIndicator.transform.parent = CurrentObject.transform;
+        _currentIndicator.transform.localPosition = new Vector3(0, 2f, 0);
+
+        currentSequence = DOTween.Sequence();
+
+        float up = _currentIndicator.transform.localPosition.y + 0.3f;
+        float down = _currentIndicator.transform.localPosition.y;
+
+
+        currentSequence
+        .SetLoops(-1, LoopType.Restart)
+        .Append(_currentIndicator.transform.DOLocalMoveY(up, 1f).SetEase(Ease.Linear))
+        .Append(_currentIndicator.transform.DOLocalMoveY(down, 1f).SetEase(Ease.Linear))
+        ;
+        //.Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y, 0.5f))
+
         ShowCell(CurrentObject);
     }
 
     public void NoCurrentObject()
     {
+        currentSequence.Kill();
+
+        _currentIndicator.SetActive(false);
         CurrentObject = null;
     }
 

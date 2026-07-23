@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info:
     inventoryItemSO: {fileID: 0}
-    position: {x: 0, y: 0}
+    FirstCellPosition: {x: 0, y: 0}
     direciton: 1
   grabbingItem: {fileID: 2852072817185343893}
   Background: {fileID: 7275735477423715183}
@@ -70,9 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cd9990aecd8684c844fd289563635a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetedObject: 0
   mouseOffset: {x: 0, y: 0, z: 0}
-  MyRectTransform: {fileID: 0}
+  MyRectTransform: {fileID: 1027598513062189993}
 --- !u!1 &6122801180244989867
 GameObject:
   m_ObjectHideFlags: 0

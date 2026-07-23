@@ -13,6 +13,11 @@ public class InventoryWindow : MonoBehaviour
 
     public RectTransform ItemsTransform;
 
+    private HumanInventoryInfo CurrentHuman;
+
+    private InventoryInfo CurrentStorage;
+
+
     private void Start()
     {
         if (Instance != null)
@@ -25,20 +30,34 @@ public class InventoryWindow : MonoBehaviour
         CloseButton.onClick.AddListener(CloseWindow);
     }
 
-    public void OpenWindow()
+    public void OpenWindow(HumanInventoryInfo humanInventory, InventoryInfo StorageInventory = null)
     {
-        InventorySystem.Instance.SpawnUnitItems((CellSelecter.Instance.CurrentObject as Human).items);
-        InventorySystem.Instance.currentEquipment.InitializeItems((CellSelecter.Instance.CurrentObject as Human).equipmentInfo);
+        CurrentHuman = humanInventory;
+
+        CurrentStorage = StorageInventory;
+
+        InventorySystem.Instance.OpenHumanInventory(CurrentHuman, StorageInventory);
+        InventorySystem.Instance.currentEquipment.InitializeItems(CurrentHuman.EquipmentInfo);
         window.gameObject.SetActive(true);
     }
 
     public void CloseWindow()
     {
-        (CellSelecter.Instance.CurrentObject as Human).items = InventorySystem.Instance.GetCurrentUnitItems();
-        (CellSelecter.Instance.CurrentObject as Human).equipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
+        if (CurrentHuman != null)
+        {
+            CurrentHuman.Items = InventorySystem.Instance.GetCurrentUnitItems();
+            CurrentHuman.EquipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
+        }
+
+        if (CurrentStorage != null)
+            CurrentStorage.Items = InventorySystem.Instance.GetCurrentStorageItems();
+
         InventorySystem.Instance.ClearGrids();
         InventorySystem.Instance.ClearEquipment();
 
+
+        CurrentHuman = null;
+        CurrentStorage = null;
         window.gameObject.SetActive(false);
     }
 }

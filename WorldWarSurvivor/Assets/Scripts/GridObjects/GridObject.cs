@@ -2,24 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridObject : MonoBehaviour
+public abstract class GridObject : MonoBehaviour
 {
-    public BoardCell MyCurrentCell;
+    //public BoardCell MyCurrentCell;
 
     protected BoardGrid myGrid;
 
     public HealthSystem HealthSystem = new();
 
-    [field: SerializeField]
-    public bool IsObstacle
-    {
-        private set;
-        get;
-    }
-
     public virtual void Initialize(BoardGrid grid, BoardCell cell)
     {
-        MyCurrentCell = cell;
+        //MyCurrentCell = cell;
         myGrid = grid;
 
     }
@@ -39,4 +32,8 @@ public class GridObject : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public abstract bool SetCurrentCells(BoardCell cell);
+
+    public abstract void RemoveMyselfFromBoard();
 }

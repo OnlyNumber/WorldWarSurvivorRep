@@ -5,29 +5,32 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    private const int GameplayTestSceneIndex = 1;
-
     public Button PlayButton;
+
+    public Button SaveButton;
+
 
     public Button ExitButton;
 
-    public GameObject MainMenuCamera;
+    public Camera MainMenuCamera;
 
     [Space(5)]
 
     [Header("Recruit")]
 
-    public GameObject RecruitCamera;
-
     public RecruitControl RecruitControl;
+
+    public ExpeditionControl ExpeditionControl;
 
 
     private void Start()
     {
+        SaveButton.onClick.AddListener(BaseProgression.Instance.SaveInfo);
+        ExitButton.onClick.AddListener(BaseProgression.Instance.DeleteInfo);
 
-        PlayButton.onClick.AddListener(LoadGameplayTest);
 
-        ExitButton.onClick.AddListener(ExitGame);
+        CameraControl.MainCamera = MainMenuCamera;
+        CameraControl.ChangeToCamera(MainMenuCamera);
     }
 
     private void Update()
@@ -42,6 +45,9 @@ public class MainMenu : MonoBehaviour
             return;
 
         var button = hit.collider.GetComponentInParent<MenuButton>();
+
+        if (button == null)
+            return;
 
         switch (button.Identifier)
         {
@@ -65,7 +71,9 @@ public class MainMenu : MonoBehaviour
 
     private void OpenStartExpedition()
     {
-        Debug.Log("OpenStartExpedition");
+        CameraControl.ChangeToCamera(ExpeditionControl.ExpeditionCamera);
+
+        ExpeditionControl.OpenExpedition();
     }
 
     private void OpenCrafting()
@@ -76,9 +84,8 @@ public class MainMenu : MonoBehaviour
 
     private void OpenRecruit()
     {
-        MainMenuCamera.SetActive(false);
-        RecruitCamera.SetActive(true);
-        
+        CameraControl.ChangeToCamera(RecruitControl.RecruitCamera);
+
         RecruitControl.OpenRecruits();
 
     }
@@ -87,11 +94,6 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("OpenExit");
 
-    }
-
-    private void LoadGameplayTest()
-    {
-        SceneManager.LoadScene(GameplayTestSceneIndex);
     }
 
     private void ExitGame()

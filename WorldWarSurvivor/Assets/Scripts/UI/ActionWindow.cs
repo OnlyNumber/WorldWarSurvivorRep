@@ -99,6 +99,6 @@ public class ActionWindow : MonoBehaviour
 
     public void OpenInventory()
     {
-        inventoryWindow.OpenWindow();
+        inventoryWindow.OpenWindow((CellSelecter.Instance.CurrentObject as Human).HumanStats.HumanInventoryInfo);
     }
 }

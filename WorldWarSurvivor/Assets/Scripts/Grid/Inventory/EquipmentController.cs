@@ -39,7 +39,7 @@ public class EquipmentController : MonoBehaviour
                 continue;
 
             Vector3 min = new Vector3(slot.rectTransform.position.x - slot.SlotSize.x / 2, slot.rectTransform.position.y - slot.SlotSize.y / 2);
-            Vector3 max = new Vector3(slot.rectTransform.position.x + slot.SlotSize.x / 2, slot.rectTransform.position.y + slot.SlotSize.y / 2); ;
+            Vector3 max = new Vector3(slot.rectTransform.position.x + slot.SlotSize.x / 2, slot.rectTransform.position.y + slot.SlotSize.y / 2);
 
             if (position.x > min.x && position.x <= max.x && position.y > min.y && position.y <= max.y)
             {

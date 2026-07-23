@@ -2,21 +2,29 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class Grid <T> : MonoBehaviour where T : Cell
+public class Grid<T> : MonoBehaviour where T : Cell
 {
     [SerializeField] protected float CellSquareSize = 1;
 
     [SerializeField]
     protected T cellPrefab;
-    
+
     public Vector2Int GridSize;
 
     protected List<T> currentCells = new();
 
-    public virtual void CreateGrid()
+    public virtual void CreateGrid(int sizeX = 1, int sizeY = 1)
     {
-        Vector3 offset = Vector3.one * CellSquareSize / 2;
+        if (sizeX <= 0 || sizeY <= 0)
+            return;
 
+        GridSize.x = sizeX;
+        GridSize.y = sizeY;
+
+
+        Vector3 offset = Vector3.one * CellSquareSize / 2;
+        offset.y = 0;
+        
         for (int y = 0; y < GridSize.y; y++)
         {
             for (int x = 0; x < GridSize.x; x++)
@@ -41,5 +49,13 @@ public class Grid <T> : MonoBehaviour where T : Cell
     public T GetCell(Vector2Int coordinate)
     {
         return GetCell(coordinate.x, coordinate.y);
+    }
+
+    public virtual void ClearCells()
+    {
+        for (int i = 0; i < currentCells.Count; i++)
+            DestroyImmediate(currentCells[i].gameObject);
+
+        currentCells.Clear();
     }
 }

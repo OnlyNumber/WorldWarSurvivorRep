@@ -17,8 +17,12 @@ public class HumanStats
 
     public GameObject ModelPrefab;
 
-    public List<InventoryItemInfo> items = new();
+    public HumanInventoryInfo HumanInventoryInfo = new();
 
-    public EquipmentInfo equipmentInfo;
+    public HumanStats()
+    {
+        HumanInventoryInfo.Size.x = 8;
+        HumanInventoryInfo.Size.y = 6;
+    }
 
 }
