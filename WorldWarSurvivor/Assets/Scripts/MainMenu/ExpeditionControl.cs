@@ -31,18 +31,26 @@ public class ExpeditionControl : MonoBehaviour
 
     private void Start()
     {
+
         CloseButton.onClick.AddListener(CloseExpedition);
         CloseButton.onClick.AddListener(() => CameraControl.ChangeToCamera(CameraControl.MainCamera));
+
 
 
         StartExpeditionButton.onClick.AddListener(CloseExpedition);
         StartExpeditionButton.onClick.AddListener(ChooseMap);
 
-        
+
         ChooseMapWindow.CloseButton.onClick.AddListener(ChooseMap);
         ChooseMapWindow.CloseButton.onClick.AddListener(() => CameraControl.ChangeToCamera(ExpeditionCamera));
 
-
+        StartCoroutine(Utilities.WaitAndRun(
+            () =>
+            {
+                InventoryWindow.Instance.CloseButton.onClick.AddListener(BaseProgression.Instance.SaveInfo);
+                CloseButton.onClick.AddListener(BaseProgression.Instance.SaveInfo);
+            },
+            0.1f));
     }
 
     public void OpenExpedition()
@@ -141,10 +149,11 @@ public class ExpeditionControl : MonoBehaviour
             list.Add(stats);
             humanUI.transform.SetParent(parent);
             LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
+            BaseProgression.Instance.SaveInfo();
         }
     }
     #endregion
-    
+
     private void ClearWindow()
     {
         foreach (var item in AllHumansUI)

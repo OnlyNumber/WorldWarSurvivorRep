@@ -21,7 +21,7 @@ public class InventorySystem : MonoBehaviour
 
     private InventoryGrid _lastGrid;
     private Vector3 _lastPlacePosition;
-    private Direciton _lastDireciton;
+    private Direction _lastDireciton;
 
     #endregion
 
@@ -101,7 +101,7 @@ public class InventorySystem : MonoBehaviour
         emptyItem.Initialize(unitItemInfo);
 
         emptyItem.transform.SetParent(InventoryWindow.Instance.ItemsTransform);
-        if (unitItemInfo.direciton == Direciton.Up)
+        if (unitItemInfo.direciton == Direction.Up)
             emptyItem.transform.rotation = Quaternion.Euler(0, 0, 90);
 
         return emptyItem;
@@ -187,7 +187,7 @@ public class InventorySystem : MonoBehaviour
         {
             inventoryItem.info.direciton = _lastDireciton;
 
-            if (inventoryItem.info.direciton == Direciton.Up)
+            if (inventoryItem.info.direciton == Direction.Up)
                 inventoryItem.grabbingItem.MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
             else
                 inventoryItem.grabbingItem.MyRectTransform.rotation = Quaternion.Euler(0, 0, 0);

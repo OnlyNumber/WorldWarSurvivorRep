@@ -1,0 +1,129 @@
+{
+    "cellSize": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "placedObjects": [
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 9,
+                "y": 0,
+                "z": 5
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 9,
+                "y": 0,
+                "z": 4
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 9,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 17,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 17,
+                "y": 0,
+                "z": 7
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 17,
+                "y": 0,
+                "z": 6
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "DamagedCar",
+            "prefabPath": "Assets/Prefabs/GridObstacle/DamagedCar.prefab",
+            "gridPosition": {
+                "x": 13,
+                "y": 0,
+                "z": 7
+            },
+            "direction": 1
+        },
+        {
+            "prefabName": "SandWall",
+            "prefabPath": "Assets/Prefabs/GridObstacle/SandWall.prefab",
+            "gridPosition": {
+                "x": 20,
+                "y": 0,
+                "z": 5
+            },
+            "direction": 1
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 5,
+                "y": 0,
+                "z": 9
+            },
+            "direction": 1
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 6,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 1
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 5,
+                "y": 0,
+                "z": 6
+            },
+            "direction": 1
+        },
+        {
+            "prefabName": "TankObstacle",
+            "prefabPath": "Assets/Prefabs/GridObstacle/TankObstacle.prefab",
+            "gridPosition": {
+                "x": 6,
+                "y": 0,
+                "z": 7
+            },
+            "direction": 1
+        }
+    ]
+}

@@ -9,12 +9,7 @@ public class BaseProgression : MonoBehaviour
     public const string PlayerSavePath = "PlayerData";
 
     public static BaseProgression Instance;
-
     public BaseProgressionData PlayerData;
-
-    //public List<HumanStats> Rostert = new();
-
-    //public List<HumanStats> CurrentCommand = new();
 
     public int CurrentCommandPrice;
 
@@ -48,6 +43,7 @@ public class BaseProgression : MonoBehaviour
 
     public void SaveInfo()
     {
+        Debug.Log("Save info");
         SaveAndLoad.Save(PlayerSavePath, PlayerData);
     }
 

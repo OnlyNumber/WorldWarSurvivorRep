@@ -43,8 +43,11 @@ public class InventoryWindow : MonoBehaviour
 
     public void CloseWindow()
     {
-        CurrentHuman.Items = InventorySystem.Instance.GetCurrentUnitItems();
-        CurrentHuman.EquipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
+        if (CurrentHuman != null)
+        {
+            CurrentHuman.Items = InventorySystem.Instance.GetCurrentUnitItems();
+            CurrentHuman.EquipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
+        }
 
         if (CurrentStorage != null)
             CurrentStorage.Items = InventorySystem.Instance.GetCurrentStorageItems();

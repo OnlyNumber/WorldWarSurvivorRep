@@ -23,7 +23,8 @@ public class Grid<T> : MonoBehaviour where T : Cell
 
 
         Vector3 offset = Vector3.one * CellSquareSize / 2;
-
+        offset.y = 0;
+        
         for (int y = 0; y < GridSize.y; y++)
         {
             for (int x = 0; x < GridSize.x; x++)
@@ -48,5 +49,13 @@ public class Grid<T> : MonoBehaviour where T : Cell
     public T GetCell(Vector2Int coordinate)
     {
         return GetCell(coordinate.x, coordinate.y);
+    }
+
+    public virtual void ClearCells()
+    {
+        for (int i = 0; i < currentCells.Count; i++)
+            DestroyImmediate(currentCells[i].gameObject);
+
+        currentCells.Clear();
     }
 }

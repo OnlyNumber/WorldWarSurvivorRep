@@ -1,0 +1,199 @@
+{
+    "cellSize": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "placedObjects": [
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 5,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 10,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 15,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 20,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 25,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 30,
+                "y": 0,
+                "z": 8
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 30,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Road",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Road.prefab",
+            "gridPosition": {
+                "x": 30,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 25,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 20,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 15,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 10,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 5,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Footpath",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Footpath.prefab",
+            "gridPosition": {
+                "x": 5,
+                "y": 0,
+                "z": 0
+            },
+            "direction": 3
+        },
+        {
+            "prefabName": "Road",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Road.prefab",
+            "gridPosition": {
+                "x": 25,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Road",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Road.prefab",
+            "gridPosition": {
+                "x": 20,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Road",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Road.prefab",
+            "gridPosition": {
+                "x": 15,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Road",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Road.prefab",
+            "gridPosition": {
+                "x": 10,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        },
+        {
+            "prefabName": "Road",
+            "prefabPath": "Assets/Prefabs/PrefabsForMap/Road.prefab",
+            "gridPosition": {
+                "x": 5,
+                "y": 0,
+                "z": 3
+            },
+            "direction": 0
+        }
+    ]
+}

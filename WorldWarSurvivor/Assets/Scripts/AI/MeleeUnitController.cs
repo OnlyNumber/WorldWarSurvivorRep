@@ -48,11 +48,7 @@ public class MeleeUnitController : UnitController
 
     private void MoveToTarget()
     {
-        Debug.Log(controllingUnit.MyCurrentCell.Coordinate + " " + MyTarget.MyCurrentCell.Coordinate);
-
-        var path = AStarPathfinding.FindPath(boardGrid, controllingUnit.MyCurrentCell.Coordinate, MyTarget.MyCurrentCell.Coordinate, true);
-
-        Debug.Log("Move to target " + path.Count);
+        var path = AStarPathfinding.FindPath(boardGrid, controllingUnit.MyCurrentCell.Coordinate, Vector2Int.zero, true);
 
         path.Remove(path[0]);
         path.Remove(path[path.Count - 1]);
@@ -65,14 +61,9 @@ public class MeleeUnitController : UnitController
 
     private void TryAttack()
     {
-        if (weapon.AccessibleCellsForAttack(boardGrid, controllingUnit.MyCurrentCell).Contains(MyTarget.MyCurrentCell))
+        /*if (weapon.AccessibleCellsForAttack(boardGrid, controllingUnit.MyCurrentCell).Contains(MyTarget.MyCurrentCell))
         {
             controllingUnit.Attack(MyTarget.MyCurrentCell);
-        }
+        }*/
     }
-
-    /*private IEnumerator ActivateQueue()
-    {
-        yield return null;
-    }*/
 }

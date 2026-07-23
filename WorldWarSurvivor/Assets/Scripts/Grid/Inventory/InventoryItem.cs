@@ -81,10 +81,10 @@ public class InventoryItem : MonoBehaviour
         {
             Debug.Log("RotateGraggbingObject");
 
-            if (info.direciton == Direciton.Right)
-                info.direciton = Direciton.Up;
+            if (info.direciton == Direction.Right)
+                info.direciton = Direction.Up;
             else
-                info.direciton = Direciton.Right;
+                info.direciton = Direction.Right;
 
             grabbingItem.Rotate(info.direciton);
 
@@ -117,7 +117,7 @@ public class InventoryItem : MonoBehaviour
     {
         List<Vector3> positions = new();
         Vector3 offset;
-        if (info.direciton == Direciton.Right || info.direciton == Direciton.Left)
+        if (info.direciton == Direction.Right || info.direciton == Direction.Left)
         {
 
             offset = (new Vector3(-info.Size.x, info.Size.y) * (GridCellSize / 2)) + ItemPosition + new Vector3(GridCellSize / 2, -GridCellSize / 2);
@@ -151,7 +151,7 @@ public class InventoryItem : MonoBehaviour
 
     public void SetPositionReferencedByCell(Vector3 CellPosition)
     {
-        if (info.direciton == Direciton.Right || info.direciton == Direciton.Left)
+        if (info.direciton == Direction.Right || info.direciton == Direction.Left)
             grabbingItem.MyRectTransform.position = CellPosition + new Vector3(info.Size.x, -info.Size.y) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
         else
             grabbingItem.MyRectTransform.position = CellPosition + new Vector3(info.Size.y, -info.Size.x) * (GridCellSize / 2) + new Vector3(-GridCellSize / 2, GridCellSize / 2);
@@ -166,7 +166,7 @@ public class InventoryItem : MonoBehaviour
 
 }
 
-public enum Direciton
+public enum Direction
 {
     Up,
     Right,

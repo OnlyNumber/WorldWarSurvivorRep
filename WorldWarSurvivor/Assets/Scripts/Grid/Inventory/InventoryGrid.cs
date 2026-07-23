@@ -120,17 +120,6 @@ public class InventoryGrid : Grid<InventoryCell>
         for (int x = 0; x < GridSize.x; x++)
             for (int y = 0; y < GridSize.y; y++)
                 GetCell(x, y).IsOccupied = false;
-
-    }
-
-    public void ClearCells()
-    {
-        for (int i = 0; i < currentCells.Count; i++)
-        {
-            Destroy(currentCells[i].gameObject);
-        }
-
-        currentCells.Clear();
     }
 
     public List<InventoryItemInfo> GetItemsInfo()

@@ -16,5 +16,5 @@ public class InventoryItemInfo
 
     public Vector2Int Size => inventoryItemSO.Size;
     
-    public Direciton direciton = Direciton.Right;
+    public Direction direciton = Direction.Right;
 }

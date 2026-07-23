@@ -54,14 +54,14 @@ public class GrabbingItem : MonoBehaviour, IPointerDownHandler, IPointerMoveHand
         }
     }
 
-    public void Rotate(Direciton direciton)
+    public void Rotate(Direction direciton)
     {
-        if (direciton == Direciton.Right)
+        if (direciton == Direction.Right)
         {
             MyRectTransform.rotation = Quaternion.Euler(0, 0, 0);
             mouseOffset = new Vector3(-mouseOffset.y, mouseOffset.x);
         }
-        else if (direciton == Direciton.Up)
+        else if (direciton == Direction.Up)
         {
             MyRectTransform.rotation = Quaternion.Euler(0, 0, 90);
             mouseOffset = new Vector3(mouseOffset.y, -mouseOffset.x);
