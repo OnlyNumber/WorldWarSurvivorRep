@@ -302,7 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415776036}
   m_Layer: 0
-  m_Name: MapParent
+  m_Name: MapBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,6 +631,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardGrid: {fileID: 5347924009230002571}
+  mapObstacleParent: {fileID: 1877994936}
+  mapBackgroundParent: {fileID: 415776036}
 --- !u!1 &1801081512
 GameObject:
   m_ObjectHideFlags: 0

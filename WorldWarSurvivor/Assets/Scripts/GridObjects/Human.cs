@@ -108,8 +108,8 @@ public class Human : ActingObject
         path.Remove(path[0]);
 
         CurrentAmountOfEnergy -= path.Count * WalkCost;
-        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition);
-        StartCoroutine(MovingAnimation(path));
+        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition, false);
+        StartCoroutine(MovingAnimation(path, endPosition));
     }
 
 
@@ -133,7 +133,7 @@ public class Human : ActingObject
         StartCoroutine(Utilities.WaitAndRun(() => humanAnimator.PlayAnimation(Animations.Idle), 0.2f));
     }
 
-    private IEnumerator MovingAnimation(List<BoardCell> cells)
+    private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
     {
         int index = 0;
 
@@ -189,14 +189,16 @@ public class Human : ActingObject
         MyCurrentCell.gridObject = null;
     }
 
-    public override bool SetCurrentCells(BoardCell cell)
+    public override bool SetCurrentCells(BoardCell cell, bool moveToPosition = true)
     {
         if (cell == null)
             return false;
 
         MyCurrentCell = cell;
+        MyCurrentCell.gridObject = this;
         cell.IsObstacle = true;
-        transform.position = cell.transform.position;
+        if (moveToPosition)
+            transform.position = cell.transform.position;
 
         return true;
     }

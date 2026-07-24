@@ -59,9 +59,9 @@ public class BoardGrid : Grid<BoardCell>
 
     }
 
-    public bool TrySetGridObjectToCell(GridObject gridObject, BoardCell toCell)
+    public bool TrySetGridObjectToCell(GridObject gridObject, BoardCell toCell, bool moveToPosition = true)
     {
-        return gridObject.SetCurrentCells(toCell);
+        return gridObject.SetCurrentCells(toCell, moveToPosition);
     }
 
 

@@ -8,12 +8,6 @@ public class BoardCell : Cell
 
     public bool IsObstacle;
 
-    #region removeLater
-    public TMPro.TMP_Text FullCost;
-    public TMPro.TMP_Text PassedCost;
-    public TMPro.TMP_Text NeedToGoCost;
-    #endregion
-
     public GridObject ShowCell()
     {
         if (gridObject != null)

@@ -13,7 +13,7 @@ public class MultipleCellGridObject : GridObject
         throw new System.NotImplementedException();
     }
 
-    public override bool SetCurrentCells(BoardCell cell)
+    public override bool SetCurrentCells(BoardCell cell, bool moveToPosition = true)
     {
         var starterPoint = cell.Coordinate;
         Vector2Int currentPoint = Vector2Int.zero;
@@ -38,12 +38,10 @@ public class MultipleCellGridObject : GridObject
 
             }
         }
-        if (gameObject.name.Contains("Damaged"))
-            Debug.Log("boolMatrix.height " + boolMatrix.height);
 
 
-
-        transform.position = cell.transform.position + ((Vector3)direction * -0.5f);
+        if (moveToPosition)
+            transform.position = cell.transform.position + ((Vector3)direction * -0.5f);
         transform.rotation = Utilities.DirectionToRotation(myDirection);
 
         return false;

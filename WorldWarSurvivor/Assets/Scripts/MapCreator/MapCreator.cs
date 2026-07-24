@@ -8,11 +8,15 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
     [SerializeField] private BoardGrid boardGrid;
-    [SerializeField] private Transform mapParent;
+    [SerializeField] private Transform mapObstacleParent;
+    [SerializeField] private Transform mapBackgroundParent;
 
-    private List<GridObject> allCreatedObjects;
 
-    private List<GameObject> _availablePrefabs = new List<GameObject>();
+    private List<GridObject> allCreatedObjects = new();
+    private List<GameObject> availableBackgroundPrefabs = new List<GameObject>();
+    private List<GameObject> _availableObstaclePrefabs = new List<GameObject>();
+    private Dictionary<Vector3Int, List<GameObject>> spawnedObjects = new Dictionary<Vector3Int, List<GameObject>>();
+    
 
     private Vector3 cellSize = new Vector3(1f, 1f, 1f);
 
@@ -27,15 +31,15 @@ public class MapCreator : MonoBehaviour
         {
             var data = item;
 
-            GameObject prefab = _availablePrefabs.Find(p => p != null && p.name == data.prefabName);
+            GameObject prefab = _availableObstaclePrefabs.Find(p => p != null && p.name == data.prefabName);
 
             if (prefab == null && !string.IsNullOrEmpty(data.prefabPath))
             {
                 prefab = AssetDatabase.LoadAssetAtPath<GameObject>(data.prefabPath);
 
-                if (prefab != null && !_availablePrefabs.Contains(prefab))
+                if (prefab != null && !_availableObstaclePrefabs.Contains(prefab))
                 {
-                    _availablePrefabs.Add(prefab);
+                    _availableObstaclePrefabs.Add(prefab);
                 }
             }
 
@@ -52,14 +56,57 @@ public class MapCreator : MonoBehaviour
 
                 boardGrid.SpawnGridObject(coordinate, currentObj.GetComponent<GridObject>(), true);
 
-                currentObj.transform.parent = mapParent;
+                currentObj.transform.parent = mapObstacleParent;
                 allCreatedObjects.Add(currentObj);
 
             }
         }
     }
 
+    public void LoadMapFromJson(string pathOfMap)
+    {
+        string json = File.ReadAllText(GetMapDataDirectory() + "/" + pathOfMap + ".json");
+        MapData mapData = JsonUtility.FromJson<MapData>(json);
+        cellSize = mapData.cellSize;
 
+        foreach (var data in mapData.placedObjects)
+        {
+            GameObject prefab = availableBackgroundPrefabs.Find(p => p != null && p.name == data.prefabName);
+
+            if (prefab == null && !string.IsNullOrEmpty(data.prefabPath))
+            {
+                prefab = AssetDatabase.LoadAssetAtPath<GameObject>(data.prefabPath);
+
+                if (prefab != null && !availableBackgroundPrefabs.Contains(prefab))
+                {
+                    availableBackgroundPrefabs.Add(prefab);
+                }
+            }
+
+            if (prefab != null)
+            {
+                Vector3 spawnPos = GridToWorldPosition(data.gridPosition);
+                GameObject newObj = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                newObj.transform.position = spawnPos;
+                newObj.transform.rotation = Utilities.DirectionToRotation(data.direction);
+
+                if (mapBackgroundParent != null)
+                    newObj.transform.SetParent(mapBackgroundParent);
+
+                AddObjectToGrid(data.gridPosition, newObj);
+            }
+        }
+
+    }
+
+    private void AddObjectToGrid(Vector3Int gridPos, GameObject obj)
+    {
+        if (!spawnedObjects.ContainsKey(gridPos))
+        {
+            spawnedObjects[gridPos] = new List<GameObject>();
+        }
+        spawnedObjects[gridPos].Add(obj);
+    }
 
     private Vector2Int CalculactePosition(Vector3 position, Direction direction)
     {
@@ -71,8 +118,6 @@ public class MapCreator : MonoBehaviour
     {
 
     }
-
-
 
     private string GetMapDataDirectory()
     {
