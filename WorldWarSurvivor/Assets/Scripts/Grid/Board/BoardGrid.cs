@@ -53,6 +53,9 @@ public class BoardGrid : Grid<BoardCell>
     {
         var obj = fromCell.gridObject;
 
+        if (obj == null)
+            return null;
+
         fromCell.gridObject.RemoveMyselfFromBoard();
 
         return obj;

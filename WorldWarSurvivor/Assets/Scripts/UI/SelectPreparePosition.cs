@@ -51,6 +51,9 @@ public class SelectPreparePosition : MonoBehaviour
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
 
+        if (cell == null)
+            return;
+
         CurrentObject = grid.RemoveFromGrid(cell);
 
         MarkPlacement();
