@@ -51,10 +51,12 @@ public class SelectPreparePosition : MonoBehaviour
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
 
+        if (cell == null)
+            return;
+
         CurrentObject = grid.RemoveFromGrid(cell);
 
-        _accessibleCells = FindAccessibleCells();
-        MarkCells(_accessibleCells, passMaterial);
+        MarkPlacement();
 
     }
 
@@ -73,9 +75,7 @@ public class SelectPreparePosition : MonoBehaviour
         CurrentObject = null;
 
         MarkCells(_accessibleCells, defaultMaterial);
-
-        _accessibleCells = FindAccessibleCells();
-        MarkCells(_accessibleCells, passMaterial);
+        MarkPlacement();
     }
 
     private void WatchPlacement()
@@ -111,6 +111,13 @@ public class SelectPreparePosition : MonoBehaviour
 
         return accessibleBoardCells;
 
+    }
+
+    public void MarkPlacement()
+    {
+
+        _accessibleCells = FindAccessibleCells();
+        MarkCells(_accessibleCells, passMaterial);
     }
 
     private void MarkCells(HashSet<BoardCell> cells, Material material)

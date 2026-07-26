@@ -32,6 +32,7 @@ public class GamePreparer : MonoBehaviour
         selectPreparePosition.AccessibleCellsSize = AccessibleCellsSize;
         Create();
         mapCreator.Create("CityObstacleData");
+        mapCreator.LoadMapFromJson("CityMap");
 
         CreatePlayerBand();
 
@@ -65,6 +66,8 @@ public class GamePreparer : MonoBehaviour
 
             human.HumanStats = item;
         }
+
+        selectPreparePosition.MarkPlacement();
 
     }
 

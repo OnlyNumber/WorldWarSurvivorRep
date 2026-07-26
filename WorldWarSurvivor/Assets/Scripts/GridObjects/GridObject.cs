@@ -19,7 +19,7 @@ public abstract class GridObject : MonoBehaviour
 
     public virtual void ShowActions()
     {
-        
+
     }
 
     public virtual void GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText)
@@ -33,7 +33,7 @@ public abstract class GridObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public abstract bool SetCurrentCells(BoardCell cell);
+    public abstract bool SetCurrentCells(BoardCell cell, bool moveToPosition = true);
 
     public abstract void RemoveMyselfFromBoard();
 }

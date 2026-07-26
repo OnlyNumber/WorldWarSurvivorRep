@@ -150,10 +150,6 @@ public static class AStarPathfinding
         pathCell.NeedToGoCost = NeedToGoCost;
         pathCell.FullCost = FullCost;
 
-        cell.FullCost.text = pathCell.FullCost.ToString();
-        cell.NeedToGoCost.text = pathCell.NeedToGoCost.ToString();
-        cell.PassedCost.text = pathCell.PassedCost.ToString();
-
         return pathCell;
     }
 

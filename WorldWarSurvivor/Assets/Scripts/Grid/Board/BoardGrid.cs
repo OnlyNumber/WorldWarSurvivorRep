@@ -53,15 +53,18 @@ public class BoardGrid : Grid<BoardCell>
     {
         var obj = fromCell.gridObject;
 
+        if (obj == null)
+            return null;
+
         fromCell.gridObject.RemoveMyselfFromBoard();
 
         return obj;
 
     }
 
-    public bool TrySetGridObjectToCell(GridObject gridObject, BoardCell toCell)
+    public bool TrySetGridObjectToCell(GridObject gridObject, BoardCell toCell, bool moveToPosition = true)
     {
-        return gridObject.SetCurrentCells(toCell);
+        return gridObject.SetCurrentCells(toCell, moveToPosition);
     }
 
 
