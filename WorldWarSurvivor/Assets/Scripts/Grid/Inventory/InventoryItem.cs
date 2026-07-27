@@ -79,8 +79,6 @@ public class InventoryItem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("RotateGraggbingObject");
-
             if (info.direciton == Direction.Right)
                 info.direciton = Direction.Up;
             else

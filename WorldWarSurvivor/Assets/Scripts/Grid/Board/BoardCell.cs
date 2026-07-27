@@ -11,7 +11,7 @@ public class BoardCell : Cell
     public GridObject ShowCell()
     {
         if (gridObject != null)
-            gridObject.ShowActions();
+            gridObject.ShowWindowOfUnit();
 
         return gridObject;
     }

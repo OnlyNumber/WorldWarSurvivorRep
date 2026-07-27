@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 
 [Serializable]
 public class EquipmentInfo 
@@ -18,5 +20,22 @@ public class EquipmentInfo
     public InventoryItemInfo MainHandItem;
 
     public InventoryItemInfo OtherHandItem;
+
+    public List<InventoryItemInfo> GetAllItemsInList()
+    {
+        List<InventoryItemInfo> inventoryItemInfos = new()
+        {
+            HeadItem,
+            BodyItem,
+            MainHandItem,
+            AmuletItem1,
+            AmuletItem2,
+            QuickUseItem1,
+            QuickUseItem2,
+            OtherHandItem
+        };
+
+        return inventoryItemInfos;
+    }
 
 }

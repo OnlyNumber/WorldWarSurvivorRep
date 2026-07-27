@@ -13,7 +13,7 @@ public class MeleeUnitController : UnitController
     private ActingObject MyTarget;
 
     //Change this later to getting from controlling unit
-    private Weapon weapon;
+    //private Weapon weapon;
 
     //Change later to the weapon;
     private int AttackRange => 1;
@@ -22,7 +22,7 @@ public class MeleeUnitController : UnitController
     {
         controllingUnit = human;
         boardGrid = grid;
-        weapon = controllingUnit.currentWeapon;
+      //  weapon = controllingUnit.currentWeapon;
         SetTargets(TeamDefiner.allObjects);
     }
 

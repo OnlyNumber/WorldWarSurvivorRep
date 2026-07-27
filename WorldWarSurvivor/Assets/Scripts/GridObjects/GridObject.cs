@@ -17,7 +17,7 @@ public abstract class GridObject : MonoBehaviour
 
     }
 
-    public virtual void ShowActions()
+    public virtual void ShowWindowOfUnit()
     {
 
     }

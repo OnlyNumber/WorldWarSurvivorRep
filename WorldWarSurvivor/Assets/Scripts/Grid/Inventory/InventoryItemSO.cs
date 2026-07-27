@@ -6,6 +6,9 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "ItemSO", menuName = "ItemSO")]
 public class InventoryItemSO : ScriptableObject
 {
+
+    //public ActiveItem activeItem;
+
     public Sprite ItemImage;
 
     public ItemType itemType;

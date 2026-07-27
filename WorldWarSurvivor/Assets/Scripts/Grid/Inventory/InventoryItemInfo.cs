@@ -6,6 +6,8 @@ public class InventoryItemInfo
 {
     [SerializeField] private InventoryItemSO inventoryItemSO;
 
+    public AbilityAction AbilityAction;
+
     public Vector2Int FirstCellPosition;
 
     public bool IsItemExist => inventoryItemSO != null;

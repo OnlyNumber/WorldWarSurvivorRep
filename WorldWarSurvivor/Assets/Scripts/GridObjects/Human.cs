@@ -11,9 +11,9 @@ public class Human : ActingObject
 
     private const int WalkCost = 10;
 
-    private const int AttackCost = 30;
+    //private const int AttackCost = 30;
 
-    public Weapon currentWeapon;
+    //public Weapon currentWeapon;
 
     public float speed;
 
@@ -21,7 +21,15 @@ public class Human : ActingObject
 
     private int MaxAmountOfEnergy = 100;
 
-    private int CurrentAmountOfEnergy;
+    private int _currentEnergy;
+
+    public int CurrentEnergy
+    {
+        get => _currentEnergy;
+
+        protected set => _currentEnergy = value;
+
+    }
 
     public HumanStats HumanStats;
 
@@ -32,11 +40,11 @@ public class Human : ActingObject
 
     private void Start()
     {
-        CurrentAmountOfEnergy = MaxAmountOfEnergy;
+        CurrentEnergy = MaxAmountOfEnergy;
 
         humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
 
-        OnActivateTurn += () => CurrentAmountOfEnergy = MaxAmountOfEnergy;
+        OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
     }
 
     public override void Initialize(BoardGrid grid, BoardCell cell)
@@ -47,14 +55,19 @@ public class Human : ActingObject
         HealthSystem.OnHealthChange += DeathCheck;
     }
 
-    public override void ShowActions()
+    public void ChangeEnergy(int energyChange)
+    {
+        CurrentEnergy += energyChange;
+    }
+
+    public override void ShowWindowOfUnit()
     {
         ActionWindow.Instance.ClearActionWindow();
 
-        base.ShowActions();
+        base.ShowWindowOfUnit();
 
         string Health = "Health " + HealthSystem.CurrentHealth.ToString() + " / " + HealthSystem.MaxHealth.ToString();
-        string Energy = "Energy " + CurrentAmountOfEnergy.ToString() + " / " + MaxAmountOfEnergy.ToString();
+        string Energy = "Energy " + CurrentEnergy.ToString() + " / " + MaxAmountOfEnergy.ToString();
 
         List<string> CharacteristicText = new()
         {
@@ -70,11 +83,21 @@ public class Human : ActingObject
 
     public override void GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText)
     {
+
+        var InventoryItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
         actions = new()
         {
-            (Move,AccessibleCellsForMove()),
-            (Attack, AccessibleCellsForWeapon())
+            //(Move,AccessibleCellsForMove()),
+            //(Attack, AccessibleCellsForWeapon())
         };
+
+
+        for (int i = 0; i < InventoryItems.Count; i++)
+        {
+            //InventoryItems[i].
+        }
+
 
         actionText = new()
         {
@@ -83,99 +106,107 @@ public class Human : ActingObject
         };
     }
 
-    private HashSet<BoardCell> AccessibleCellsForWeapon()
+    public List<bool> CheckActionCost()
     {
-        return currentWeapon.AccessibleCellsForAttack(myGrid, MyCurrentCell);
+        var InventoryItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
+
+        List<bool> checkActionList = new()
+        {
+            CurrentEnergy > WalkCost,
+            //CurrentAmountOfEnergy > AttackCost
+        };
+
+        for (int i = 0; i < InventoryItems.Count; i++)
+        {
+            //InventoryItems[i].
+        }
+
+        return checkActionList;
     }
 
     #region Actions
-
-    public HashSet<BoardCell> AccessibleCellsForMove()
-    {
-        HashSet<BoardCell> cells = new();
-
-        foreach (var item in AStarPathfinding.GetReachableTiles(MyCurrentCell.Coordinate, CurrentAmountOfEnergy, myGrid))
+    /*
+        public HashSet<BoardCell> AccessibleCellsForMove()
         {
-            cells.Add(myGrid.GetCell(item));
+            HashSet<BoardCell> cells = new();
+
+            foreach (var item in AStarPathfinding.GetReachableTiles(MyCurrentCell.Coordinate, CurrentEnergy, myGrid))
+            {
+                cells.Add(myGrid.GetCell(item));
+            }
+
+            return cells;
         }
 
-        return cells;
-    }
+        public void Move(BoardCell endPosition)
+        {
+            var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
+            path.Remove(path[0]);
 
-    public void Move(BoardCell endPosition)
-    {
-        var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
-        path.Remove(path[0]);
-
-        CurrentAmountOfEnergy -= path.Count * WalkCost;
-        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition, false);
-        StartCoroutine(MovingAnimation(path, endPosition));
-    }
+            CurrentEnergy -= path.Count * WalkCost;
+            myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition, false);
+            StartCoroutine(MovingAnimation(path, endPosition));
+        }*/
 
 
-    public void Attack(BoardCell attackingCell)
-    {
-        Debug.Log("Attack");
+    /*    public void Attack(BoardCell attackingCell)
+        {
+            Debug.Log("Attack");
 
-        CurrentAmountOfEnergy -= AttackCost;
+            CurrentAmountOfEnergy -= AttackCost;
 
-        TurnController.AddMovingObject(this);
-        humanAnimator.PlayAnimation(Animations.Attack);
+            TurnController.AddMovingObject(this);
+            humanAnimator.PlayAnimation(Animations.Attack);
 
-        if (attackingCell.gridObject != null)
-            currentWeapon.AttackCell(attackingCell);
-    }
+            if (attackingCell.gridObject != null)
+                currentWeapon.AttackCell(attackingCell);
+        }
 
+        private HashSet<BoardCell> AccessibleCellsForWeapon()
+        {
+            return currentWeapon.AccessibleCellsForAttack(myGrid, MyCurrentCell);
+        }
+    */
     private void EndAttack()
     {
         TurnController.RemoveMovingObject(this);
         humanAnimator.PlayAnimation(Animations.Idle);
         StartCoroutine(Utilities.WaitAndRun(() => humanAnimator.PlayAnimation(Animations.Idle), 0.2f));
     }
-
-    private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
-    {
-        int index = 0;
-
-        TurnController.AddMovingObject(this);
-
-        humanAnimator.PlayAnimation(Animations.Walk);
-
-        do
+    /*
+        private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
         {
-            var cellPosition = cells[index].transform.position;
+            int index = 0;
 
-            transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
+            TurnController.AddMovingObject(this);
 
-            Vector3 direction = (cellPosition - transform.position).normalized;
-            if (direction != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(direction);
+            humanAnimator.PlayAnimation(Animations.Walk);
+
+            do
+            {
+                var cellPosition = cells[index].transform.position;
+
+                transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
+
+                Vector3 direction = (cellPosition - transform.position).normalized;
+                if (direction != Vector3.zero)
+                    transform.rotation = Quaternion.LookRotation(direction);
 
 
-            if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
-                index++;
+                if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
+                    index++;
 
-            yield return null;
+                yield return null;
 
-        } while (index < cells.Count);
+            } while (index < cells.Count);
 
-        humanAnimator.PlayAnimation(Animations.Idle);
-        TurnController.RemoveMovingObject(this);
+            humanAnimator.PlayAnimation(Animations.Idle);
+            TurnController.RemoveMovingObject(this);
 
-    }
-
+        }
+    */
     #endregion
-
-    public List<bool> CheckActionCost()
-    {
-        List<bool> checkActionList = new()
-        {
-            CurrentAmountOfEnergy > WalkCost,
-            CurrentAmountOfEnergy > AttackCost
-        };
-
-        return checkActionList;
-    }
 
     private void DeathCheck()
     {
