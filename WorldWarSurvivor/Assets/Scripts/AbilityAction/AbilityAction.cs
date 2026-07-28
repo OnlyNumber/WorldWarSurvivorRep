@@ -13,7 +13,7 @@ public abstract class AbilityAction : IDisposable
 
     public abstract void Dispose();
 
-    public abstract HashSet<BoardCell> GetAccessibleCells(BoardGrid boardGrid, BoardCell boardCell);
+    public abstract HashSet<BoardCell> GetAccessibleCells();
 
     public abstract void TargetCell(BoardCell attackingCell);
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : AbilityAction
+public class GunShootAction : AbilityAction
 {
     public int Damage;
 
@@ -11,15 +11,20 @@ public class Weapon : AbilityAction
 
     private RuntimeAnimatorController WeaponAnimator;
 
-    private Human GetHuman()
-    {
-        return CurrentActingObject as Human;
-    }
+    private Human CurrentHuman;
+
+    private Transform cachedTransform;
+    
 
     public override void Initialize(ActingObject actingObject, BoardGrid myGrid)
     {
         CurrentActingObject = actingObject;
         this.myGrid = myGrid;
+
+
+
+        CurrentHuman = CurrentActingObject as Human;
+        cachedTransform = CurrentHuman.transform;
 
         //Create here model and place it
     }
@@ -31,19 +36,19 @@ public class Weapon : AbilityAction
         throw new System.NotImplementedException();
     }
 
-    public override HashSet<BoardCell> GetAccessibleCells(BoardGrid boardGrid, BoardCell boardCell)
+    public override HashSet<BoardCell> GetAccessibleCells()
     {
         HashSet<BoardCell> targets = new();
 
-        foreach (var item in AStarPathfinding.GetReachableTiles(boardCell.Coordinate, AttackRange, boardGrid, false))
+        foreach (var item in AStarPathfinding.GetReachableTiles(CurrentHuman.MyCurrentCell.Coordinate, AttackRange, myGrid, false))
         {
-            if (boardGrid.GetCell(item).gridObject is Human)
+            if (myGrid.GetCell(item).gridObject is Human)
             {
-                targets.Add(boardGrid.GetCell(item));
+                targets.Add(myGrid.GetCell(item));
             }
         }
 
-        targets.Remove(boardCell);
+        targets.Remove(CurrentHuman.MyCurrentCell);
 
         return targets;
     }
@@ -56,8 +61,7 @@ public class Weapon : AbilityAction
 
     public override bool IsActionAccessible()
     {
-
-        return GetHuman().CurrentEnergy > AttackEnergyCost;
+        return CurrentHuman.CurrentEnergy > AttackEnergyCost;
     }
 
 }

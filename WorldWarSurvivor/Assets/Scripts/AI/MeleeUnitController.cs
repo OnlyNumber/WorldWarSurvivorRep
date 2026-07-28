@@ -39,14 +39,14 @@ public class MeleeUnitController : UnitController
     {
         List<Action> actions = new();
 
-        actions.Add(MoveToTarget);
+        //actions.Add(MoveToTarget);
         actions.Add(TryAttack);
 
         return actions;
 
     }
 
-    private void MoveToTarget()
+    /*private void MoveToTarget()
     {
         var path = AStarPathfinding.FindPath(boardGrid, controllingUnit.MyCurrentCell.Coordinate, Vector2Int.zero, true);
 
@@ -57,7 +57,7 @@ public class MeleeUnitController : UnitController
         distanceToTarget -= (AttackRange - 1);
 
         controllingUnit.Move(path[distanceToTarget - 1]);
-    }
+    }*/
 
     private void TryAttack()
     {

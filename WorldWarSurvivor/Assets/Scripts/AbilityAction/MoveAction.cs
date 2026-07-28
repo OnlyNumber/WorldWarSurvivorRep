@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class MoveAction : AbilityAction
 {
-    private int WalkCost;
+    private int WalkCost = 10;
+
+    private Human CurrentHuman;
+
+    private Transform cachedTransform;
+
+    private int Speed = 10;
+
+    private const float DistanceBetweenPoints = 0.1f;
 
     public override void Initialize(ActingObject actingObject, BoardGrid myGrid)
     {
         CurrentActingObject = actingObject;
         this.myGrid = myGrid;
-    }
 
-    private Human GetHuman()
-    {
-        return CurrentActingObject as Human;
+        CurrentHuman = CurrentActingObject as Human;
+        cachedTransform = CurrentHuman.transform;
     }
 
     public override void Dispose()
@@ -22,11 +28,11 @@ public class MoveAction : AbilityAction
         throw new System.NotImplementedException();
     }
 
-    public override HashSet<BoardCell> GetAccessibleCells(BoardGrid boardGrid, BoardCell boardCell)
+    public override HashSet<BoardCell> GetAccessibleCells()
     {
         HashSet<BoardCell> cells = new();
 
-        foreach (var item in AStarPathfinding.GetReachableTiles(GetHuman().MyCurrentCell.Coordinate, GetHuman().CurrentEnergy, myGrid))
+        foreach (var item in AStarPathfinding.GetReachableTiles(CurrentHuman.MyCurrentCell.Coordinate, CurrentHuman.CurrentEnergy, myGrid))
         {
             cells.Add(myGrid.GetCell(item));
         }
@@ -36,50 +42,51 @@ public class MoveAction : AbilityAction
 
     public override bool IsActionAccessible()
     {
-        throw new System.NotImplementedException();
+        return CurrentHuman.CurrentEnergy > WalkCost;
     }
 
     public override void TargetCell(BoardCell targetCell)
     {
-        var path = AStarPathfinding.FindPath(myGrid, GetHuman().MyCurrentCell.Coordinate, targetCell.Coordinate);
+        var path = AStarPathfinding.FindPath(myGrid, CurrentHuman.MyCurrentCell.Coordinate, targetCell.Coordinate);
         path.Remove(path[0]);
 
-        GetHuman().ChangeEnergy(-path.Count * WalkCost);
-        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(GetHuman().MyCurrentCell), targetCell, false);
+        Debug.Log(path.Count);
+        CurrentHuman.ChangeEnergy(-path.Count * WalkCost);
+        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(CurrentHuman.MyCurrentCell), targetCell, false);
 
-        //StartCoroutine(MovingAnimation(path, targetCell));
+        CurrentHuman.StartCoroutine(MovingAnimation(path, targetCell));
     }
 
-    /*
+
     private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
     {
         int index = 0;
 
-        TurnController.AddMovingObject(this);
+        TurnController.AddMovingObject(CurrentHuman);
 
-        humanAnimator.PlayAnimation(Animations.Walk);
+        CurrentHuman.SetCurrentAnimation(Animations.Walk);
 
         do
         {
             var cellPosition = cells[index].transform.position;
 
-            transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
+            cachedTransform.position = Vector3.MoveTowards(cachedTransform.position, cellPosition, Time.deltaTime * Speed);
 
-            Vector3 direction = (cellPosition - transform.position).normalized;
+            Vector3 direction = (cellPosition - cachedTransform.position).normalized;
             if (direction != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(direction);
+                cachedTransform.rotation = Quaternion.LookRotation(direction);
 
 
-            if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
+            if (Vector3.Distance(cachedTransform.position, cellPosition) < DistanceBetweenPoints)
                 index++;
 
             yield return null;
 
         } while (index < cells.Count);
 
-        humanAnimator.PlayAnimation(Animations.Idle);
-        TurnController.RemoveMovingObject(this);
+        CurrentHuman.SetCurrentAnimation(Animations.Idle);
+        TurnController.RemoveMovingObject(CurrentHuman);
 
-    }*/
+    }
 
 }

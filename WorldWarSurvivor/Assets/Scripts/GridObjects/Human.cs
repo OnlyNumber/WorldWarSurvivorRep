@@ -7,14 +7,6 @@ public class Human : ActingObject
 {
     public BoardCell MyCurrentCell;
 
-    private const float DistanceBetweenPoints = 0.1f;
-
-    private const int WalkCost = 10;
-
-    //private const int AttackCost = 30;
-
-    //public Weapon currentWeapon;
-
     public float speed;
 
     [SerializeField] private HumanAnimator humanAnimator;
@@ -27,19 +19,24 @@ public class Human : ActingObject
     {
         get => _currentEnergy;
 
-        protected set => _currentEnergy = value;
-
+        protected set
+        {
+            _currentEnergy = value;
+        }
     }
 
     public HumanStats HumanStats;
 
-    //[SerializeField] public List<InventoryItemInfo> Items = new();
+    [SerializeField] protected MoveActionSO moveActionSO = new();
 
-    //[SerializeField] public EquipmentInfo EquipmentInfo;
-
+    protected MoveAction moveAction;
+    protected List<AbilityAction> abilityActions;
 
     private void Start()
     {
+        moveAction = (MoveAction)moveActionSO.GetAction();
+        moveAction.Initialize(this, myGrid);
+
         CurrentEnergy = MaxAmountOfEnergy;
 
         humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
@@ -57,6 +54,7 @@ public class Human : ActingObject
 
     public void ChangeEnergy(int energyChange)
     {
+        Debug.Log("Change energy " + energyChange);
         CurrentEnergy += energyChange;
     }
 
@@ -88,21 +86,22 @@ public class Human : ActingObject
 
         actions = new()
         {
-            //(Move,AccessibleCellsForMove()),
+
+            (moveAction.TargetCell,moveAction.GetAccessibleCells()),
             //(Attack, AccessibleCellsForWeapon())
         };
 
 
         for (int i = 0; i < InventoryItems.Count; i++)
         {
+            //actions.Add()
             //InventoryItems[i].
         }
 
 
         actionText = new()
         {
-            "Move",
-            "Attack"
+            moveActionSO.NameAction
         };
     }
 
@@ -113,7 +112,8 @@ public class Human : ActingObject
 
         List<bool> checkActionList = new()
         {
-            CurrentEnergy > WalkCost,
+            moveAction.IsActionAccessible()
+            //CurrentEnergy > WalkCost,
             //CurrentAmountOfEnergy > AttackCost
         };
 
@@ -232,5 +232,10 @@ public class Human : ActingObject
             transform.position = cell.transform.position;
 
         return true;
+    }
+
+    public void SetCurrentAnimation(Animations animations)
+    {
+        humanAnimator.PlayAnimation(animations);
     }
 }

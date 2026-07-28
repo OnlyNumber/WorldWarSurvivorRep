@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InventoryItemSO : ScriptableObject
 {
 
-    //public ActiveItem activeItem;
+    public ActionSO activeItem;
 
     public Sprite ItemImage;
 

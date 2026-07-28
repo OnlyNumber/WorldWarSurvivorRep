@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ac9c2b6c02a06478c22cfb149ab4ec, type: 3}
-  m_Name: RifleActivation
+  m_Script: {fileID: 11500000, guid: 8adc66b168ac4414b8bc5b96949fc71c, type: 3}
+  m_Name: ShootActionSO
   m_EditorClassIdentifier: 
-  Damage: 0
-  AttackRange: 0
-  AttackEnergyCost: 0

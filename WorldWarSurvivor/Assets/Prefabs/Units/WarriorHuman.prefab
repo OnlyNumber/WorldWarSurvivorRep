@@ -94,6 +94,7 @@ MonoBehaviour:
           inventoryItemSO: {fileID: 0}
           FirstCellPosition: {x: 0, y: 0}
           direciton: 1
+  moveActionSO: {fileID: 11400000, guid: e5f0ecea60a6e10449c64fb672ade4e1, type: 2}
 --- !u!114 &3992697489456467168
 MonoBehaviour:
   m_ObjectHideFlags: 0
