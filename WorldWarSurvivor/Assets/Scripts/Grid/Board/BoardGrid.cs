@@ -13,7 +13,7 @@ public class BoardGrid : Grid<BoardCell>
         return GetCell((int)coordinate.x, (int)coordinate.z);
     }
 
-    public GridObject SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab, bool isSpawned = false)
+    public GridObject SpawnGridObject(Vector2Int coordinate, GridObject gridObjectPrefab, GridObjectStats gridObjectStats, bool isSpawned = false)
     {
         var cell = (BoardCell)GetCell(coordinate);
 
@@ -32,7 +32,7 @@ public class BoardGrid : Grid<BoardCell>
         else
             currentObject = gridObjectPrefab;
 
-        currentObject.Initialize(this, cell);
+        currentObject.Initialize(this, cell, gridObjectStats);
 
         TrySetGridObjectToCell(currentObject, cell);
 

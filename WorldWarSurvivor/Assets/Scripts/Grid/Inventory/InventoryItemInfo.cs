@@ -4,19 +4,22 @@ using UnityEngine;
 [Serializable]
 public class InventoryItemInfo
 {
-    [SerializeField] private InventoryItemSO inventoryItemSO;
+    [Tooltip("Do not touch that (Temporary)")] [SerializeField] private InventoryItemSO inventoryItemSO;
 
-    public AbilityAction AbilityAction;
-
-    public Vector2Int FirstCellPosition;
-
+    public ActionSO AbilityActionSO => inventoryItemSO.ActiveItem;
     public bool IsItemExist => inventoryItemSO != null;
-
     public Sprite ItemSprite => inventoryItemSO.ItemImage;
-
     public ItemType itemType => inventoryItemSO.itemType;
-
     public Vector2Int Size => inventoryItemSO.Size;
     
+
+    public Vector2Int FirstCellPosition;
     public Direction direciton = Direction.Right;
+
+    private int inventoryItemSOIndex;
+
+    private void GetMyItemFromIndex()
+    {
+        
+    }
 }

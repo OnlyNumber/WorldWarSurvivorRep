@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BaseProgression : MonoBehaviour
 {
@@ -30,7 +32,6 @@ public class BaseProgression : MonoBehaviour
         }
 
         Instance = this;
-
         LoadInfo();
     }
 
@@ -38,13 +39,18 @@ public class BaseProgression : MonoBehaviour
 
     private void LoadInfo()
     {
-        PlayerData = SaveAndLoad.Load<BaseProgressionData>(PlayerSavePath);
+        string folderPath = Path.Combine(Application.dataPath + "/" + "PlayerSave", "PlayerDataSave" + ".json");
+
+        PlayerData = SaveAndLoad.LoadMapFromJson<BaseProgressionData>(folderPath); //SaveAndLoad.Load<BaseProgressionData>(PlayerSavePath);
     }
+
 
     public void SaveInfo()
     {
-        Debug.Log("Save info");
-        SaveAndLoad.Save(PlayerSavePath, PlayerData);
+        string folderPath = Path.Combine(Application.dataPath + "/" + "PlayerSave", "PlayerDataSave" + ".json");
+        SaveAndLoad.SaveMap(folderPath, PlayerData);
+
+//        SaveAndLoad.Save(PlayerSavePath, PlayerData);
     }
 
     public void DeleteInfo()

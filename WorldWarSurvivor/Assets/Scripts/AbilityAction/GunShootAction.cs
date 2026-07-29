@@ -13,18 +13,12 @@ public class GunShootAction : AbilityAction
 
     private Human CurrentHuman;
 
-    private Transform cachedTransform;
-    
-
     public override void Initialize(ActingObject actingObject, BoardGrid myGrid)
     {
         CurrentActingObject = actingObject;
         this.myGrid = myGrid;
 
-
-
         CurrentHuman = CurrentActingObject as Human;
-        cachedTransform = CurrentHuman.transform;
 
         //Create here model and place it
     }
@@ -55,8 +49,15 @@ public class GunShootAction : AbilityAction
 
     public override void TargetCell(BoardCell attackingCell)
     {
+            CurrentHuman.ChangeEnergy(AttackEnergyCost);
+
+            TurnController.AddMovingObject(CurrentHuman);
+            CurrentHuman.SetCurrentAnimation(Animations.Attack);
+
         if (attackingCell.gridObject != null)
             attackingCell.gridObject.HealthSystem.ChangeHealth(-Damage);
+
+            EndAttack();
     }
 
     public override bool IsActionAccessible()
@@ -64,4 +65,12 @@ public class GunShootAction : AbilityAction
         return CurrentHuman.CurrentEnergy > AttackEnergyCost;
     }
 
+    private void EndAttack()
+    {
+        TurnController.RemoveMovingObject(CurrentHuman);
+        CurrentHuman.SetCurrentAnimation(Animations.Idle);
+        //StartCoroutine(Utilities.WaitAndRun(() => CurrentHuman.SetCurrentAnimation(Animations.Idle), 0.2f));
+
+        CurrentHuman.SetCurrentAnimation(Animations.Idle);
+    }
 }

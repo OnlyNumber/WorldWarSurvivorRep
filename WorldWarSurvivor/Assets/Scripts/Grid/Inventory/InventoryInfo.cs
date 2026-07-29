@@ -9,5 +9,7 @@ public class InventoryInfo
     public Vector2Int Size;
 
     [SerializeField] public List<InventoryItemInfo> Items = new();
+
+    public Action OnEndInventoryManipulation;
     
 }

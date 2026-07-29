@@ -1,17 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "ItemSO", menuName = "ItemSO")]
 public class InventoryItemSO : ScriptableObject
 {
+    public int UniqueIndex;
 
-    public ActionSO activeItem;
+    [field: SerializeField] public ActionSO ActiveItem
+    {
+        get;
+        private set;
+    }
 
-    public Sprite ItemImage;
+    [field: SerializeField] public Sprite ItemImage
+    {
+        get;
+        private set;
+    }
 
-    public ItemType itemType;
+    [field: SerializeField] public ItemType itemType
+    {
+        get;
+        private set;
+    }
 
-    public Vector2Int Size;
+    [field: SerializeField] public Vector2Int Size
+    {
+        get;
+        private set;
+    }
 }

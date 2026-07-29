@@ -27,10 +27,10 @@ public class Human : ActingObject
 
     public HumanStats HumanStats;
 
-    [SerializeField] protected MoveActionSO moveActionSO = new();
+    [SerializeField] protected MoveActionSO moveActionSO;
 
     protected MoveAction moveAction;
-    protected List<AbilityAction> abilityActions;
+    protected List<AbilityAction> abilityActions = new();
 
     private void Start()
     {
@@ -44,12 +44,33 @@ public class Human : ActingObject
         OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
     }
 
-    public override void Initialize(BoardGrid grid, BoardCell cell)
+    public override void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
-        base.Initialize(grid, cell);
+        base.Initialize(grid, cell, gridObjectStats);
+
+        HumanStats = (HumanStats)gridObjectStats;
 
         HealthSystem.Initialize(20, 20);
         HealthSystem.OnHealthChange += DeathCheck;
+
+        //HumanStats.HumanInventoryInfo.OnEndInventoryManipulation
+        CreateActions();
+    }
+
+    private void CreateActions()
+    {
+        Debug.Log("CreateActions");
+        var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
+        for (int i = 0; i < equipedItems.Count; i++)
+        {
+            if (equipedItems[i].AbilityActionSO == null)
+                continue;
+
+            var action = equipedItems[i].AbilityActionSO.GetAction();
+            action.Initialize(this, myGrid);
+            abilityActions.Add(action);
+        }
     }
 
     public void ChangeEnergy(int energyChange)
@@ -82,20 +103,16 @@ public class Human : ActingObject
     public override void GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText)
     {
 
-        var InventoryItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
-
         actions = new()
         {
-
             (moveAction.TargetCell,moveAction.GetAccessibleCells()),
-            //(Attack, AccessibleCellsForWeapon())
         };
 
 
-        for (int i = 0; i < InventoryItems.Count; i++)
+        for (int i = 0; i < abilityActions.Count; i++)
         {
-            //actions.Add()
-            //InventoryItems[i].
+            int index = i;
+            actions.Add((abilityActions[index].TargetCell, abilityActions[index].GetAccessibleCells()));
         }
 
 
@@ -103,71 +120,41 @@ public class Human : ActingObject
         {
             moveActionSO.NameAction
         };
+
+        var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
+        if (equipedItems == null)
+        {
+            Debug.Log("equipedItems == null");
+            return;
+        }
+
+        for (int i = 0; i < equipedItems.Count; i++)
+        {
+            if (equipedItems[i].AbilityActionSO == null)
+                continue;
+            actionText.Add(equipedItems[i].AbilityActionSO.NameAction);
+        }
     }
 
     public List<bool> CheckActionCost()
     {
-        var InventoryItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
-
 
         List<bool> checkActionList = new()
         {
             moveAction.IsActionAccessible()
-            //CurrentEnergy > WalkCost,
-            //CurrentAmountOfEnergy > AttackCost
         };
 
-        for (int i = 0; i < InventoryItems.Count; i++)
+        for (int i = 0; i < abilityActions.Count; i++)
         {
-            //InventoryItems[i].
+            checkActionList.Add(abilityActions[i].IsActionAccessible());
         }
 
         return checkActionList;
     }
 
     #region Actions
-    /*
-        public HashSet<BoardCell> AccessibleCellsForMove()
-        {
-            HashSet<BoardCell> cells = new();
 
-            foreach (var item in AStarPathfinding.GetReachableTiles(MyCurrentCell.Coordinate, CurrentEnergy, myGrid))
-            {
-                cells.Add(myGrid.GetCell(item));
-            }
-
-            return cells;
-        }
-
-        public void Move(BoardCell endPosition)
-        {
-            var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
-            path.Remove(path[0]);
-
-            CurrentEnergy -= path.Count * WalkCost;
-            myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition, false);
-            StartCoroutine(MovingAnimation(path, endPosition));
-        }*/
-
-
-    /*    public void Attack(BoardCell attackingCell)
-        {
-            Debug.Log("Attack");
-
-            CurrentAmountOfEnergy -= AttackCost;
-
-            TurnController.AddMovingObject(this);
-            humanAnimator.PlayAnimation(Animations.Attack);
-
-            if (attackingCell.gridObject != null)
-                currentWeapon.AttackCell(attackingCell);
-        }
-
-        private HashSet<BoardCell> AccessibleCellsForWeapon()
-        {
-            return currentWeapon.AccessibleCellsForAttack(myGrid, MyCurrentCell);
-        }
-    */
     private void EndAttack()
     {
         TurnController.RemoveMovingObject(this);

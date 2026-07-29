@@ -2880,6 +2880,7 @@ MonoBehaviour:
     PlayerInventory:
       Size: {x: 10, y: 20}
       Items: []
+    MapIndex: 0
   CurrentCommandPrice: 0
   <MaxCommandPrice>k__BackingField: 0
 --- !u!1 &757351816
@@ -6965,9 +6966,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItemInfos:
   - inventoryItemSO: {fileID: 11400000, guid: 821cb8d35ca960a47973c15effb9870d, type: 2}
+    AbilityActionSO: {fileID: 11400000, guid: 40ee69ab0b82b854eb754c1ceca6493a, type: 2}
     FirstCellPosition: {x: 0, y: 0}
     direciton: 0
   - inventoryItemSO: {fileID: 11400000, guid: 11ab31a4f50724b40beb78c77e15a989, type: 2}
+    AbilityActionSO: {fileID: 0}
     FirstCellPosition: {x: 0, y: 0}
     direciton: 0
   ItemIndex: 0

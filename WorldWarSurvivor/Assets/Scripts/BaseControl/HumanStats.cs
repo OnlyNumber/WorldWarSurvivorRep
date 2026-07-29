@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class HumanStats
+public class HumanStats : GridObjectStats
 {
     public int CurrentLevel;
 

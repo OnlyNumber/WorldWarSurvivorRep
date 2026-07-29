@@ -5,13 +5,6 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button PlayButton;
-
-    public Button SaveButton;
-
-
-    public Button ExitButton;
-
     public Camera MainMenuCamera;
 
     [Space(5)]
@@ -25,10 +18,6 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        SaveButton.onClick.AddListener(BaseProgression.Instance.SaveInfo);
-        ExitButton.onClick.AddListener(BaseProgression.Instance.DeleteInfo);
-
-
         CameraControl.MainCamera = MainMenuCamera;
         CameraControl.ChangeToCamera(MainMenuCamera);
     }

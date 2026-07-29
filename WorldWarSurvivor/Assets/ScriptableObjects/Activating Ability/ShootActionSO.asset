@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8adc66b168ac4414b8bc5b96949fc71c, type: 3}
   m_Name: ShootActionSO
   m_EditorClassIdentifier: 
+  NameAction: Shoot

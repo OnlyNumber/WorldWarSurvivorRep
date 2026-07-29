@@ -13,9 +13,9 @@ public class InventoryWindow : MonoBehaviour
 
     public RectTransform ItemsTransform;
 
-    private HumanInventoryInfo CurrentHuman;
+    private HumanInventoryInfo _currentHumanInventory;
 
-    private InventoryInfo CurrentStorage;
+    private InventoryInfo _currentStorage;
 
 
     private void Start()
@@ -32,32 +32,33 @@ public class InventoryWindow : MonoBehaviour
 
     public void OpenWindow(HumanInventoryInfo humanInventory, InventoryInfo StorageInventory = null)
     {
-        CurrentHuman = humanInventory;
+        _currentHumanInventory = humanInventory;
 
-        CurrentStorage = StorageInventory;
+        _currentStorage = StorageInventory;
 
-        InventorySystem.Instance.OpenHumanInventory(CurrentHuman, StorageInventory);
-        InventorySystem.Instance.currentEquipment.InitializeItems(CurrentHuman.EquipmentInfo);
+        InventorySystem.Instance.OpenHumanInventory(_currentHumanInventory, StorageInventory);
+        InventorySystem.Instance.currentEquipment.InitializeItems(_currentHumanInventory.EquipmentInfo);
         window.gameObject.SetActive(true);
     }
 
     public void CloseWindow()
     {
-        if (CurrentHuman != null)
+        if (_currentHumanInventory != null)
         {
-            CurrentHuman.Items = InventorySystem.Instance.GetCurrentUnitItems();
-            CurrentHuman.EquipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
+            _currentHumanInventory.Items = InventorySystem.Instance.GetCurrentUnitItems();
+            _currentHumanInventory.EquipmentInfo = InventorySystem.Instance.GetCurrentUnitEquipmentItems();
         }
 
-        if (CurrentStorage != null)
-            CurrentStorage.Items = InventorySystem.Instance.GetCurrentStorageItems();
+        if (_currentStorage != null)
+            _currentStorage.Items = InventorySystem.Instance.GetCurrentStorageItems();
 
         InventorySystem.Instance.ClearGrids();
         InventorySystem.Instance.ClearEquipment();
 
+        _currentHumanInventory.OnEndInventoryManipulation?.Invoke();
 
-        CurrentHuman = null;
-        CurrentStorage = null;
+        _currentHumanInventory = null;
+        _currentStorage = null;
         window.gameObject.SetActive(false);
     }
 }
