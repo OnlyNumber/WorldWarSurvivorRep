@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSOSearcher : MonoBehaviour
+public static class ItemSOSearcher
 {
-    // Start is called before the first frame update
-    void Start()
+    private const string PathToItems = "ScriptableObjects/Items";
+
+    private static InventoryItemSO[] inventoryItemSOs;
+
+    public static InventoryItemSO GetItemFromIndex(int uniqueIndex)
     {
-        
+        if (inventoryItemSOs == null || inventoryItemSOs.Length == 0)
+            LoadAllItems();
+
+        foreach (var item in inventoryItemSOs)
+        {
+            if (item.UniqueIndex == uniqueIndex)
+                return item;
+        }
+
+        return null;
     }
 
-    // Update is called once per frame
-    void Update()
+    private static void LoadAllItems()
     {
-        
+        inventoryItemSOs = Resources.LoadAll<InventoryItemSO>(PathToItems);
     }
+
 }

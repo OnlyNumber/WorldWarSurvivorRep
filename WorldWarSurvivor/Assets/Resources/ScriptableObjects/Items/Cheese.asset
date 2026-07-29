@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ac8670cf67dcc24aa03b4e125f7e699, type: 3}
-  m_Name: BodyArmour
+  m_Name: Cheese
   m_EditorClassIdentifier: 
-  ItemImage: {fileID: 21300000, guid: b07164769129b7d47818470b1cea1909, type: 3}
-  itemType: 2
-  Size: {x: 2, y: 2}
+  UniqueIndex: 2
+  <ActiveItem>k__BackingField: {fileID: 0}
+  <ItemImage>k__BackingField: {fileID: 0}
+  <itemType>k__BackingField: 0
+  <Size>k__BackingField: {x: 2, y: 2}

@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ac8670cf67dcc24aa03b4e125f7e699, type: 3}
-  m_Name: Cheese
+  m_Name: RifleItem
   m_EditorClassIdentifier: 
-  activeItem: {fileID: 11400000, guid: 1d8b726fb164eae429723149f529ca30, type: 2}
-  ItemImage: {fileID: 21300000, guid: aea2cbf1c63507a4dbe2213a48b79d90, type: 3}
-  itemType: 4
-  Size: {x: 2, y: 2}
+  UniqueIndex: 4
+  <ActiveItem>k__BackingField: {fileID: 11400000, guid: 40ee69ab0b82b854eb754c1ceca6493a,
+    type: 2}
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 3ec1003942a963642b0bfcf43ef02dc1,
+    type: 3}
+  <itemType>k__BackingField: 0
+  <Size>k__BackingField: {x: 8, y: 2}

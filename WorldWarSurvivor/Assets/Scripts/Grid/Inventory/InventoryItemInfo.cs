@@ -16,10 +16,15 @@ public class InventoryItemInfo
     public Vector2Int FirstCellPosition;
     public Direction direciton = Direction.Right;
 
-    private int inventoryItemSOIndex;
+    public int inventoryItemSOIndex = -1;
 
-    private void GetMyItemFromIndex()
+    public void GetMyItemFromIndex()
     {
-        
+        inventoryItemSO = ItemSOSearcher.GetItemFromIndex(inventoryItemSOIndex);
+    }
+
+    public void SetMyItemIndex()
+    {
+        inventoryItemSOIndex = inventoryItemSO.UniqueIndex;
     }
 }

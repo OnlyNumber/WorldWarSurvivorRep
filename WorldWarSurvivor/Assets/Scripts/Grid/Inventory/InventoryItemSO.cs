@@ -3,29 +3,40 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ItemSO", menuName = "ItemSO")]
 public class InventoryItemSO : ScriptableObject
 {
-    public int UniqueIndex;
 
-    [field: SerializeField] public ActionSO ActiveItem
+    [Tooltip("If unique index == -1, then index not initialized")] public int UniqueIndex = -1;
+
+    [field: SerializeField]
+    public ActionSO ActiveItem
     {
         get;
         private set;
     }
 
-    [field: SerializeField] public Sprite ItemImage
+    [field: SerializeField]
+    public Sprite ItemImage
     {
         get;
         private set;
     }
 
-    [field: SerializeField] public ItemType itemType
+    [field: SerializeField]
+    public ItemType itemType
     {
         get;
         private set;
     }
 
-    [field: SerializeField] public Vector2Int Size
+    [field: SerializeField]
+    public Vector2Int Size
     {
         get;
         private set;
+    }
+
+    [ContextMenu("GetUniqueIndex")]
+    private void GetUniqueIndex()
+    {
+
     }
 }

@@ -136,14 +136,22 @@ public class EquipmentController : MonoBehaviour
      InventoryItemInfo MainHand,
      InventoryItemInfo OtherHand)
     {
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(HeadSlot), this.HeadSlot.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(BodySlot), this.BodySlot.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(AmuletSlot1), this.AmuletSlot1.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(AmuletSlot2), this.AmuletSlot2.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(QuickUseSlot1), this.QuickUseSlot1.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(QuickUseSlot2), this.QuickUseSlot2.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(MainHand), this.MainHand.rectTransform.position);
-        TryPlaceItem(InventorySystem.Instance.SpawnItem(OtherHand), this.OtherHand.rectTransform.position);
+        if (HeadSlot != null && HeadSlot.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(HeadSlot), this.HeadSlot.rectTransform.position);
+        if (BodySlot != null && BodySlot.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(BodySlot), this.BodySlot.rectTransform.position);
+        if (AmuletSlot1 != null && AmuletSlot1.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(AmuletSlot1), this.AmuletSlot1.rectTransform.position);
+        if (AmuletSlot2 != null && AmuletSlot2.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(AmuletSlot2), this.AmuletSlot2.rectTransform.position);
+        if (QuickUseSlot1 != null && QuickUseSlot1.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(QuickUseSlot1), this.QuickUseSlot1.rectTransform.position);
+        if (QuickUseSlot2 != null && QuickUseSlot2.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(QuickUseSlot2), this.QuickUseSlot2.rectTransform.position);
+        if (MainHand != null && MainHand.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(MainHand), this.MainHand.rectTransform.position);
+        if (OtherHand != null && OtherHand.IsItemExist)
+            TryPlaceItem(InventorySystem.Instance.SpawnItem(OtherHand), this.OtherHand.rectTransform.position);
     }
 
     public EquipmentInfo GetItems()

@@ -41,16 +41,21 @@ public class BaseProgression : MonoBehaviour
     {
         string folderPath = Path.Combine(Application.dataPath + "/" + "PlayerSave", "PlayerDataSave" + ".json");
 
-        PlayerData = SaveAndLoad.LoadMapFromJson<BaseProgressionData>(folderPath); //SaveAndLoad.Load<BaseProgressionData>(PlayerSavePath);
+        
+        PlayerData = SaveAndLoad.LoadMapFromJson<BaseProgressionData>(folderPath);
+        PlayerData.GetMyItemFromIndex();
     }
 
 
     public void SaveInfo()
     {
         string folderPath = Path.Combine(Application.dataPath + "/" + "PlayerSave", "PlayerDataSave" + ".json");
+        
+        PlayerData.SetMyItemIndex();
         SaveAndLoad.SaveMap(folderPath, PlayerData);
 
-//        SaveAndLoad.Save(PlayerSavePath, PlayerData);
+
+
     }
 
     public void DeleteInfo()

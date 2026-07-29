@@ -95,7 +95,10 @@ public class InventorySystem : MonoBehaviour
     public InventoryItem SpawnItem(InventoryItemInfo unitItemInfo)
     {
         if (unitItemInfo == null || !unitItemInfo.IsItemExist)
+        {
+            Debug.Log("unitItemInfo == null");
             return null;
+        }
 
         var emptyItem = Instantiate(emptyItemPrefab);
         emptyItem.Initialize(unitItemInfo);
