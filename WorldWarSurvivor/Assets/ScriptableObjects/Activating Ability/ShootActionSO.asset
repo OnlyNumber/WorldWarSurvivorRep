@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac8670cf67dcc24aa03b4e125f7e699, type: 3}
-  m_Name: Helmet
+  m_Script: {fileID: 11500000, guid: 8adc66b168ac4414b8bc5b96949fc71c, type: 3}
+  m_Name: ShootActionSO
   m_EditorClassIdentifier: 
-  ItemImage: {fileID: 21300000, guid: 8879dafd52713ff43bec7f89d9c4a02e, type: 3}
-  itemType: 1
-  Size: {x: 2, y: 2}
+  NameAction: Shoot

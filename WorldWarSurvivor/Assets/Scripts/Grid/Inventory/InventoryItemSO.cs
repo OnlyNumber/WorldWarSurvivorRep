@@ -1,14 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "ItemSO", menuName = "ItemSO")]
 public class InventoryItemSO : ScriptableObject
 {
-    public Sprite ItemImage;
 
-    public ItemType itemType;
+    [Tooltip("If unique index == -1, then index not initialized")] public int UniqueIndex = -1;
 
-    public Vector2Int Size;
+    [field: SerializeField]
+    public ActionSO ActiveItem
+    {
+        get;
+        private set;
+    }
+
+    [field: SerializeField]
+    public Sprite ItemImage
+    {
+        get;
+        private set;
+    }
+
+    [field: SerializeField]
+    public ItemType itemType
+    {
+        get;
+        private set;
+    }
+
+    [field: SerializeField]
+    public Vector2Int Size
+    {
+        get;
+        private set;
+    }
+
+    [ContextMenu("GetUniqueIndex")]
+    private void GetUniqueIndex()
+    {
+
+    }
 }

@@ -110,7 +110,7 @@ public class CellSelecter : MonoBehaviour
         if (gridObject == null)
             return;
 
-        gridObject.ShowActions();
+        gridObject.ShowWindowOfUnit();
 
         gridObject.GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText);
         currentAction = actions;
@@ -168,7 +168,7 @@ public class CellSelecter : MonoBehaviour
         //In future add delay before refreshing data
         MarkAccesibleCells();
 
-        CurrentObject.ShowActions();
+        CurrentObject.ShowWindowOfUnit();
 
     }
 

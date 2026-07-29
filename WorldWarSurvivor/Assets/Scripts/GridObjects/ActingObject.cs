@@ -17,9 +17,9 @@ public abstract class ActingObject : GridObject
 
     public Action OnActivateTurn;
 
-    public override void Initialize(BoardGrid grid, BoardCell cell)
+    public override void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
-        base.Initialize(grid, cell);
+        base.Initialize(grid, cell, gridObjectStats);
 
         TurnController.AddActingObject(this);
     }

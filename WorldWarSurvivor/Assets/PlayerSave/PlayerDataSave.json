@@ -1,0 +1,132 @@
+{
+    "Roster": [
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "HumanHealth": 81,
+            "MeleeSkill": 39,
+            "RangeSkill": 48,
+            "ModelPrefab": {
+                "instanceID": 35356
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 28546
+                        },
+                        "FirstCellPosition": {
+                            "x": 2,
+                            "y": 3
+                        },
+                        "direciton": 0,
+                        "inventoryItemSOIndex": 4
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        }
+    ],
+    "CurrentCommand": [],
+    "PlayerInventory": {
+        "Size": {
+            "x": 10,
+            "y": 20
+        },
+        "Items": [
+            {
+                "inventoryItemSO": {
+                    "instanceID": 28546
+                },
+                "FirstCellPosition": {
+                    "x": 0,
+                    "y": 0
+                },
+                "direciton": 1,
+                "inventoryItemSOIndex": 4
+            }
+        ]
+    },
+    "MapIndex": 0
+}

@@ -60,11 +60,9 @@ public class GamePreparer : MonoBehaviour
 
                 var cell = accesibleCells[rand];
 
-                human = TeamDefiner.CreateObject(grid, cell.Coordinate, gridObectPrefab) as Human;
+                human = TeamDefiner.CreateObject(grid, cell.Coordinate, gridObectPrefab, item) as Human;
 
             } while (human == null);
-
-            human.HumanStats = item;
         }
 
         selectPreparePosition.MarkPlacement();

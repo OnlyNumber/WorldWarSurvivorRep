@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public static class TeamDefiner 
+public static class TeamDefiner
 {
     public static List<ActingObject> allObjects = new();
 
-    public static ActingObject CreateObject(BoardGrid grid, Vector2Int position, GridObject prefab)
+    public static ActingObject CreateObject(BoardGrid grid, Vector2Int position, GridObject prefab, GridObjectStats gridObjectStats)
     {
-        var obj = grid.SpawnGridObject(position, prefab);
+        var obj = grid.SpawnGridObject(position, prefab, gridObjectStats);
 
         allObjects.Add(obj as ActingObject);
 

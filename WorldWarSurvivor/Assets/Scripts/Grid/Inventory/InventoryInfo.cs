@@ -9,5 +9,23 @@ public class InventoryInfo
     public Vector2Int Size;
 
     [SerializeField] public List<InventoryItemInfo> Items = new();
+
+    public Action OnEndInventoryManipulation;
+
+    public virtual void GetItemsSO()
+    {
+        foreach (var item in Items)
+        {
+            item.GetMyItemFromIndex();
+        }
+    }
+
+    public virtual void SetItemsSO()
+    {
+        foreach (var item in Items)
+        {
+            item.SetMyItemIndex();
+        }
+    }
     
 }

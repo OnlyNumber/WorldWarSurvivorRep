@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingWeapon : MonoBehaviour
+public class SmokeAction : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

@@ -13,7 +13,7 @@ public class MeleeUnitController : UnitController
     private ActingObject MyTarget;
 
     //Change this later to getting from controlling unit
-    private Weapon weapon;
+    //private Weapon weapon;
 
     //Change later to the weapon;
     private int AttackRange => 1;
@@ -22,7 +22,7 @@ public class MeleeUnitController : UnitController
     {
         controllingUnit = human;
         boardGrid = grid;
-        weapon = controllingUnit.currentWeapon;
+      //  weapon = controllingUnit.currentWeapon;
         SetTargets(TeamDefiner.allObjects);
     }
 
@@ -39,14 +39,14 @@ public class MeleeUnitController : UnitController
     {
         List<Action> actions = new();
 
-        actions.Add(MoveToTarget);
+        //actions.Add(MoveToTarget);
         actions.Add(TryAttack);
 
         return actions;
 
     }
 
-    private void MoveToTarget()
+    /*private void MoveToTarget()
     {
         var path = AStarPathfinding.FindPath(boardGrid, controllingUnit.MyCurrentCell.Coordinate, Vector2Int.zero, true);
 
@@ -57,7 +57,7 @@ public class MeleeUnitController : UnitController
         distanceToTarget -= (AttackRange - 1);
 
         controllingUnit.Move(path[distanceToTarget - 1]);
-    }
+    }*/
 
     private void TryAttack()
     {

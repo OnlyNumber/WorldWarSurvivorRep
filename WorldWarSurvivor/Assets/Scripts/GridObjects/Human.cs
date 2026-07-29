@@ -7,54 +7,86 @@ public class Human : ActingObject
 {
     public BoardCell MyCurrentCell;
 
-    private const float DistanceBetweenPoints = 0.1f;
-
-    private const int WalkCost = 10;
-
-    private const int AttackCost = 30;
-
-    public Weapon currentWeapon;
-
     public float speed;
 
     [SerializeField] private HumanAnimator humanAnimator;
 
     private int MaxAmountOfEnergy = 100;
 
-    private int CurrentAmountOfEnergy;
+    private int _currentEnergy;
+
+    public int CurrentEnergy
+    {
+        get => _currentEnergy;
+
+        protected set
+        {
+            _currentEnergy = value;
+        }
+    }
 
     public HumanStats HumanStats;
 
-    //[SerializeField] public List<InventoryItemInfo> Items = new();
+    [SerializeField] protected MoveActionSO moveActionSO;
 
-    //[SerializeField] public EquipmentInfo EquipmentInfo;
-
+    protected MoveAction moveAction;
+    protected List<AbilityAction> abilityActions = new();
 
     private void Start()
     {
-        CurrentAmountOfEnergy = MaxAmountOfEnergy;
+        moveAction = (MoveAction)moveActionSO.GetAction();
+        moveAction.Initialize(this, myGrid);
+
+        CurrentEnergy = MaxAmountOfEnergy;
 
         humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
 
-        OnActivateTurn += () => CurrentAmountOfEnergy = MaxAmountOfEnergy;
+        OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
     }
 
-    public override void Initialize(BoardGrid grid, BoardCell cell)
+    public override void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
-        base.Initialize(grid, cell);
+        base.Initialize(grid, cell, gridObjectStats);
+
+        HumanStats = (HumanStats)gridObjectStats;
 
         HealthSystem.Initialize(20, 20);
         HealthSystem.OnHealthChange += DeathCheck;
+
+        //HumanStats.HumanInventoryInfo.OnEndInventoryManipulation
+        CreateActions();
     }
 
-    public override void ShowActions()
+    private void CreateActions()
+    {
+        Debug.Log("CreateActions");
+        var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
+        for (int i = 0; i < equipedItems.Count; i++)
+        {
+            if (equipedItems[i].AbilityActionSO == null)
+                continue;
+
+            var action = equipedItems[i].AbilityActionSO.GetAction();
+            action.Initialize(this, myGrid);
+            abilityActions.Add(action);
+        }
+    }
+
+    public void ChangeEnergy(int energyChange)
+    {
+        Debug.Log("Change energy " + energyChange);
+        CurrentEnergy += energyChange;
+    }
+
+    public override void ShowWindowOfUnit()
     {
         ActionWindow.Instance.ClearActionWindow();
 
-        base.ShowActions();
+        base.ShowWindowOfUnit();
 
         string Health = "Health " + HealthSystem.CurrentHealth.ToString() + " / " + HealthSystem.MaxHealth.ToString();
-        string Energy = "Energy " + CurrentAmountOfEnergy.ToString() + " / " + MaxAmountOfEnergy.ToString();
+        string Energy = "Energy " + CurrentEnergy.ToString() + " / " + MaxAmountOfEnergy.ToString();
 
         List<string> CharacteristicText = new()
         {
@@ -70,61 +102,58 @@ public class Human : ActingObject
 
     public override void GetActions(out List<(Action<BoardCell>, HashSet<BoardCell>)> actions, out List<string> actionText)
     {
+
         actions = new()
         {
-            (Move,AccessibleCellsForMove()),
-            (Attack, AccessibleCellsForWeapon())
+            (moveAction.TargetCell,moveAction.GetAccessibleCells()),
         };
+
+
+        for (int i = 0; i < abilityActions.Count; i++)
+        {
+            int index = i;
+            actions.Add((abilityActions[index].TargetCell, abilityActions[index].GetAccessibleCells()));
+        }
+
 
         actionText = new()
         {
-            "Move",
-            "Attack"
+            moveActionSO.NameAction
         };
+
+        var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
+        if (equipedItems == null)
+        {
+            Debug.Log("equipedItems == null");
+            return;
+        }
+
+        for (int i = 0; i < equipedItems.Count; i++)
+        {
+            if (equipedItems[i].AbilityActionSO == null)
+                continue;
+            actionText.Add(equipedItems[i].AbilityActionSO.NameAction);
+        }
     }
 
-    private HashSet<BoardCell> AccessibleCellsForWeapon()
+    public List<bool> CheckActionCost()
     {
-        return currentWeapon.AccessibleCellsForAttack(myGrid, MyCurrentCell);
+
+        List<bool> checkActionList = new()
+        {
+            moveAction.IsActionAccessible()
+        };
+
+        for (int i = 0; i < abilityActions.Count; i++)
+        {
+            checkActionList.Add(abilityActions[i].IsActionAccessible());
+        }
+
+        return checkActionList;
     }
 
     #region Actions
-
-    public HashSet<BoardCell> AccessibleCellsForMove()
-    {
-        HashSet<BoardCell> cells = new();
-
-        foreach (var item in AStarPathfinding.GetReachableTiles(MyCurrentCell.Coordinate, CurrentAmountOfEnergy, myGrid))
-        {
-            cells.Add(myGrid.GetCell(item));
-        }
-
-        return cells;
-    }
-
-    public void Move(BoardCell endPosition)
-    {
-        var path = AStarPathfinding.FindPath(myGrid, MyCurrentCell.Coordinate, endPosition.Coordinate);
-        path.Remove(path[0]);
-
-        CurrentAmountOfEnergy -= path.Count * WalkCost;
-        myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(MyCurrentCell), endPosition, false);
-        StartCoroutine(MovingAnimation(path, endPosition));
-    }
-
-
-    public void Attack(BoardCell attackingCell)
-    {
-        Debug.Log("Attack");
-
-        CurrentAmountOfEnergy -= AttackCost;
-
-        TurnController.AddMovingObject(this);
-        humanAnimator.PlayAnimation(Animations.Attack);
-
-        if (attackingCell.gridObject != null)
-            currentWeapon.AttackCell(attackingCell);
-    }
 
     private void EndAttack()
     {
@@ -132,50 +161,39 @@ public class Human : ActingObject
         humanAnimator.PlayAnimation(Animations.Idle);
         StartCoroutine(Utilities.WaitAndRun(() => humanAnimator.PlayAnimation(Animations.Idle), 0.2f));
     }
-
-    private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
-    {
-        int index = 0;
-
-        TurnController.AddMovingObject(this);
-
-        humanAnimator.PlayAnimation(Animations.Walk);
-
-        do
+    /*
+        private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
         {
-            var cellPosition = cells[index].transform.position;
+            int index = 0;
 
-            transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
+            TurnController.AddMovingObject(this);
 
-            Vector3 direction = (cellPosition - transform.position).normalized;
-            if (direction != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(direction);
+            humanAnimator.PlayAnimation(Animations.Walk);
+
+            do
+            {
+                var cellPosition = cells[index].transform.position;
+
+                transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
+
+                Vector3 direction = (cellPosition - transform.position).normalized;
+                if (direction != Vector3.zero)
+                    transform.rotation = Quaternion.LookRotation(direction);
 
 
-            if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
-                index++;
+                if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
+                    index++;
 
-            yield return null;
+                yield return null;
 
-        } while (index < cells.Count);
+            } while (index < cells.Count);
 
-        humanAnimator.PlayAnimation(Animations.Idle);
-        TurnController.RemoveMovingObject(this);
+            humanAnimator.PlayAnimation(Animations.Idle);
+            TurnController.RemoveMovingObject(this);
 
-    }
-
+        }
+    */
     #endregion
-
-    public List<bool> CheckActionCost()
-    {
-        List<bool> checkActionList = new()
-        {
-            CurrentAmountOfEnergy > WalkCost,
-            CurrentAmountOfEnergy > AttackCost
-        };
-
-        return checkActionList;
-    }
 
     private void DeathCheck()
     {
@@ -201,5 +219,10 @@ public class Human : ActingObject
             transform.position = cell.transform.position;
 
         return true;
+    }
+
+    public void SetCurrentAnimation(Animations animations)
+    {
+        humanAnimator.PlayAnimation(animations);
     }
 }

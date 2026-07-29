@@ -9,7 +9,7 @@ public class ChooseMap : MonoBehaviour
 
     private const int GameplayTestSceneIndex = 1;
 
-    private int CurrentMap;
+    //private int CurrentMap;
 
     public Button CloseButton;
 
@@ -32,9 +32,11 @@ public class ChooseMap : MonoBehaviour
 
         StartExpedition.onClick.AddListener(LoadGameplayTest);
 
+        /*
         SovietMap.onClick.AddListener(() => CurrentMap = 0);
         GermanMap.onClick.AddListener(() => CurrentMap = 1);
         SteppeMap.onClick.AddListener(() => CurrentMap = 2);
+        */
 
     }
 

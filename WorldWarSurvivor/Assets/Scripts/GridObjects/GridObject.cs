@@ -10,14 +10,14 @@ public abstract class GridObject : MonoBehaviour
 
     public HealthSystem HealthSystem = new();
 
-    public virtual void Initialize(BoardGrid grid, BoardCell cell)
+    public virtual void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
         //MyCurrentCell = cell;
         myGrid = grid;
 
     }
 
-    public virtual void ShowActions()
+    public virtual void ShowWindowOfUnit()
     {
 
     }

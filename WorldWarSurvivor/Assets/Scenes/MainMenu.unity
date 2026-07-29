@@ -2880,6 +2880,7 @@ MonoBehaviour:
     PlayerInventory:
       Size: {x: 10, y: 20}
       Items: []
+    MapIndex: 0
   CurrentCommandPrice: 0
   <MaxCommandPrice>k__BackingField: 0
 --- !u!1 &757351816
@@ -6967,7 +6968,7 @@ MonoBehaviour:
   - inventoryItemSO: {fileID: 11400000, guid: 821cb8d35ca960a47973c15effb9870d, type: 2}
     FirstCellPosition: {x: 0, y: 0}
     direciton: 0
-  - inventoryItemSO: {fileID: 11400000, guid: 11ab31a4f50724b40beb78c77e15a989, type: 2}
+  - inventoryItemSO: {fileID: 11400000, guid: ac84e5da9520b2a4ea9691e042fa88b2, type: 2}
     FirstCellPosition: {x: 0, y: 0}
     direciton: 0
   ItemIndex: 0
@@ -9486,9 +9487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1494dbcbe6a1d8946853ba34e68a2d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayButton: {fileID: 54511072}
-  SaveButton: {fileID: 666363527}
-  ExitButton: {fileID: 1049898139}
   MainMenuCamera: {fileID: 1457411841}
   RecruitControl: {fileID: 1519077880}
   ExpeditionControl: {fileID: 144114112}

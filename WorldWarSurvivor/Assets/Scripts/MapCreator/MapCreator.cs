@@ -54,7 +54,7 @@ public class MapCreator : MonoBehaviour
                     multipleObj.myDirection = data.direction;
 
 
-                boardGrid.SpawnGridObject(coordinate, currentObj.GetComponent<GridObject>(), true);
+                boardGrid.SpawnGridObject(coordinate, currentObj.GetComponent<GridObject>(), null, true);
 
                 currentObj.transform.parent = mapObstacleParent;
                 allCreatedObjects.Add(currentObj);
