@@ -17,6 +17,8 @@ public class InventoryWindow : MonoBehaviour
 
     private InventoryInfo _currentStorage;
 
+    //private 
+
 
     private void Start()
     {

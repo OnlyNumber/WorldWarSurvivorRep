@@ -9,7 +9,7 @@ public abstract class AbilityAction : IDisposable
     protected BoardGrid myGrid;
 
     
-    public abstract void Initialize(ActingObject actingObjectm, BoardGrid myGrid);
+    public abstract void Initialize(ActingObject actingObject, BoardGrid myGrid);
 
     public abstract void Dispose();
 

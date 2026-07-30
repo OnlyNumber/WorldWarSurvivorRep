@@ -108,7 +108,7 @@ public static class TurnController
 
         obj.ActivateTurn();
 
-        CellSelecter.Instance.NoCurrentObject();
+        CellSelecter.Instance.KillCurrentObjectIndicator();
 
         //Here will be choose who will control this object
         if (obj.IsFriend)

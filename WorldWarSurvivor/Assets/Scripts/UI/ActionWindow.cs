@@ -37,6 +37,8 @@ public class ActionWindow : MonoBehaviour
 
     public void CreateButtons(List<string> text, List<bool> isAvailableButton)
     {
+        Debug.Log("Text " + text.Count + " isAvailableButton " + isAvailableButton.Count);
+
         for (int i = 0; i < text.Count; i++)
         {
             var button = Instantiate(ActionButtonPrefab, actionButtonsPlace);
@@ -101,4 +103,5 @@ public class ActionWindow : MonoBehaviour
     {
         inventoryWindow.OpenWindow((CellSelecter.Instance.CurrentObject as Human).HumanStats.HumanInventoryInfo);
     }
+
 }

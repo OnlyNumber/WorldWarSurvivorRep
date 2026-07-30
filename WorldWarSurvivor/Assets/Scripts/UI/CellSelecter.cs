@@ -125,7 +125,7 @@ public class CellSelecter : MonoBehaviour
     {
         CurrentObject = gridObject;
 
-
+        #region  SetIndicator
         _currentIndicator.SetActive(true);
         _currentIndicator.transform.parent = CurrentObject.transform;
         _currentIndicator.transform.localPosition = new Vector3(0, 2f, 0);
@@ -139,14 +139,13 @@ public class CellSelecter : MonoBehaviour
         currentSequence
         .SetLoops(-1, LoopType.Restart)
         .Append(_currentIndicator.transform.DOLocalMoveY(up, 1f).SetEase(Ease.Linear))
-        .Append(_currentIndicator.transform.DOLocalMoveY(down, 1f).SetEase(Ease.Linear))
-        ;
-        //.Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y, 0.5f))
+        .Append(_currentIndicator.transform.DOLocalMoveY(down, 1f).SetEase(Ease.Linear));
+        #endregion
 
         ShowCell(CurrentObject);
     }
 
-    public void NoCurrentObject()
+    public void KillCurrentObjectIndicator()
     {
         currentSequence.Kill();
 

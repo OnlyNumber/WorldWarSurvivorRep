@@ -69,7 +69,7 @@ public class GunShootAction : AbilityAction
     {
         TurnController.RemoveMovingObject(CurrentHuman);
         CurrentHuman.SetCurrentAnimation(Animations.Idle);
-        //StartCoroutine(Utilities.WaitAndRun(() => CurrentHuman.SetCurrentAnimation(Animations.Idle), 0.2f));
+        CurrentHuman.StartCoroutine(Utilities.WaitAndRun(() => CurrentHuman.SetCurrentAnimation(Animations.Idle), 0.2f));
 
         CurrentHuman.SetCurrentAnimation(Animations.Idle);
     }

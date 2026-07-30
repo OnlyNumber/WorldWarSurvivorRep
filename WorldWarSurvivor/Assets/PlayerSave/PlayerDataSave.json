@@ -1,5 +1,6 @@
 {
-    "Roster": [
+    "Roster": [],
+    "CurrentCommand": [
         {
             "CurrentLevel": 0,
             "CurrentAmountOfExperience": 0,
@@ -14,7 +15,41 @@
                     "x": 8,
                     "y": 6
                 },
-                "Items": [],
+                "Items": [
+                    {
+                        "inventoryItemSO": {
+                            "instanceID": 28544
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": 4
+                    },
+                    {
+                        "inventoryItemSO": {
+                            "instanceID": 28544
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 2
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": 4
+                    },
+                    {
+                        "inventoryItemSO": {
+                            "instanceID": 33646
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 4
+                        },
+                        "direciton": 0,
+                        "inventoryItemSOIndex": 2
+                    }
+                ],
                 "EquipmentInfo": {
                     "HeadItem": {
                         "inventoryItemSO": {
@@ -84,14 +119,14 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 28546
+                            "instanceID": 0
                         },
                         "FirstCellPosition": {
-                            "x": 2,
-                            "y": 3
+                            "x": 0,
+                            "y": 0
                         },
-                        "direciton": 0,
-                        "inventoryItemSOIndex": 4
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
                     },
                     "OtherHandItem": {
                         "inventoryItemSO": {
@@ -108,25 +143,12 @@
             }
         }
     ],
-    "CurrentCommand": [],
     "PlayerInventory": {
         "Size": {
             "x": 10,
             "y": 20
         },
-        "Items": [
-            {
-                "inventoryItemSO": {
-                    "instanceID": 28546
-                },
-                "FirstCellPosition": {
-                    "x": 0,
-                    "y": 0
-                },
-                "direciton": 1,
-                "inventoryItemSOIndex": 4
-            }
-        ]
+        "Items": []
     },
     "MapIndex": 0
 }

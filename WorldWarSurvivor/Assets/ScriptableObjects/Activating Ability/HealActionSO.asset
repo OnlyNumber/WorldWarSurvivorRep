@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac8670cf67dcc24aa03b4e125f7e699, type: 3}
-  m_Name: Helmet
+  m_Script: {fileID: 11500000, guid: 65d231860e263fd459398bfa241f8d22, type: 3}
+  m_Name: HealActionSO
   m_EditorClassIdentifier: 
-  UniqueIndex: 3
-  <ActiveItem>k__BackingField: {fileID: 0}
-  <ItemImage>k__BackingField: {fileID: 0}
-  <itemType>k__BackingField: 1
-  <Size>k__BackingField: {x: 2, y: 2}
+  NameAction: Eat cheese

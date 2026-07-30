@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 
 [Serializable]
-public class EquipmentInfo 
+public class EquipmentInfo
 {
     public InventoryItemInfo HeadItem;
 
@@ -25,16 +25,32 @@ public class EquipmentInfo
     {
         List<InventoryItemInfo> inventoryItemInfos = new()
         {
-            HeadItem,
+            /*HeadItem,
             BodyItem,
             MainHandItem,
             AmuletItem1,
             AmuletItem2,
             QuickUseItem1,
             QuickUseItem2,
-            OtherHandItem
+            OtherHandItem*/
         };
 
+        if (HeadItem != null)
+            inventoryItemInfos.Add(HeadItem);
+        if (BodyItem != null)
+            inventoryItemInfos.Add(BodyItem);
+        if (MainHandItem != null)
+            inventoryItemInfos.Add(MainHandItem);
+        if (AmuletItem1 != null)
+            inventoryItemInfos.Add(AmuletItem1);
+        if (AmuletItem2 != null)
+            inventoryItemInfos.Add(AmuletItem2);
+        if (QuickUseItem1 != null)
+            inventoryItemInfos.Add(QuickUseItem1);
+        if (QuickUseItem2 != null)
+            inventoryItemInfos.Add(QuickUseItem2);
+        if (OtherHandItem != null)
+            inventoryItemInfos.Add(OtherHandItem);
         return inventoryItemInfos;
     }
 

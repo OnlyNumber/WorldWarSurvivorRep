@@ -32,14 +32,14 @@ public class Human : ActingObject
     protected MoveAction moveAction;
     protected List<AbilityAction> abilityActions = new();
 
+    protected Dictionary<InventoryItemInfo, AbilityAction> abilityDictionary = new();
+
     private void Start()
     {
         moveAction = (MoveAction)moveActionSO.GetAction();
         moveAction.Initialize(this, myGrid);
 
         CurrentEnergy = MaxAmountOfEnergy;
-
-        humanAnimator.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
 
         OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
     }
@@ -53,24 +53,38 @@ public class Human : ActingObject
         HealthSystem.Initialize(20, 20);
         HealthSystem.OnHealthChange += DeathCheck;
 
-        //HumanStats.HumanInventoryInfo.OnEndInventoryManipulation
         CreateActions();
+
+        HumanStats.HumanInventoryInfo.OnEndInventoryManipulation += UpdateItemAction;
+
     }
 
     private void CreateActions()
     {
-        Debug.Log("CreateActions");
+        abilityActions.Clear();
+
         var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
 
         for (int i = 0; i < equipedItems.Count; i++)
         {
-            if (equipedItems[i].AbilityActionSO == null)
+            if (equipedItems[i] == null || 
+                !equipedItems[i].IsItemExist || 
+                equipedItems[i].AbilityActionSO == null)
                 continue;
 
             var action = equipedItems[i].AbilityActionSO.GetAction();
             action.Initialize(this, myGrid);
             abilityActions.Add(action);
         }
+    }
+
+    public void UpdateItemAction()
+    {
+        ActionWindow.Instance.ClearButtons();
+
+
+        CreateActions();
+        ShowWindowOfUnit();
     }
 
     public void ChangeEnergy(int energyChange)
@@ -123,15 +137,9 @@ public class Human : ActingObject
 
         var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
 
-        if (equipedItems == null)
-        {
-            Debug.Log("equipedItems == null");
-            return;
-        }
-
         for (int i = 0; i < equipedItems.Count; i++)
         {
-            if (equipedItems[i].AbilityActionSO == null)
+            if (!equipedItems[i].IsItemExist || equipedItems[i].AbilityActionSO == null)
                 continue;
             actionText.Add(equipedItems[i].AbilityActionSO.NameAction);
         }
@@ -152,48 +160,6 @@ public class Human : ActingObject
 
         return checkActionList;
     }
-
-    #region Actions
-
-    private void EndAttack()
-    {
-        TurnController.RemoveMovingObject(this);
-        humanAnimator.PlayAnimation(Animations.Idle);
-        StartCoroutine(Utilities.WaitAndRun(() => humanAnimator.PlayAnimation(Animations.Idle), 0.2f));
-    }
-    /*
-        private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
-        {
-            int index = 0;
-
-            TurnController.AddMovingObject(this);
-
-            humanAnimator.PlayAnimation(Animations.Walk);
-
-            do
-            {
-                var cellPosition = cells[index].transform.position;
-
-                transform.position = Vector3.MoveTowards(transform.position, cellPosition, Time.deltaTime * speed);
-
-                Vector3 direction = (cellPosition - transform.position).normalized;
-                if (direction != Vector3.zero)
-                    transform.rotation = Quaternion.LookRotation(direction);
-
-
-                if (Vector3.Distance(transform.position, cellPosition) < DistanceBetweenPoints)
-                    index++;
-
-                yield return null;
-
-            } while (index < cells.Count);
-
-            humanAnimator.PlayAnimation(Animations.Idle);
-            TurnController.RemoveMovingObject(this);
-
-        }
-    */
-    #endregion
 
     private void DeathCheck()
     {
