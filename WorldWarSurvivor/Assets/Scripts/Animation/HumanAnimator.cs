@@ -29,6 +29,11 @@ public class HumanAnimator : MonoBehaviour
         SetAnimator(defaultAnimatorController);
     }
 
+    private void Temp()
+    {
+        PlayAnimation(Animations.Idle);
+    }
+
     public void PlayAnimation(Animations animation)
     {
         switch (animation)

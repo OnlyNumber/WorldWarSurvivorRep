@@ -162,6 +162,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e5fac147c4e24a443b1b7245cc0d455c, type: 2}
+    - target: {fileID: 95218715033358026, guid: f11597d739665a54992b8339873fd7bc,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -222,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb6c685efd9ada45bd6f3cfd16e7f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultAnimatorController: {fileID: 9100000, guid: e5fac147c4e24a443b1b7245cc0d455c,
+  defaultAnimatorController: {fileID: 9100000, guid: a3b8ed451a57fef4a990281005f19b85,
     type: 2}
   animator: {fileID: 7571673317881394721}
 --- !u!4 &7515954225081197927 stripped

@@ -7,6 +7,11 @@ public class HealAction : AbilityAction
     public int Heal = 10;
     private Human CurrentHuman;
 
+    public HealAction(ActionSO actionSO) : base(actionSO)
+    {
+        Heal = (actionSO as HealActionSO).HealingHealth;
+    }
+
     public override void Dispose()
     {
         throw new System.NotImplementedException();
