@@ -18,7 +18,7 @@
                 "Items": [
                     {
                         "inventoryItemSO": {
-                            "instanceID": 28544
+                            "instanceID": 37916
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -29,18 +29,7 @@
                     },
                     {
                         "inventoryItemSO": {
-                            "instanceID": 28544
-                        },
-                        "FirstCellPosition": {
-                            "x": 0,
-                            "y": 2
-                        },
-                        "direciton": 1,
-                        "inventoryItemSOIndex": 4
-                    },
-                    {
-                        "inventoryItemSO": {
-                            "instanceID": 33646
+                            "instanceID": 33656
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -119,14 +108,14 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 0
+                            "instanceID": 37916
                         },
                         "FirstCellPosition": {
                             "x": 0,
-                            "y": 0
+                            "y": 2
                         },
                         "direciton": 1,
-                        "inventoryItemSOIndex": -1
+                        "inventoryItemSOIndex": 4
                     },
                     "OtherHandItem": {
                         "inventoryItemSO": {

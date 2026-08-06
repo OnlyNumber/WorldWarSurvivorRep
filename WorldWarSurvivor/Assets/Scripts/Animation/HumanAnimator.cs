@@ -13,11 +13,21 @@ public class HumanAnimator : MonoBehaviour
     private const string WALK_ANIMATION_NAME = "Walk";
     private const string Idle_ANIMATION_NAME = "Idle";
 
+    [SerializeField] private RuntimeAnimatorController defaultAnimatorController;
     public Dictionary<Animations, List<(float, Action)>> animationActions = new();
     public Animator animator;
 
     private Coroutine checkAnimation;
 
+    public void SetAnimator(RuntimeAnimatorController runtimeAnimatorController)
+    {
+        animator.runtimeAnimatorController = runtimeAnimatorController;
+    }
+
+    public void SetDefaultAnimator()
+    {
+        SetAnimator(defaultAnimatorController);
+    }
 
     public void PlayAnimation(Animations animation)
     {
