@@ -44,6 +44,8 @@ public class EquipmentController : MonoBehaviour
             if (position.x > min.x && position.x <= max.x && position.y > min.y && position.y <= max.y)
             {
                 slot.inventoryItem = inventoryItem;
+                //inventoryItem.info.
+
                 inventoryItem.grabbingItem.MyRectTransform.position = slot.rectTransform.position;
                 return true;
             }

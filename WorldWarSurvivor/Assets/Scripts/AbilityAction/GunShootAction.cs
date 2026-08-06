@@ -9,9 +9,14 @@ public class GunShootAction : AbilityAction
 
     public int AttackEnergyCost;
 
-    private RuntimeAnimatorController WeaponAnimator;
-
     private Human CurrentHuman;
+
+    public GunShootAction(ActionSO actionSO) : base(actionSO)
+    {
+        var gunShootSO = actionSO as ShootActionSO;
+
+        Damage = gunShootSO.Damage;
+    }
 
     public override void Initialize(ActingObject actingObject, BoardGrid myGrid)
     {
@@ -19,15 +24,10 @@ public class GunShootAction : AbilityAction
         this.myGrid = myGrid;
 
         CurrentHuman = CurrentActingObject as Human;
-
-        //Create here model and place it
     }
 
     public override void Dispose()
     {
-        //remove model
-
-        throw new System.NotImplementedException();
     }
 
     public override HashSet<BoardCell> GetAccessibleCells()

@@ -10,9 +10,14 @@ public class MoveAction : AbilityAction
 
     private Transform cachedTransform;
 
-    private int Speed = 10;
+    private float Speed = 1;
 
     private const float DistanceBetweenPoints = 0.1f;
+
+    public MoveAction(ActionSO actionSO) : base(actionSO)
+    {
+        Speed = (actionSO as MoveActionSO).speed;
+    }
 
     public override void Initialize(ActingObject actingObject, BoardGrid myGrid)
     {

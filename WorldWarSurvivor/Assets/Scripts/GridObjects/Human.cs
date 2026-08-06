@@ -1,16 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Human : ActingObject
 {
     public BoardCell MyCurrentCell;
 
-    public float speed;
+    //[SerializeField] private HumanAnimator humanAnimator;
 
-    [SerializeField] private HumanAnimator humanAnimator;
-
+    #region  Stats
     private int MaxAmountOfEnergy = 100;
 
     private int _currentEnergy;
@@ -25,14 +25,23 @@ public class Human : ActingObject
         }
     }
 
-    public HumanStats HumanStats;
+    public HumanStats MyHumanStats;
+    #endregion
 
+    #region Actions
     [SerializeField] protected MoveActionSO moveActionSO;
 
     protected MoveAction moveAction;
-    protected List<AbilityAction> abilityActions = new();
+    protected Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
 
-    protected Dictionary<InventoryItemInfo, AbilityAction> abilityDictionary = new();
+    //protected Dictionary<InventoryItemInfo, AbilityAction> lastAbilityDictionary = new();
+    #endregion
+
+    #region Model Control
+
+    [SerializeField] private ModelController _currentModel;
+
+    #endregion
 
     private void Start()
     {
@@ -48,33 +57,34 @@ public class Human : ActingObject
     {
         base.Initialize(grid, cell, gridObjectStats);
 
-        HumanStats = (HumanStats)gridObjectStats;
+        MyHumanStats = (HumanStats)gridObjectStats;
 
         HealthSystem.Initialize(20, 20);
         HealthSystem.OnHealthChange += DeathCheck;
 
         CreateActions();
 
-        HumanStats.HumanInventoryInfo.OnEndInventoryManipulation += UpdateItemAction;
+        MyHumanStats.HumanInventoryInfo.OnEndInventoryManipulation += UpdateItemAction;
 
+        EquipItems();
     }
 
     private void CreateActions()
     {
         abilityActions.Clear();
 
-        var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+        var equipedItems = MyHumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
 
         for (int i = 0; i < equipedItems.Count; i++)
         {
-            if (equipedItems[i] == null || 
-                !equipedItems[i].IsItemExist || 
+            if (equipedItems[i] == null ||
+                !equipedItems[i].IsItemExist ||
                 equipedItems[i].AbilityActionSO == null)
                 continue;
 
             var action = equipedItems[i].AbilityActionSO.GetAction();
             action.Initialize(this, myGrid);
-            abilityActions.Add(action);
+            abilityActions.Add(equipedItems[i], action);
         }
     }
 
@@ -82,9 +92,23 @@ public class Human : ActingObject
     {
         ActionWindow.Instance.ClearButtons();
 
-
         CreateActions();
         ShowWindowOfUnit();
+        EquipItems();
+    }
+
+    [ContextMenu("EquipItems")]
+    private void EquipItems()
+    {
+        _currentModel.ClearAllItems();
+
+        var equippedItems = MyHumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+
+        for (int i = 0; i < equippedItems.Count; i++)
+        {
+            if (equippedItems[i].IsItemExist)
+                equippedItems[i].EquipItem(_currentModel);
+        }
     }
 
     public void ChangeEnergy(int energyChange)
@@ -121,12 +145,12 @@ public class Human : ActingObject
         {
             (moveAction.TargetCell,moveAction.GetAccessibleCells()),
         };
-
+        var list = abilityActions.Values.ToList();
 
         for (int i = 0; i < abilityActions.Count; i++)
         {
             int index = i;
-            actions.Add((abilityActions[index].TargetCell, abilityActions[index].GetAccessibleCells()));
+            actions.Add((list[index].TargetCell, list[index].GetAccessibleCells()));
         }
 
 
@@ -135,7 +159,7 @@ public class Human : ActingObject
             moveActionSO.NameAction
         };
 
-        var equipedItems = HumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
+        var equipedItems = MyHumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
 
         for (int i = 0; i < equipedItems.Count; i++)
         {
@@ -152,10 +176,11 @@ public class Human : ActingObject
         {
             moveAction.IsActionAccessible()
         };
+        var list = abilityActions.Values.ToList();
 
         for (int i = 0; i < abilityActions.Count; i++)
         {
-            checkActionList.Add(abilityActions[i].IsActionAccessible());
+            checkActionList.Add(list[i].IsActionAccessible());
         }
 
         return checkActionList;
@@ -189,6 +214,6 @@ public class Human : ActingObject
 
     public void SetCurrentAnimation(Animations animations)
     {
-        humanAnimator.PlayAnimation(animations);
+        _currentModel.PlayAnimation(animations);
     }
 }

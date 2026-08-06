@@ -5,8 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "HealActionSO", menuName = "Actioons/HealActionSO")]
 public class HealActionSO : ActionSO
 {
+
+    public int HealingHealth = 10;
+
     public override AbilityAction GetAction()
     {
-        return new HealAction();
+        return new HealAction(this);
     }
 }

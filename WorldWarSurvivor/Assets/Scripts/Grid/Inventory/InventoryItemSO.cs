@@ -34,6 +34,10 @@ public class InventoryItemSO : ScriptableObject
         private set;
     }
 
+    public GameObject ItemPrefab;
+
+    public ModelInfo Model;
+
     [ContextMenu("GetUniqueIndex")]
     private void GetUniqueIndex()
     {

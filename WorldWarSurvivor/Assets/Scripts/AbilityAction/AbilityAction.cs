@@ -7,7 +7,11 @@ public abstract class AbilityAction : IDisposable
     protected ActingObject CurrentActingObject;
 
     protected BoardGrid myGrid;
-
+    
+    public AbilityAction(ActionSO actionSO)
+    {
+        
+    }
     
     public abstract void Initialize(ActingObject actingObject, BoardGrid myGrid);
 
