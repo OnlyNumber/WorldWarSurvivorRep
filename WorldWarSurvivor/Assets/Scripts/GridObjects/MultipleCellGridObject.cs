@@ -8,6 +8,8 @@ public class MultipleCellGridObject : GridObject
 
     public Direction myDirection;
 
+    [SerializeField] private GameObject model;
+
     public override void RemoveMyselfFromBoard()
     {
         throw new System.NotImplementedException();
@@ -45,5 +47,15 @@ public class MultipleCellGridObject : GridObject
         transform.rotation = Utilities.DirectionToRotation(myDirection);
 
         return false;
+    }
+
+    public override void Show()
+    {
+        model.SetActive(true);
+    }
+
+    public override void Hide()
+    {
+        model.SetActive(false);
     }
 }

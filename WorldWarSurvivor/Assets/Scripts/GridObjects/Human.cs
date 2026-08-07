@@ -8,6 +8,8 @@ public class Human : ActingObject
 {
     public BoardCell MyCurrentCell;
 
+    public Vector3 CenterPosition => MyCurrentCell.transform.position;
+
     //[SerializeField] private HumanAnimator humanAnimator;
 
     #region  Stats
@@ -47,10 +49,16 @@ public class Human : ActingObject
     {
         moveAction = (MoveAction)moveActionSO.GetAction();
         moveAction.Initialize(this, myGrid);
+        moveAction.OnEndAbilityAction += UpdateVision;
 
         CurrentEnergy = MaxAmountOfEnergy;
 
         OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
+    }
+
+    private void UpdateVision()
+    {
+        FogOfWar.UpdateAllVisibleCells(myGrid);
     }
 
     public override void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
@@ -215,5 +223,15 @@ public class Human : ActingObject
     public void SetCurrentAnimation(Animations animations)
     {
         _currentModel.PlayAnimation(animations);
+    }
+
+    public override void Show()
+    {
+        _currentModel.SetRendererVisibility(true);
+    }
+
+    public override void Hide()
+    {
+        _currentModel.SetRendererVisibility(false);
     }
 }

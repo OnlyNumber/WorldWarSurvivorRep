@@ -51,6 +51,7 @@ MonoBehaviour:
     rows:
     - cols: 01
   myDirection: 0
+  model: {fileID: 7354629696880288251}
 --- !u!1 &7354629696880288251
 GameObject:
   m_ObjectHideFlags: 0

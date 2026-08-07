@@ -8,6 +8,8 @@ public abstract class AbilityAction : IDisposable
 
     protected BoardGrid myGrid;
     
+    public Action OnEndAbilityAction;
+
     public AbilityAction(ActionSO actionSO)
     {
         

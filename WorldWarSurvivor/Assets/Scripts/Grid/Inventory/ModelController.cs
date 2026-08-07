@@ -9,6 +9,8 @@ public class ModelController : MonoBehaviour
 
     [SerializeField] private List<Position> positions;
 
+    [SerializeField] private List<GameObject> modelRenderer;
+
     public void EquipItem(ItemModel itemPrefab, BodyPosition point)
     {
         var item = GameObject.Instantiate(itemPrefab);
@@ -64,6 +66,14 @@ public class ModelController : MonoBehaviour
     public void PlayAnimation(Animations animations)
     {
         Animator.PlayAnimation(animations);
+    }
+
+    public void SetRendererVisibility(bool state)
+    {
+        foreach (var item in modelRenderer)
+        {
+            item.SetActive(false);
+        }
     }
 }
 

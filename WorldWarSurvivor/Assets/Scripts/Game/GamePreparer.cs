@@ -30,9 +30,13 @@ public class GamePreparer : MonoBehaviour
         EndPreparationButton.onClick.AddListener(EndPreparation);
 
         selectPreparePosition.AccessibleCellsSize = AccessibleCellsSize;
-        Create();
+        #region Map creation
+        
+        CreateGrid();
         mapCreator.Create("CityObstacleData");
         mapCreator.LoadMapFromJson("CityMap");
+        
+        #endregion
 
         CreatePlayerBand();
 
@@ -40,7 +44,7 @@ public class GamePreparer : MonoBehaviour
     }
 
     [ContextMenu("Create")]
-    private void Create()
+    private void CreateGrid()
     {
         grid.CreateGrid(GridSize.x, GridSize.y);
     }
@@ -57,15 +61,18 @@ public class GamePreparer : MonoBehaviour
             do
             {
                 int rand = Random.Range(0, accesibleCells.Count);
-
                 var cell = accesibleCells[rand];
-
                 human = TeamDefiner.CreateObject(grid, cell.Coordinate, gridObectPrefab, item) as Human;
 
             } while (human == null);
         }
 
         selectPreparePosition.MarkPlacement();
+        
+        foreach (var item in accesibleCells)
+        {
+            item.ShowCell();
+        }
 
     }
 

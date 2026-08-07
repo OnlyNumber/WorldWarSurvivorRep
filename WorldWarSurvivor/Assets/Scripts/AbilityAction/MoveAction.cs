@@ -92,6 +92,8 @@ public class MoveAction : AbilityAction
         CurrentHuman.SetCurrentAnimation(Animations.Idle);
         TurnController.RemoveMovingObject(CurrentHuman);
 
+        OnEndAbilityAction?.Invoke();
+
     }
 
 }

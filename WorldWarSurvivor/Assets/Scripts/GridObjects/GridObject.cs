@@ -36,4 +36,8 @@ public abstract class GridObject : MonoBehaviour
     public abstract bool SetCurrentCells(BoardCell cell, bool moveToPosition = true);
 
     public abstract void RemoveMyselfFromBoard();
+
+    public abstract void Show();
+    public abstract void Hide();
+
 }
