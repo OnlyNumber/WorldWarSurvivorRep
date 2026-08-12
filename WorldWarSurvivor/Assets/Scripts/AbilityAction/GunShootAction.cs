@@ -44,7 +44,7 @@ public class GunShootAction : AbilityAction
 
         foreach (var cell in cells)
         {
-            if (cell.gridObject is Human)
+            if (cell.gridObject != null && cell.gridObject is Human)
             {
                 targets.Add(cell);
             }

@@ -19,12 +19,15 @@ public class ModelController : MonoBehaviour
         item.transform.SetParent(part.transform);
         item.EquipItem(this);
         part.PlacedItemModel = item;
+
+        modelRenderer.Add(item.gameObject);
     }
 
     public void UnEquipItem(BodyPosition point)
     {
         var position = Find(point);
 
+        modelRenderer.Remove(position.PlacedItemModel.gameObject);
         Destroy(position.PlacedItemModel.gameObject);
         position.PlacedItemModel = null;
     }

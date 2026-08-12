@@ -10,8 +10,6 @@ public class Human : ActingObject
 
     public Vector3 CenterPosition => MyCurrentCell.transform.position;
 
-    //[SerializeField] private HumanAnimator humanAnimator;
-
     #region  Stats
     private int MaxAmountOfEnergy = 100;
 
@@ -35,8 +33,6 @@ public class Human : ActingObject
 
     protected MoveAction moveAction;
     public Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
-
-    //protected Dictionary<InventoryItemInfo, AbilityAction> lastAbilityDictionary = new();
     #endregion
 
     #region Model Control
@@ -274,5 +270,12 @@ public class Human : ActingObject
             return true;
 
         return false;
+    }
+
+    public override void Dispose()
+    {
+        RemoveMyselfFromBoard();
+
+        base.Dispose();
     }
 }

@@ -6,7 +6,7 @@
             "CurrentAmountOfExperience": 0,
             "HumanHealth": 81,
             "MeleeSkill": 39,
-            "RangeSkill": 48,
+            "RangeSkill": 99,
             "ModelPrefab": {
                 "instanceID": 35356
             },

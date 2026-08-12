@@ -66,6 +66,18 @@ public class CellSelecter : MonoBehaviour
         .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y + 0.5f, 0.5f))
         .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y - 0.5f, 0.5f))
         .SetLoops(-1, LoopType.Restart);
+
+        TurnController.OnEndedAnimation += UpdateAfterAction;
+    }
+
+    private void UpdateAfterAction()
+    {
+        if (CurrentObject == null)
+            return;
+
+        MarkAccesibleCells();
+
+        CurrentObject.ShowWindowOfUnit();
     }
 
     private void Update()

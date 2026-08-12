@@ -26,6 +26,10 @@ public class GamePreparer : MonoBehaviour
     [SerializeField]
     private EnemyBand enemyBand;
 
+    public bool IsCreateDummy;
+
+    public bool IsCreateEnemyBand;
+
 
     private void Start()
     {
@@ -39,10 +43,12 @@ public class GamePreparer : MonoBehaviour
         mapCreator.LoadMapFromJson("CityMap");
 
         #endregion
-        CreateEnemyBand();
+        if (IsCreateEnemyBand)
+            CreateEnemyBand();
         HideAllCells();
         CreatePlayerBand();
-        //CreateDummy();
+        if (IsCreateDummy)
+            CreateDummy();
     }
 
     [ContextMenu("Create")]
