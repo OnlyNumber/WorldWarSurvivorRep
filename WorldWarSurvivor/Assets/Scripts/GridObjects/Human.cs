@@ -8,7 +8,7 @@ public class Human : ActingObject
 {
     public BoardCell MyCurrentCell;
 
-    //[SerializeField] private HumanAnimator humanAnimator;
+    public Vector3 CenterPosition => MyCurrentCell.transform.position;
 
     #region  Stats
     private int MaxAmountOfEnergy = 100;
@@ -32,9 +32,7 @@ public class Human : ActingObject
     [SerializeField] protected MoveActionSO moveActionSO;
 
     protected MoveAction moveAction;
-    protected Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
-
-    //protected Dictionary<InventoryItemInfo, AbilityAction> lastAbilityDictionary = new();
+    public Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
     #endregion
 
     #region Model Control
@@ -43,14 +41,30 @@ public class Human : ActingObject
 
     #endregion
 
+    public void SetTargetMove(BoardCell targetCell)
+    {
+        moveAction.TargetCell(targetCell);
+    }
+
+    public HashSet<BoardCell> GetMoveAccessibleCells()
+    {
+        return moveAction.GetAccessibleCells();
+    }
+
     private void Start()
     {
         moveAction = (MoveAction)moveActionSO.GetAction();
         moveAction.Initialize(this, myGrid);
+        moveAction.OnEndAbilityAction += UpdateVision;
 
         CurrentEnergy = MaxAmountOfEnergy;
 
         OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
+    }
+
+    private void UpdateVision()
+    {
+        FogOfWar.UpdateAllVisibleCells(myGrid);
     }
 
     public override void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
@@ -71,6 +85,11 @@ public class Human : ActingObject
 
     private void CreateActions()
     {
+        foreach (var ability in abilityActions.Values)
+        {
+            ability.Dispose();
+        }
+
         abilityActions.Clear();
 
         var equipedItems = MyHumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
@@ -215,5 +234,48 @@ public class Human : ActingObject
     public void SetCurrentAnimation(Animations animations)
     {
         _currentModel.PlayAnimation(animations);
+    }
+
+    public void AddAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        _currentModel.AddAnimationAction(animation, percentTime, action);
+    }
+
+    public void RemoveAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        _currentModel.RemoveAnimationAction(animation, percentTime, action);
+    }
+
+    public override void Show()
+    {
+        _currentModel.SetRendererVisibility(true);
+    }
+
+    public override void Hide()
+    {
+        _currentModel.SetRendererVisibility(false);
+    }
+
+    public static bool TryToHitHuman(Human attacker, Human defender, bool IsRangedAttack)
+    {
+        int hitNumber = UnityEngine.Random.Range(0, 100);
+
+        int skillOfAttacker = 0;
+        if (IsRangedAttack)
+            skillOfAttacker = attacker.MyHumanStats.RangeSkill;
+        else
+            skillOfAttacker = attacker.MyHumanStats.MeleeSkill;
+
+        if(hitNumber <= skillOfAttacker)
+            return true;
+
+        return false;
+    }
+
+    public override void Dispose()
+    {
+        RemoveMyselfFromBoard();
+
+        base.Dispose();
     }
 }

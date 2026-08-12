@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MoveAction : AbilityAction
 {
-    private int WalkCost = 10;
+    private int StraightWalkCosst = 10;
+    private int DiagonalWalkCost = 14;
 
     private Human CurrentHuman;
 
@@ -33,11 +35,11 @@ public class MoveAction : AbilityAction
         throw new System.NotImplementedException();
     }
 
-    public override HashSet<BoardCell> GetAccessibleCells()
+    public override HashSet<BoardCell> GetAccessibleCells(Vector2Int CellPosition)
     {
         HashSet<BoardCell> cells = new();
 
-        foreach (var item in AStarPathfinding.GetReachableTiles(CurrentHuman.MyCurrentCell.Coordinate, CurrentHuman.CurrentEnergy, myGrid))
+        foreach (var item in AStarPathfinding.GetReachableTiles(CellPosition, CurrentHuman.CurrentEnergy, myGrid))
         {
             cells.Add(myGrid.GetCell(item));
         }
@@ -45,9 +47,14 @@ public class MoveAction : AbilityAction
         return cells;
     }
 
+    public override HashSet<BoardCell> GetAccessibleCells()
+    {
+        return GetAccessibleCells(CurrentHuman.MyCurrentCell.Coordinate);
+    }
+
     public override bool IsActionAccessible()
     {
-        return CurrentHuman.CurrentEnergy > WalkCost;
+        return CurrentHuman.CurrentEnergy > StraightWalkCosst;
     }
 
     public override void TargetCell(BoardCell targetCell)
@@ -55,11 +62,34 @@ public class MoveAction : AbilityAction
         var path = AStarPathfinding.FindPath(myGrid, CurrentHuman.MyCurrentCell.Coordinate, targetCell.Coordinate);
         path.Remove(path[0]);
 
-        Debug.Log(path.Count);
-        CurrentHuman.ChangeEnergy(-path.Count * WalkCost);
+        int diagonalCells = 0;
+        Cell compareCell = path.First();
+
+        foreach (var item in path)
+        {
+            if (Abs(item.Coordinate - compareCell.Coordinate) == Vector2Int.one)
+                diagonalCells++;
+
+            compareCell = item;
+        }
+
+        Debug.Log("diagonal " + diagonalCells);
+
+        int totalCost = diagonalCells * DiagonalWalkCost + (path.Count - diagonalCells) * StraightWalkCosst;
+
+        CurrentHuman.ChangeEnergy(-totalCost);
+
         myGrid.TrySetGridObjectToCell(myGrid.RemoveFromGrid(CurrentHuman.MyCurrentCell), targetCell, false);
 
         CurrentHuman.StartCoroutine(MovingAnimation(path, targetCell));
+
+        Vector2Int Abs(Vector2Int vector2Int)
+        {
+            int x = Mathf.Abs(vector2Int.x);
+            int y = Mathf.Abs(vector2Int.y);
+
+            return new Vector2Int(x, y);
+        }
     }
 
 
@@ -92,6 +122,7 @@ public class MoveAction : AbilityAction
         CurrentHuman.SetCurrentAnimation(Animations.Idle);
         TurnController.RemoveMovingObject(CurrentHuman);
 
-    }
+        OnEndAbilityAction?.Invoke();
 
+    }
 }

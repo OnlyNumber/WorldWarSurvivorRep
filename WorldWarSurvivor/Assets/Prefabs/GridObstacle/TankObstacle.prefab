@@ -45,12 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb953ce4364f0be4aa39f2c3ec94a99e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coverType: 1
   boolMatrix:
     width: 1
     height: 1
     rows:
     - cols: 01
   myDirection: 0
+  model: {fileID: 7354629696880288251}
 --- !u!1 &7354629696880288251
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,9 @@ using UnityEngine;
 public class ShootActionSO : ActionSO
 {
     public int Damage = 1;
-
+    public int AttackRange = 10;
+    public int AttackEnergyCost = 20;
+    
     public override AbilityAction GetAction()
     {
         return new GunShootAction(this);

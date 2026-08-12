@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
 
     public BoardGrid boardGrid;
 
-    private MeleeUnitController meleeUnitController;
+    private UnitController meleeUnitController;
 
     List<Action> unitActions = new();
 
@@ -29,6 +29,13 @@ public class EnemyController : MonoBehaviour
     {
         CurrentObject = gridObject;
         DefineAI();
+        StartCoroutine(Timer());
+    }
+
+    private IEnumerator Timer()
+    {
+
+        yield return new WaitForSeconds(1);
         ActivateObject();
     }
 
@@ -65,7 +72,10 @@ public class EnemyController : MonoBehaviour
     private void DefineAI()
     {
         //In future define will be more complex
-        meleeUnitController = new();
+        if (CurrentObject.gameObject.name.Contains("Dummy"))
+            meleeUnitController = new TrainingDummy();
+        else
+            meleeUnitController = new RangeUnitController();
 
         meleeUnitController.Initialize(CurrentObject as Human, boardGrid);
     }

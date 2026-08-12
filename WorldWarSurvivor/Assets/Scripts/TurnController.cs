@@ -31,7 +31,7 @@ public static class TurnController
     {
         currentMovingObjects.Remove(animatingObject);
 
-        if(!IsNowAnimation)
+        if (!IsNowAnimation)
         {
             OnEndedAnimation?.Invoke();
         }
@@ -63,7 +63,7 @@ public static class TurnController
             checkInfinity++;
             if (checkInfinity > 1000)
             {
-                Debug.Log("This happened ");
+                Debug.Log("This happened  checkInfinity > 1000");
                 break;
             }
             isChanged = false;
@@ -117,5 +117,31 @@ public static class TurnController
             EnemyController.Instance.SetCurrentObject(obj);
         //RaidersAI.Insance.SetCurrentObject
 
+    }
+
+    public static HashSet<ActingObject> GetFriendlyUnits()
+    {
+        HashSet<ActingObject> friendlyUnits = new();
+
+        foreach (var unit in actingObjects)
+        {
+            if (unit.IsFriend)
+                friendlyUnits.Add(unit);
+        }
+
+        return friendlyUnits;
+    }
+
+    public static HashSet<ActingObject> GetUnits(bool isFriend)
+    {
+        HashSet<ActingObject> units = new();
+
+        foreach (var obj in actingObjects)
+        {
+            if (obj.IsFriend == isFriend)
+                units.Add(obj);
+        }
+
+        return units;
     }
 }

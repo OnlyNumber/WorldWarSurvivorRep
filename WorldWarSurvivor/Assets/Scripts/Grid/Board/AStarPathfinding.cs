@@ -7,7 +7,7 @@ public static class AStarPathfinding
 {
 
 
-    public static List<BoardCell> FindPath(BoardGrid searchingGrid, Vector2Int startPoint, Vector2Int endPoint, bool isTarget = false)
+    public static List<BoardCell> FindPath(BoardGrid searchingGrid, Vector2Int startPoint, Vector2Int endPoint, bool isTargetObstacle = false)
     {
         PathCell[,] allCreatedCells = new PathCell[searchingGrid.GridSize.x, searchingGrid.GridSize.y];
 
@@ -25,6 +25,12 @@ public static class AStarPathfinding
 
         List<PathCell> notavailableCells = new();
         HashSet<PathCell> availableCells = new();
+
+        if (searchingGrid.GetCell(startPoint.x, startPoint.y) == null)
+        {
+
+            Debug.Log("searchingGrid.GetCell(startPoint.x, startPoint.y) == " + startPoint.x + " " + startPoint.y);
+        }
 
         PathCell currentCell = CalculateCost((BoardCell)searchingGrid.GetCell(startPoint.x, startPoint.y), endPoint, null, allCreatedCells);
         availableCells.Add(currentCell);
@@ -52,7 +58,7 @@ public static class AStarPathfinding
 
             foreach (var item in neighbours)
             {
-                if (isTarget && item.Coordinate == endPoint)
+                if (isTargetObstacle && item.Coordinate == endPoint)
                 {
                     CalculateCost(searchingGrid.GetCell(item.Coordinate), endPoint, currentCell, allCreatedCells);
                     currentCell = item;
@@ -106,6 +112,9 @@ public static class AStarPathfinding
 
     private static PathCell CalculateCost(BoardCell cell, Vector2Int endPoint, PathCell cellBefore, PathCell[,] allCreatedCells)
     {
+        if (allCreatedCells == null)
+            Debug.Log("allCreatedCells == null");
+
         PathCell pathCell = allCreatedCells[cell.Coordinate.x, cell.Coordinate.y];
 
         pathCell.MyCell = cell;

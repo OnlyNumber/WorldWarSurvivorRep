@@ -9,6 +9,8 @@ public class ModelController : MonoBehaviour
 
     [SerializeField] private List<Position> positions;
 
+    [SerializeField] private List<GameObject> modelRenderer;
+
     public void EquipItem(ItemModel itemPrefab, BodyPosition point)
     {
         var item = GameObject.Instantiate(itemPrefab);
@@ -17,12 +19,15 @@ public class ModelController : MonoBehaviour
         item.transform.SetParent(part.transform);
         item.EquipItem(this);
         part.PlacedItemModel = item;
+
+        modelRenderer.Add(item.gameObject);
     }
 
     public void UnEquipItem(BodyPosition point)
     {
         var position = Find(point);
 
+        modelRenderer.Remove(position.PlacedItemModel.gameObject);
         Destroy(position.PlacedItemModel.gameObject);
         position.PlacedItemModel = null;
     }
@@ -64,6 +69,24 @@ public class ModelController : MonoBehaviour
     public void PlayAnimation(Animations animations)
     {
         Animator.PlayAnimation(animations);
+    }
+    
+    public void AddAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        Animator.AddAnimationAction(animation, percentTime, action);
+    }
+
+    public void RemoveAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        Animator.RemoveAnimationAction(animation, percentTime, action);
+    }
+
+    public void SetRendererVisibility(bool state)
+    {
+        foreach (var item in modelRenderer)
+        {
+            item.SetActive(state);
+        }
     }
 }
 

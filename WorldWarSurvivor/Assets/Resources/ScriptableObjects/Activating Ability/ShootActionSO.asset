@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: ShootActionSO
   m_EditorClassIdentifier: 
   NameAction: Shoot
+  Damage: 10
+  AttackRange: 10
+  AttackEnergyCost: 20

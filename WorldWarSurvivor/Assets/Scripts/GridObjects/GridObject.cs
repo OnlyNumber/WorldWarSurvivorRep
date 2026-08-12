@@ -10,6 +10,8 @@ public abstract class GridObject : MonoBehaviour
 
     public HealthSystem HealthSystem = new();
 
+    public CoverType coverType;
+
     public virtual void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
         //MyCurrentCell = cell;
@@ -36,4 +38,15 @@ public abstract class GridObject : MonoBehaviour
     public abstract bool SetCurrentCells(BoardCell cell, bool moveToPosition = true);
 
     public abstract void RemoveMyselfFromBoard();
+
+    public abstract void Show();
+    public abstract void Hide();
+
+}
+
+public enum CoverType
+{
+    Nothing,
+    HalfCover,
+    FullCover
 }

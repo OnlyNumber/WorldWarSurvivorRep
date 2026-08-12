@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardCell : Cell
-{    
+{
     public GridObject gridObject;
 
     public bool IsObstacle;
+
+    public bool IsVisible = true;
+
+    public GameObject FullHidePlate;
+    public GameObject HidePlate;
+    public GameObject CellPlate;
 
     public GridObject ShowCell()
     {
@@ -18,6 +24,40 @@ public class BoardCell : Cell
 
     public void CloseCell()
     {
-        
+
     }
+
+
+    #region  For of War
+    public void FullHide()
+    {
+        FullHidePlate.SetActive(true);
+
+        if (gridObject != null)
+            gridObject.Hide();
+        CellPlate.SetActive(false);
+        HidePlate.SetActive(false);
+
+    }
+
+    public void Hide()
+    {
+        HidePlate.SetActive(true);
+
+        if (gridObject != null)
+            gridObject.Hide();
+        CellPlate.SetActive(false);
+        FullHidePlate.SetActive(false);
+    }
+
+    public void Show()
+    {
+        CellPlate.SetActive(true);
+        if (gridObject != null)
+            gridObject.Show();
+
+        HidePlate.SetActive(false);
+        FullHidePlate.SetActive(false);
+    }
+    #endregion
 }

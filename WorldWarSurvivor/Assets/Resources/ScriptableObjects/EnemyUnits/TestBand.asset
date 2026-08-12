@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23a9f07acc2accd46b4ac6a07ed35b40, type: 3}
-  m_Name: MoveActionSO
+  m_Script: {fileID: 11500000, guid: e4aa955a9f061ac418b477a83b6862df, type: 3}
+  m_Name: TestBand
   m_EditorClassIdentifier: 
-  NameAction: Move
-  speed: 1
+  Band:
+  - {fileID: 11400000, guid: 6d9dfa8647f5cda45810b2f90a358871, type: 2}
