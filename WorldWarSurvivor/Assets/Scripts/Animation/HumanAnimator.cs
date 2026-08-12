@@ -29,11 +29,6 @@ public class HumanAnimator : MonoBehaviour
         SetAnimator(defaultAnimatorController);
     }
 
-    private void Temp()
-    {
-        PlayAnimation(Animations.Idle);
-    }
-
     public void PlayAnimation(Animations animation)
     {
         switch (animation)
@@ -64,28 +59,32 @@ public class HumanAnimator : MonoBehaviour
         animationActions[animation].Add((percentTime, action));
     }
 
+    public void RemoveAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        if (!animationActions.ContainsKey(animation))
+            animationActions.Add(animation, new());
+
+        animationActions[animation].Remove((percentTime, action));
+    }
+
     private IEnumerator CheckAnimations(Animations animation, float animationLength)
     {
 
 
         float timer = 0;
-        float checkDelay = 0;
 
         List<(float, Action)> actions = new();
 
         foreach (var item in animationActions[animation])
             actions.Add(item);
 
-        Debug.Log("CheckAnimations " + actions.Count);
-
         do
         {
             timer += Time.deltaTime;
-            checkDelay += Time.deltaTime;
 
             for (int i = 0; i < actions.Count; i++)
             {
-                if (actions[i].Item1 > timer / animationLength)
+                if (actions[i].Item1 < timer / animationLength)
                 {
                     actions[i].Item2.Invoke();
                     actions.Remove(actions[i]);
@@ -95,12 +94,9 @@ public class HumanAnimator : MonoBehaviour
                 }
             }
 
-            checkDelay = 0;
-
             yield return null;
 
-        } while (timer > animationLength);
-
+        } while (timer < animationLength);
     }
 
     #region Animations
@@ -121,6 +117,7 @@ public class HumanAnimator : MonoBehaviour
     {
         animator.CrossFade(ATTACK_ANIMATION_NAME, 0);
     }
+
     #endregion
 
     public void Dispose()

@@ -1,23 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class AbilityAction : IDisposable
-{   
+{
     protected ActingObject CurrentActingObject;
 
     protected BoardGrid myGrid;
-    
+
     public Action OnEndAbilityAction;
 
     public AbilityAction(ActionSO actionSO)
     {
-        
+
     }
-    
+
     public abstract void Initialize(ActingObject actingObject, BoardGrid myGrid);
 
     public abstract void Dispose();
+
+    public abstract HashSet<BoardCell> GetAccessibleCells(Vector2Int CellPosition);
 
     public abstract HashSet<BoardCell> GetAccessibleCells();
 

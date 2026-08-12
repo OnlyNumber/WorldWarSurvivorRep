@@ -790,8 +790,8 @@ MonoBehaviour:
   gridObject: {fileID: 0}
   IsObstacle: 0
   IsVisible: 1
-  FullHidePlate: {fileID: 0}
-  HidePlate: {fileID: 0}
+  FullHidePlate: {fileID: 3794997081222263808}
+  HidePlate: {fileID: 3565641405208380049}
   CellPlate: {fileID: 111511789140139257}
 --- !u!1 &8594129244246568586
 GameObject:

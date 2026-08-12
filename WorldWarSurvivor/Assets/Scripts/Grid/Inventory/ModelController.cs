@@ -67,12 +67,22 @@ public class ModelController : MonoBehaviour
     {
         Animator.PlayAnimation(animations);
     }
+    
+    public void AddAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        Animator.AddAnimationAction(animation, percentTime, action);
+    }
+
+    public void RemoveAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        Animator.RemoveAnimationAction(animation, percentTime, action);
+    }
 
     public void SetRendererVisibility(bool state)
     {
         foreach (var item in modelRenderer)
         {
-            item.SetActive(false);
+            item.SetActive(state);
         }
     }
 }

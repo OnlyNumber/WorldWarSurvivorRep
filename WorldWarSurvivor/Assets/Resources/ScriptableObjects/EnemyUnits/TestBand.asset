@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8adc66b168ac4414b8bc5b96949fc71c, type: 3}
-  m_Name: ShootActionSO
+  m_Script: {fileID: 11500000, guid: e4aa955a9f061ac418b477a83b6862df, type: 3}
+  m_Name: TestBand
   m_EditorClassIdentifier: 
-  NameAction: Shoot
-  Damage: 10
-  AttackRange: 10
-  AttackEnergyCost: 20
+  Band:
+  - {fileID: 11400000, guid: 6d9dfa8647f5cda45810b2f90a358871, type: 2}

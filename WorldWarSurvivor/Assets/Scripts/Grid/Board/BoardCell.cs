@@ -33,7 +33,8 @@ public class BoardCell : Cell
     {
         FullHidePlate.SetActive(true);
 
-        gridObject.Hide();
+        if (gridObject != null)
+            gridObject.Hide();
         CellPlate.SetActive(false);
         HidePlate.SetActive(false);
 
@@ -43,8 +44,8 @@ public class BoardCell : Cell
     {
         HidePlate.SetActive(true);
 
-
-        gridObject.Hide();
+        if (gridObject != null)
+            gridObject.Hide();
         CellPlate.SetActive(false);
         FullHidePlate.SetActive(false);
     }
@@ -52,7 +53,8 @@ public class BoardCell : Cell
     public void Show()
     {
         CellPlate.SetActive(true);
-        gridObject.Show();
+        if (gridObject != null)
+            gridObject.Show();
 
         HidePlate.SetActive(false);
         FullHidePlate.SetActive(false);

@@ -25,4 +25,49 @@ public class HumanStats : GridObjectStats
         HumanInventoryInfo.Size.y = 6;
     }
 
+    public List<Func<int>> numberRangeAttackEffects = new();
+    public List<Func<float>> percentRangeAttackEffects = new();
+
+    public int GetRangeAttackEffects()
+    {
+        int attack = 0;
+
+        foreach (var item in numberRangeAttackEffects)
+            attack += item.Invoke();
+
+        return attack;
+    }
+
+    public float GetRangeAttackPercentEffects()
+    {
+        float attackPercent = 1;
+
+        foreach (var item in percentRangeAttackEffects)
+            attackPercent += item.Invoke();
+
+        return attackPercent;
+    }
+
+    public List<Func<int>> numberRangeDefenceEffects = new();
+    public List<Func<float>> percentRangeDefenceEffects = new();
+
+    public int GetRangeDefendEffects()
+    {
+        int defend = 0;
+        foreach (var item in numberRangeDefenceEffects)
+            defend += item.Invoke();
+
+        return defend;
+    }
+
+    public float GetRangeDefendPercentEffects()
+    {
+        float attackPercent = 1;
+
+        foreach (var item in percentRangeDefenceEffects)
+            attackPercent += item.Invoke();
+
+        return attackPercent;
+    }
+
 }

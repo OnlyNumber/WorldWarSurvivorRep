@@ -34,7 +34,7 @@ public class Human : ActingObject
     [SerializeField] protected MoveActionSO moveActionSO;
 
     protected MoveAction moveAction;
-    protected Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
+    public Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
 
     //protected Dictionary<InventoryItemInfo, AbilityAction> lastAbilityDictionary = new();
     #endregion
@@ -44,6 +44,16 @@ public class Human : ActingObject
     [SerializeField] private ModelController _currentModel;
 
     #endregion
+
+    public void SetTargetMove(BoardCell targetCell)
+    {
+        moveAction.TargetCell(targetCell);
+    }
+
+    public HashSet<BoardCell> GetMoveAccessibleCells()
+    {
+        return moveAction.GetAccessibleCells();
+    }
 
     private void Start()
     {
@@ -79,6 +89,11 @@ public class Human : ActingObject
 
     private void CreateActions()
     {
+        foreach (var ability in abilityActions.Values)
+        {
+            ability.Dispose();
+        }
+
         abilityActions.Clear();
 
         var equipedItems = MyHumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
@@ -225,6 +240,16 @@ public class Human : ActingObject
         _currentModel.PlayAnimation(animations);
     }
 
+    public void AddAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        _currentModel.AddAnimationAction(animation, percentTime, action);
+    }
+
+    public void RemoveAnimationAction(Animations animation, float percentTime, Action action)
+    {
+        _currentModel.RemoveAnimationAction(animation, percentTime, action);
+    }
+
     public override void Show()
     {
         _currentModel.SetRendererVisibility(true);
@@ -233,5 +258,21 @@ public class Human : ActingObject
     public override void Hide()
     {
         _currentModel.SetRendererVisibility(false);
+    }
+
+    public static bool TryToHitHuman(Human attacker, Human defender, bool IsRangedAttack)
+    {
+        int hitNumber = UnityEngine.Random.Range(0, 100);
+
+        int skillOfAttacker = 0;
+        if (IsRangedAttack)
+            skillOfAttacker = attacker.MyHumanStats.RangeSkill;
+        else
+            skillOfAttacker = attacker.MyHumanStats.MeleeSkill;
+
+        if(hitNumber <= skillOfAttacker)
+            return true;
+
+        return false;
     }
 }

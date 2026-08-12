@@ -91,21 +91,32 @@ public class SelectPreparePosition : MonoBehaviour
         CurrentObject.transform.position = cell.transform.position;
     }
 
-    public HashSet<BoardCell> FindAccessibleCells()
+    public HashSet<BoardCell> FindAccessibleCellsForFirends()
     {
-        int height = grid.GridSize.y;
+        return FindAccessibleCells(AccessibleCellsSize, 0);
+    }
 
-        int currentHeight = AccessibleCellsSize.y;
+    public HashSet<BoardCell> FindAccessibleCellsForEnemies()
+    {
+        return FindAccessibleCells(AccessibleCellsSize, grid.GridSize.x - AccessibleCellsSize.x);
 
-        height = (height / 2) + 1;
+    }
+
+    public HashSet<BoardCell> FindAccessibleCells(Vector2Int accesiblePositions, int startXPosition)
+    {
+        int middlePosition = grid.GridSize.y;
+
+        int currentHeight = accesiblePositions.y;
+
+        middlePosition = (middlePosition / 2) + 1;
         currentHeight /= 2;
 
-        int first = height - currentHeight;
+        int first = middlePosition - currentHeight;
 
         HashSet<BoardCell> accessibleBoardCells = new();
 
-        for (int y = first; y < first + AccessibleCellsSize.y; y++)
-            for (int x = 0; x < AccessibleCellsSize.x; x++)
+        for (int y = first; y < first + accesiblePositions.y; y++)
+            for (int x = startXPosition; x < startXPosition + accesiblePositions.x; x++)
                 if (!grid.GetCell(x, y).IsObstacle)
                     accessibleBoardCells.Add(grid.GetCell(x, y));
 
@@ -116,7 +127,7 @@ public class SelectPreparePosition : MonoBehaviour
     public void MarkPlacement()
     {
 
-        _accessibleCells = FindAccessibleCells();
+        _accessibleCells = FindAccessibleCellsForFirends();
         MarkCells(_accessibleCells, passMaterial);
     }
 

@@ -40,4 +40,8 @@ public class InventoryItemInfo
         modelController.EquipItem(inventoryItemSO.Model.modelPrefab, inventoryItemSO.Model.Place);
     }
 
+    public void CopyInfo(InventoryItemInfo copiedInfo)
+    {
+        inventoryItemSO = copiedInfo.inventoryItemSO;
+    }
 }

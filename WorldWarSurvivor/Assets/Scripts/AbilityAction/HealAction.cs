@@ -19,6 +19,11 @@ public class HealAction : AbilityAction
 
     public override HashSet<BoardCell> GetAccessibleCells()
     {
+        return GetAccessibleCells(CurrentHuman.MyCurrentCell.Coordinate);
+    }
+
+    public override HashSet<BoardCell> GetAccessibleCells(Vector2Int CellPosition)
+    {
         HashSet<BoardCell> targets = new();
         targets.Add(CurrentHuman.MyCurrentCell);
 

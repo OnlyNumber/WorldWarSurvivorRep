@@ -131,4 +131,17 @@ public static class TurnController
 
         return friendlyUnits;
     }
+
+    public static HashSet<ActingObject> GetUnits(bool isFriend)
+    {
+        HashSet<ActingObject> units = new();
+
+        foreach (var obj in actingObjects)
+        {
+            if (obj.IsFriend == isFriend)
+                units.Add(obj);
+        }
+
+        return units;
+    }
 }
