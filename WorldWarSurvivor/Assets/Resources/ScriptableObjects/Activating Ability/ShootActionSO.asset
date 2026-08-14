@@ -16,3 +16,5 @@ MonoBehaviour:
   Damage: 10
   AttackRange: 10
   AttackEnergyCost: 20
+  ShootParticlePrefab: {fileID: 4149781600178904242, guid: 7eb4e89a4eaacc64baee62dd0253a439,
+    type: 3}

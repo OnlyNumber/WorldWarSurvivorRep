@@ -34,9 +34,15 @@ public class InventoryItemSO : ScriptableObject
         private set;
     }
 
-    public GameObject ItemPrefab;
-
     public ModelInfo Model;
+
+    public VisualEffects visualEffect; 
+    public Animations whichAnimation;
+    public float TimeOfVisualEffect; 
+    public Vector3 offsetForEffect;
+    public Vector3 offsetForRotation;
+
+    public bool BodyOrItem = true;
 
     [ContextMenu("GetUniqueIndex")]
     private void GetUniqueIndex()
