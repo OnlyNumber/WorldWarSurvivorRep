@@ -19,5 +19,11 @@ MonoBehaviour:
     type: 3}
   <itemType>k__BackingField: 0
   <Size>k__BackingField: {x: 8, y: 2}
-  ItemPrefab: {fileID: 0}
   Model: {fileID: 11400000, guid: 53b89a21c0a9ae345a4726491fce21a0, type: 2}
+  visualEffect: {fileID: 4149781600178904242, guid: 7eb4e89a4eaacc64baee62dd0253a439,
+    type: 3}
+  whichAnimation: 2
+  TimeOfVisualEffect: 0.1
+  offsetForEffect: {x: 0, y: 0.081, z: 0.644}
+  offsetForRotation: {x: 0, y: 0, z: 0}
+  BodyOrItem: 0

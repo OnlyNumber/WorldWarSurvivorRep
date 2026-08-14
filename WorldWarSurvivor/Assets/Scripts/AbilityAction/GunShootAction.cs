@@ -6,21 +6,24 @@ public class GunShootAction : AbilityAction
 {
     private const float Cover_Angle = 175f;
 
-    private int Damage;
+    private int _damage;
 
-    private int AttackRange;
+    private int _attackRange;
 
-    private int AttackEnergyCost;
+    private int _attackEnergyCost;
 
     private Human CurrentHuman;
+
+    private VisualEffects _particlePrefab;
 
     public GunShootAction(ActionSO actionSO) : base(actionSO)
     {
         var gunShootSO = actionSO as ShootActionSO;
 
-        Damage = gunShootSO.Damage;
-        AttackRange = gunShootSO.AttackRange;
-        AttackEnergyCost = gunShootSO.AttackEnergyCost;
+        _particlePrefab = gunShootSO.ShootParticlePrefab;
+        _damage = gunShootSO.Damage;
+        _attackRange = gunShootSO.AttackRange;
+        _attackEnergyCost = gunShootSO.AttackEnergyCost;
     }
 
     public override void Initialize(ActingObject actingObject, BoardGrid myGrid)
@@ -40,7 +43,7 @@ public class GunShootAction : AbilityAction
     public override HashSet<BoardCell> GetAccessibleCells(Vector2Int CellPosition)
     {
         HashSet<BoardCell> targets = new();
-        FogOfWar.FindVisibleCellsFromPosition(myGrid, CellPosition, out var cells, AttackRange);
+        FogOfWar.FindVisibleCellsFromPosition(myGrid, CellPosition, out var cells, _attackRange);
 
         foreach (var cell in cells)
         {
@@ -62,23 +65,31 @@ public class GunShootAction : AbilityAction
 
     public override void TargetCell(BoardCell attackingCell)
     {
-        CurrentHuman.ChangeEnergy(-AttackEnergyCost);
+        CurrentHuman.ChangeEnergy(-_attackEnergyCost);
 
         TurnController.AddMovingObject(CurrentHuman);
         CurrentHuman.SetCurrentAnimation(Animations.Attack);
 
         CurrentHuman.transform.LookAt(attackingCell.transform);
 
+        HitDescription.Instance.transform.position = attackingCell.transform.position + new Vector3(0, 2.5f, 1);
 
         if (attackingCell.gridObject != null)
         {
             if (CalculateChanceOfHit((Human)CurrentActingObject, (Human)attackingCell.gridObject))
             {
-                attackingCell.gridObject.HealthSystem.ChangeHealth(-Damage);
+                attackingCell.gridObject.HealthSystem.ChangeHealth(-_damage);
+                HitDescription.Instance.Show("Damaged " + _damage);
+
+            }
+            else
+            {
+                HitDescription.Instance.Show("Miss");
             }
         }
 
-        //EndAttack();
+        HitDescription.Instance.HideAfterDelay();
+
     }
 
     private bool CalculateChanceOfHit(Human attacker, Human defender)
@@ -140,16 +151,13 @@ public class GunShootAction : AbilityAction
         return dot >= requiredDot;
     }
 
-
     public override bool IsActionAccessible()
     {
-        return CurrentHuman.CurrentEnergy > AttackEnergyCost;
+        return CurrentHuman.CurrentEnergy > _attackEnergyCost;
     }
 
     private void EndAttack()
     {
-        Debug.Log("End attack");
-
         TurnController.RemoveMovingObject(CurrentHuman);
         CurrentHuman.SetCurrentAnimation(Animations.Idle);
         CurrentHuman.StartCoroutine(Utilities.WaitAndRun(() => CurrentHuman.SetCurrentAnimation(Animations.Idle), 0.2f));
@@ -159,6 +167,6 @@ public class GunShootAction : AbilityAction
 
     public float GetAttackRange()
     {
-        return AttackRange;
+        return _attackRange;
     }
 }

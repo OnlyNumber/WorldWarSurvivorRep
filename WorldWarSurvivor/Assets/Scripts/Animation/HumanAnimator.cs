@@ -78,6 +78,12 @@ public class HumanAnimator : MonoBehaviour
         foreach (var item in animationActions[animation])
             actions.Add(item);
 
+        for (int i = 0; i < actions.Count; i++)
+        {
+            if (actions[i].Item1 == 0)
+                Debug.Log("Check");
+        }
+
         do
         {
             timer += Time.deltaTime;

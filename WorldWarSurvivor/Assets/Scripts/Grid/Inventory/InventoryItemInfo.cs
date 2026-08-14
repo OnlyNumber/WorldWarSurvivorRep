@@ -35,9 +35,27 @@ public class InventoryItemInfo
         if (inventoryItemSO.Model == null)
             return;
 
-        var model = GameObject.Instantiate(inventoryItemSO.Model.modelPrefab);
-
         modelController.EquipItem(inventoryItemSO.Model.modelPrefab, inventoryItemSO.Model.Place);
+
+        if (inventoryItemSO.visualEffect == null)
+            return;
+
+        var currentItem = modelController.Find(inventoryItemSO.Model.Place);
+        var currentEffect = GameObject.Instantiate(inventoryItemSO.visualEffect);
+
+        currentEffect.Initialize(inventoryItemSO.whichAnimation, inventoryItemSO.TimeOfVisualEffect);
+        currentEffect.Subscibe(modelController);
+        currentItem.PlacedItemModel.CurrentEffect = currentEffect;
+
+        if (inventoryItemSO.BodyOrItem)
+            currentEffect.transform.SetParent(modelController.transform);
+        else
+            currentEffect.transform.SetParent(currentItem.PlacedItemModel.transform);
+
+        currentEffect.transform.localPosition = inventoryItemSO.offsetForEffect;
+        currentEffect.transform.localRotation = Quaternion.Euler(inventoryItemSO.offsetForRotation);
+
+
     }
 
     public void CopyInfo(InventoryItemInfo copiedInfo)

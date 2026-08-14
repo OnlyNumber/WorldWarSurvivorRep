@@ -41,6 +41,8 @@ public class Human : ActingObject
 
     #endregion
 
+    [SerializeField] private UnitHealthUI unitHealthUI;
+
     public void SetTargetMove(BoardCell targetCell)
     {
         moveAction.TargetCell(targetCell);
@@ -60,6 +62,13 @@ public class Human : ActingObject
         CurrentEnergy = MaxAmountOfEnergy;
 
         OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
+
+        HealthSystem.OnHealthChange += ChangeHealthUI;
+    }
+
+    private void ChangeHealthUI()
+    {
+        unitHealthUI.SetBar(HealthSystem.CurrentHealth + " / " + HealthSystem.MaxHealth, (float)HealthSystem.CurrentHealth / (float)HealthSystem.MaxHealth);
     }
 
     private void UpdateVision()
@@ -81,6 +90,7 @@ public class Human : ActingObject
         MyHumanStats.HumanInventoryInfo.OnEndInventoryManipulation += UpdateItemAction;
 
         EquipItems();
+        ChangeHealthUI();
     }
 
     private void CreateActions()
@@ -249,11 +259,14 @@ public class Human : ActingObject
     public override void Show()
     {
         _currentModel.SetRendererVisibility(true);
+        unitHealthUI.gameObject.SetActive(true);
     }
 
     public override void Hide()
     {
         _currentModel.SetRendererVisibility(false);
+        unitHealthUI.gameObject.SetActive(false);
+
     }
 
     public static bool TryToHitHuman(Human attacker, Human defender, bool IsRangedAttack)
@@ -266,7 +279,7 @@ public class Human : ActingObject
         else
             skillOfAttacker = attacker.MyHumanStats.MeleeSkill;
 
-        if(hitNumber <= skillOfAttacker)
+        if (hitNumber <= skillOfAttacker)
             return true;
 
         return false;
