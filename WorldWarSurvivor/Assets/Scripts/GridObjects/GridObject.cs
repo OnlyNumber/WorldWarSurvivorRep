@@ -14,7 +14,6 @@ public abstract class GridObject : MonoBehaviour
 
     public virtual void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
-        //MyCurrentCell = cell;
         myGrid = grid;
 
     }

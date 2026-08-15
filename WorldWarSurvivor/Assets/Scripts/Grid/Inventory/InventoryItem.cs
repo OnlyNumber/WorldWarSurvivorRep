@@ -137,8 +137,6 @@ public class InventoryItem : MonoBehaviour
                 for (int y = 0; y < info.Size.y; y++)
                 {
                     positions.Add(offset + new Vector3(GridCellSize * y, GridCellSize * -x, 0));
-                    //var ppoint = Instantiate(DebugPoint);
-                    //ppoint.position = offset + new Vector3(GridCellSize * y, GridCellSize * -x, 0);
                 }
             }
         }

@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public Transform attacker;
+    public BoardGrid boardGrid;
+    public Container firstChest;
+    public Vector2Int spawnPosition;
 
-    public Transform defender;
-    public Transform Cover;
+    [SerializeField] private List<InventoryItemSO> items;
 
     [ContextMenu("Check")]
-    public void Check()
+    public void CreateContainer()
     {
-        Vector3 direction = Cover.position - defender.position;
-        direction.Normalize();
+        var container = (Container)boardGrid.SpawnGridObject(spawnPosition, firstChest, null);
 
-        //bool isProtected = GunShootAction.CanProtectFrom(attacker.position, defender.position, direction);
+        foreach (var item in items)
+        {
+            var info = new InventoryItemInfo(item);
+            if (InventorySystem.Instance.AutoPlaceItem(container.GetContainer(), info))
+                Debug.Log("Completed");
+            else
+                Debug.Log("Not placed");
 
-        //Debug.Log("Is protecting ? " + isProtected); 
-    }   
+        }
+    }
 }

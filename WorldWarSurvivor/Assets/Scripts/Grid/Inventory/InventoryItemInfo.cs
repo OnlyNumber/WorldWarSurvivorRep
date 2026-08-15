@@ -20,6 +20,16 @@ public class InventoryItemInfo
 
     //public GameObject ItemPrefab => inventoryItemSO.ItemPrefab;
 
+    public InventoryItemInfo(InventoryItemSO inventoryItemSO)
+    {
+        this.inventoryItemSO = inventoryItemSO;
+    }
+
+    public InventoryItemInfo()
+    {
+        
+    }
+
     public void GetMyItemFromIndex()
     {
         inventoryItemSO = ItemSOSearcher.GetItemFromIndex(inventoryItemSOIndex);

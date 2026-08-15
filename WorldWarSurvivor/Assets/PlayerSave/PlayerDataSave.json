@@ -18,7 +18,7 @@
                 "Items": [
                     {
                         "inventoryItemSO": {
-                            "instanceID": 37916
+                            "instanceID": 28916
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -29,7 +29,7 @@
                     },
                     {
                         "inventoryItemSO": {
-                            "instanceID": 33656
+                            "instanceID": 35206
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -108,7 +108,7 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 37916
+                            "instanceID": 28916
                         },
                         "FirstCellPosition": {
                             "x": 0,

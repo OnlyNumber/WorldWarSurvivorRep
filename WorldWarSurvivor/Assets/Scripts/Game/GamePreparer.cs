@@ -31,6 +31,8 @@ public class GamePreparer : MonoBehaviour
     public bool IsCreateEnemyBand;
 
 
+    public Test deleteLaterTest;
+
     private void Start()
     {
         EndPreparationButton.onClick.AddListener(EndPreparation);
@@ -41,12 +43,16 @@ public class GamePreparer : MonoBehaviour
         CreateGrid();
         mapCreator.Create("CityObstacleData");
         mapCreator.LoadMapFromJson("CityMap");
+        
+        deleteLaterTest.CreateContainer();
 
         #endregion
         if (IsCreateEnemyBand)
             CreateEnemyBand();
         HideAllCells();
         CreatePlayerBand();
+
+
         if (IsCreateDummy)
             CreateDummy();
     }

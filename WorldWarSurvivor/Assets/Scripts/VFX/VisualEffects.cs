@@ -15,7 +15,6 @@ public class VisualEffects : MonoBehaviour
 
     public void Subscibe(ModelController modelController)
     {
-        Debug.Log("Subscribe");
         modelController.AddAnimationAction(whichAnimation, TimeOfVisualEffect, ActivateEffect);
     }
 

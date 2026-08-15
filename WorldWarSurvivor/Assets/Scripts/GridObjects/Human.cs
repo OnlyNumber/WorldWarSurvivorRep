@@ -32,6 +32,9 @@ public class Human : ActingObject
     [SerializeField] protected MoveActionSO moveActionSO;
 
     protected MoveAction moveAction;
+    protected OpenContainerAction openContainerAction;
+
+
     public Dictionary<InventoryItemInfo, AbilityAction> abilityActions = new();
     #endregion
 
@@ -59,8 +62,10 @@ public class Human : ActingObject
         moveAction.Initialize(this, myGrid);
         moveAction.OnEndAbilityAction += UpdateVision;
 
-        CurrentEnergy = MaxAmountOfEnergy;
+        openContainerAction = new(null);
+        openContainerAction.Initialize(this, myGrid);
 
+        CurrentEnergy = MaxAmountOfEnergy;
         OnActivateTurn += () => CurrentEnergy = MaxAmountOfEnergy;
 
         HealthSystem.OnHealthChange += ChangeHealthUI;
@@ -174,6 +179,10 @@ public class Human : ActingObject
         {
             (moveAction.TargetCell,moveAction.GetAccessibleCells()),
         };
+
+        if (openContainerAction.GetAccessibleCells().Count > 0)
+            actions.Add((openContainerAction.TargetCell, openContainerAction.GetAccessibleCells()));
+
         var list = abilityActions.Values.ToList();
 
         for (int i = 0; i < abilityActions.Count; i++)
@@ -187,6 +196,11 @@ public class Human : ActingObject
         {
             moveActionSO.NameAction
         };
+        
+        if (openContainerAction.GetAccessibleCells().Count > 0)
+        {
+            actionText.Add("Open container");
+        }
 
         var equipedItems = MyHumanStats.HumanInventoryInfo.EquipmentInfo.GetAllItemsInList();
 
@@ -205,6 +219,11 @@ public class Human : ActingObject
         {
             moveAction.IsActionAccessible()
         };
+
+        
+        if (openContainerAction.GetAccessibleCells().Count > 0)
+            checkActionList.Add(openContainerAction.IsActionAccessible());
+
         var list = abilityActions.Values.ToList();
 
         for (int i = 0; i < abilityActions.Count; i++)
