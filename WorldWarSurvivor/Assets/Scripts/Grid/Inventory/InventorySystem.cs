@@ -186,7 +186,7 @@ public class InventorySystem : MonoBehaviour
         var itemPosition = inventoryItem.grabbingItem.MyRectTransform.position;
 
         if ((gridForPlace == null || !gridForPlace.TyrPlaceItem(inventoryItem, itemPosition)) &&
-         !currentEquipment.TryPlaceItem(inventoryItem, itemPosition))
+         !currentEquipment.TryPlaceItem(inventoryItem, Input.mousePosition))
         {
             inventoryItem.info.direciton = _lastDireciton;
 
@@ -217,10 +217,7 @@ public class InventorySystem : MonoBehaviour
 
         foreach (var item in inventory.Items)
             foreach (var cell in GetItemPositions(item.FirstCellPosition, item.Size, item.direciton))
-            {
                 cells[cell.x, cell.y] = true;
-                Debug.Log(cell.x + " " + cell.y);
-            }
 
         bool isFinded = true;
 

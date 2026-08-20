@@ -36,19 +36,6 @@ public class InventoryGrid : Grid<InventoryCell>
         }
     }
 
-    public RectTransform pos;
-
-    [ContextMenu("CheckPoint")]
-    public void CheckPoint()
-    {
-        var cell = GetCellFromPosition(pos.position);
-
-        if (cell != null)
-            Debug.Log("Coord " + cell.Coordinate);
-        else
-            Debug.Log("No point");
-    }
-
     public InventoryCell GetCellFromPosition(Vector3 position)
     {
         Vector3 coordinate = position - rectTransform.position;

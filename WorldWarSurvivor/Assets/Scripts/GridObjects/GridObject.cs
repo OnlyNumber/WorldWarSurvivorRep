@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GridObject : MonoBehaviour
+public abstract class GridObject : MonoBehaviour, IDisposable
 {
     //public BoardCell MyCurrentCell;
 
@@ -11,6 +11,8 @@ public abstract class GridObject : MonoBehaviour
     public HealthSystem HealthSystem = new();
 
     public CoverType coverType;
+
+    public Action OnDestroyGridObject;
 
     public virtual void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
@@ -31,6 +33,7 @@ public abstract class GridObject : MonoBehaviour
 
     public virtual void Dispose()
     {
+        OnDestroyGridObject?.Invoke();
         Destroy(gameObject);
     }
 

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac8670cf67dcc24aa03b4e125f7e699, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  UniqueIndex: 4
+  <ActiveItem>k__BackingField: {fileID: 11400000, guid: c0f402451896286419d6cff0c60154d2,
+    type: 2}
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 9e8c655b5abbcfb4392edbf511907510,
+    type: 3}
+  <itemType>k__BackingField: 0
+  <Size>k__BackingField: {x: 3, y: 4}
+  Model: {fileID: 11400000, guid: 94f8578f656aa40478d03953634e6a0f, type: 2}
+  visualEffect: {fileID: 0}
+  whichAnimation: 2
+  TimeOfVisualEffect: 0.1
+  offsetForEffect: {x: 0, y: 0.081, z: 0.644}
+  offsetForRotation: {x: 0, y: 0, z: 0}
+  BodyOrItem: 0

@@ -12,7 +12,7 @@ public class BaseProgressionData
 
     public InventoryInfo PlayerInventory = new();
 
-    public int MapIndex = 0;
+    public MissionData CurrentMission;
 
     public BaseProgressionData()
     {

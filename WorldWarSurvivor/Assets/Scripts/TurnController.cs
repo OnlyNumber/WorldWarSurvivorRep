@@ -13,22 +13,21 @@ public static class TurnController
     }
 
     private static List<ActingObject> currentMovingObjects = new();
-
     private static List<ActingObject> actingObjects = new();
-
     private static Queue<ActingObject> currentQueue = new();
 
     public static bool IsNowAnimation => currentMovingObjects.Count > 0;
-
     public static Action OnEndedAnimation;
+    public static Action OnRemovingObject;
 
+    #region MovingAnimation
     public static void AddMovingObject(ActingObject animatingObject)
     {
         currentMovingObjects.Add(animatingObject);
     }
-
     public static void RemoveMovingObject(ActingObject animatingObject)
     {
+
         currentMovingObjects.Remove(animatingObject);
 
         if (!IsNowAnimation)
@@ -36,18 +35,21 @@ public static class TurnController
             OnEndedAnimation?.Invoke();
         }
     }
+    #endregion
 
+    #region Acting Object
     public static void AddActingObject(ActingObject animatingObject)
     {
         actingObjects.Add(animatingObject);
         currentQueue.Clear();
         SortAndCreateQueue();
     }
-
     public static void RemoveActingObject(ActingObject animatingObject)
     {
         actingObjects.Remove(animatingObject);
+        OnRemovingObject?.Invoke();
     }
+    #endregion
 
     public static void SortAndCreateQueue()
     {

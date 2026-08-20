@@ -13,6 +13,15 @@ public class Grid<T> : MonoBehaviour where T : Cell
 
     protected List<T> currentCells = new();
 
+    
+    public List<Vector2Int> Directions = new(){
+            new Vector2Int(0,1),
+            new Vector2Int(1,0),
+            new Vector2Int(0,-1),
+            new Vector2Int(-1,0)
+        };
+
+
     public virtual void CreateGrid(int sizeX = 1, int sizeY = 1)
     {
         if (sizeX <= 0 || sizeY <= 0)

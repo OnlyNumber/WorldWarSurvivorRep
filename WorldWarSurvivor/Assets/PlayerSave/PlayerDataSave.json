@@ -8,7 +8,7 @@
             "MeleeSkill": 39,
             "RangeSkill": 99,
             "ModelPrefab": {
-                "instanceID": 35356
+                "instanceID": 0
             },
             "HumanInventoryInfo": {
                 "Size": {
@@ -18,7 +18,7 @@
                 "Items": [
                     {
                         "inventoryItemSO": {
-                            "instanceID": 28916
+                            "instanceID": 29026
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -29,7 +29,7 @@
                     },
                     {
                         "inventoryItemSO": {
-                            "instanceID": 35206
+                            "instanceID": 35316
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -108,7 +108,7 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 28916
+                            "instanceID": 29026
                         },
                         "FirstCellPosition": {
                             "x": 0,
@@ -139,5 +139,15 @@
         },
         "Items": []
     },
-    "MapIndex": 0
+    "CurrentMission": {
+        "Map": 0,
+        "Type": 1,
+        "LongOfMission": 3,
+        "MoneyReward": 3000,
+        "ItemReward": [
+            {
+                "instanceID": 0
+            }
+        ]
+    }
 }

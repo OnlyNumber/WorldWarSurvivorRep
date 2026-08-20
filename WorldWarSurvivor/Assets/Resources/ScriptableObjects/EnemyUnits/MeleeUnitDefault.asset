@@ -17,7 +17,7 @@ MonoBehaviour:
   RangeSkillRange: {x: 55, y: 65}
   modelsForCreation: []
   Weapon:
-    inventoryItemSO: {fileID: 0}
+    inventoryItemSO: {fileID: 11400000, guid: 257b61126acdb5247a74dd386ef95846, type: 2}
     FirstCellPosition: {x: 0, y: 0}
     direciton: 1
     inventoryItemSOIndex: -1

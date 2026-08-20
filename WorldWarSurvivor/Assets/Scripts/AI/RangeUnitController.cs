@@ -13,27 +13,23 @@ public class RangeUnitController : UnitController
 
     private Human MyCurrentTarget;
 
-    //Change this later to getting from controlling unit
-    //private Weapon weapon;
-
-    //Change later to the weapon;
-
     public override void Initialize(Human human, BoardGrid grid)
     {
         controllingUnit = human;
         this.grid = grid;
-        //  weapon = controllingUnit.currentWeapon;
     }
 
 
     public override List<Action> CreateQueueOfActions()
     {
+        
+
         FindTarget();
         List<Action> actions = new();
 
         actions.Add(MoveToTarget);
         actions.Add(TryAttack);
-
+        
         return actions;
 
     }

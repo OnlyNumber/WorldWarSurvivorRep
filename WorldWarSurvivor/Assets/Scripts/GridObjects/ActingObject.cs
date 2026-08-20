@@ -28,4 +28,10 @@ public abstract class ActingObject : GridObject
     {
         OnActivateTurn?.Invoke();
     }
+
+    public override void Dispose()
+    {
+        TurnController.RemoveActingObject(this);
+        base.Dispose();
+    }
 }
