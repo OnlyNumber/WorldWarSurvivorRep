@@ -1554,7 +1554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Confirm
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1676,6 +1676,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ea24ff9ba223141aef360009661a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapWindow: {fileID: 183717308}
+  ReturnHomeButton: {fileID: 1406550020}
+  roomEventWindow: {fileID: 1335971870}
+  rewardWindow: {fileID: 586420776}
+  homeReturnWindow: {fileID: 1129514061}
   missionMapController:
     CurrentMap: {fileID: 1977657747}
     SizeOfGrid: {x: 10, y: 10}
@@ -1685,11 +1690,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 0e35fded0a8e6fb408a29d38405f8cf7, type: 3}
     - {fileID: 21300000, guid: 16703c98e8b4d384389dda46b7d5d12a, type: 3}
   commandMover: {fileID: 1977657748}
-  mapWindow: {fileID: 183717308}
-  roomEventWindow: {fileID: 1335971870}
-  rewardWindow: {fileID: 586420776}
   battlefieldPreparer: {fileID: 5750864862871258514}
-  confirmWindow: {fileID: 1129514061}
+  enemyBands: []
+  mapObstacles: []
+  mapBackground: 
+  mapName: 
 --- !u!114 &1335971870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1782,7 +1787,7 @@ GameObject:
   - component: {fileID: 1406550021}
   - component: {fileID: 1406550020}
   m_Layer: 5
-  m_Name: Button
+  m_Name: BackHomeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2560,6 +2565,7 @@ MonoBehaviour:
       LongOfMission: 0
       MoneyReward: 0
       ItemReward: []
+    MissionBackgroundMap: 
   CurrentCommandPrice: 0
   <MaxCommandPrice>k__BackingField: 0
 --- !u!1 &1863155324
@@ -7493,7 +7499,7 @@ MonoBehaviour:
   selectPreparePosition: {fileID: 1965657036}
   PreparationWindow: {fileID: 1469053562}
   EndPreparationButton: {fileID: 1212296845}
-  enemyBand: {fileID: 11400000, guid: b601f6567031f594ab17aaae3c0f37a7, type: 2}
+  enemyBandExample: {fileID: 0}
   IsCreateDummy: 0
   deleteLaterTest: {fileID: 540117601}
 --- !u!23 &5773593203670784167

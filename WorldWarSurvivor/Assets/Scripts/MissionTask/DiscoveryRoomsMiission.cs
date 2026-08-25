@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiscoveryRoomsMiission : MissionTask
 {
-    private HashSet<MapCellRoom> mapCellRooms;
+    private HashSet<MapCellRoom> mapCellRooms = new();
     int countOfRooms;
 
     public override void Initialize(MissionManager missionManager)

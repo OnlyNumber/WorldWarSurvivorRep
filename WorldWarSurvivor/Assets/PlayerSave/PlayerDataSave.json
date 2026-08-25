@@ -519,7 +519,7 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 29040
+                            "instanceID": 29048
                         },
                         "FirstCellPosition": {
                             "x": 2,
@@ -627,7 +627,7 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 29040
+                            "instanceID": 29048
                         },
                         "FirstCellPosition": {
                             "x": 2,
@@ -735,7 +735,7 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 29040
+                            "instanceID": 29048
                         },
                         "FirstCellPosition": {
                             "x": 2,
@@ -843,7 +843,7 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 29040
+                            "instanceID": 29048
                         },
                         "FirstCellPosition": {
                             "x": 2,
@@ -875,7 +875,7 @@
         "Items": [
             {
                 "inventoryItemSO": {
-                    "instanceID": 29040
+                    "instanceID": 29048
                 },
                 "FirstCellPosition": {
                     "x": 0,
@@ -886,7 +886,7 @@
             },
             {
                 "inventoryItemSO": {
-                    "instanceID": 29040
+                    "instanceID": 29048
                 },
                 "FirstCellPosition": {
                     "x": 2,
@@ -897,7 +897,7 @@
             },
             {
                 "inventoryItemSO": {
-                    "instanceID": 29040
+                    "instanceID": 29048
                 },
                 "FirstCellPosition": {
                     "x": 4,
@@ -908,7 +908,7 @@
             },
             {
                 "inventoryItemSO": {
-                    "instanceID": 29040
+                    "instanceID": 29048
                 },
                 "FirstCellPosition": {
                     "x": 0,
@@ -919,7 +919,7 @@
             },
             {
                 "inventoryItemSO": {
-                    "instanceID": 29040
+                    "instanceID": 29048
                 },
                 "FirstCellPosition": {
                     "x": 0,
@@ -940,5 +940,6 @@
                 "instanceID": 0
             }
         ]
-    }
+    },
+    "MissionBackgroundMap": ""
 }

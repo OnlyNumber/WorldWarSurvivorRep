@@ -4,6 +4,7 @@ using System.IO;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MissionManager : MonoBehaviour
 {
@@ -13,21 +14,25 @@ public class MissionManager : MonoBehaviour
 
     #region Windows 
     [SerializeField] private GameObject mapWindow;
+    [SerializeField] private Button ReturnHomeButton;
+
     [SerializeField] private RoomEventWindow roomEventWindow;
     [SerializeField] private RewardWindow rewardWindow;
-    [SerializeField] private ConfirmWindow confirmWindow;
+    [SerializeField] private ConfirmWindow homeReturnWindow;
+
     #endregion
     [SerializeField] private MissionMapController missionMapController = new();
     [SerializeField] private CommandMover commandMover;
     [SerializeField] private BattlefieldPreparer battlefieldPreparer;
 
+    #region Map data
     [SerializeField] private EnemyBand[] enemyBands;
     [SerializeField] private string[] mapObstacles;
     [SerializeField] private string mapBackground;
+    [SerializeField] private string mapName;
+    #endregion
 
-    private string mapName;
-
-    private MissionTask _currentMission;
+    private MissionTask _currentMissionTask;
 
     private void Start()
     {
@@ -38,8 +43,7 @@ public class MissionManager : MonoBehaviour
         rewardWindow.GetRewardButton.onClick.AddListener(GetReward);
         rewardWindow.GetRewardButton.onClick.AddListener(BackToMapAfterFight);
 
-        confirmWindow.CancelButton.onClick.AddListener(confirmWindow.Hide);
-        confirmWindow.ConfirmButton.onClick.AddListener(BackFromMissionDefeat);
+        ReturnHomeButton.onClick.AddListener(ShowHomeReturnWindow);
     }
 
     public void SetupMissionMap()
@@ -53,11 +57,23 @@ public class MissionManager : MonoBehaviour
         enemyBands = LoadEnemyBands<EnemyBand>(Resources_Path_To_Data + "/" + mapName + "/Bands");
         mapObstacles = GetMapObstacles(Path_To_Data + "/" + mapName + "/Obstacles");
         mapBackground = Directory.GetFiles(Path_To_Data + "/" + mapName, "*.json")[0];
-        _currentMission = GetMission();
+        _currentMissionTask = GetMission();
+        _currentMissionTask = new DiscoveryRoomsMiission();
+        _currentMissionTask.Initialize(this);
 
+        SetNoActivities();
 
         commandMover.MoveToThisRoom(missionMapController.GetStartCell());
         commandMover.OnMovingToRoom += ActivateRoom;
+    }
+
+    #region  Mission Loaders
+    private void SetNoActivities()
+    {
+        foreach (var item in missionMapController.GetAllCreatedRooms())
+        {
+            item.activity = Activities.Nothing;
+        }
     }
 
     private string GetBackgroundMap(MissionData missionData)
@@ -77,9 +93,9 @@ public class MissionManager : MonoBehaviour
 
     private string[] GetMapObstacles(string enemyBandsPath)
     {
-        var names = Directory.GetFiles(enemyBandsPath,"*.json");
+        var names = Directory.GetFiles(enemyBandsPath, "*.json");
 
-        return names; 
+        return names;
     }
 
     private T[] LoadEnemyBands<T>(string enemyBandsPath) where T : UnityEngine.Object
@@ -91,11 +107,19 @@ public class MissionManager : MonoBehaviour
 
     private MissionTask GetMission()
     {
-        //Do something
-        //enemyBands
+        switch (BaseProgression.Instance.PlayerData.CurrentMission.Type)
+        {
+            case MissionType.KillToughEnemy:
+                return new BossMission();
+            case MissionType.FindSomeObjects:
+                return new DiscoveryRoomsMiission();
+            case MissionType.DestroyObject:
+                return new DestroyObjectsMission();
+        }
 
         return null;
     }
+    #endregion
 
     public void AddOnMovingToRoom(System.Action<MapCellRoom> action)
     {
@@ -106,7 +130,6 @@ public class MissionManager : MonoBehaviour
     {
         return missionMapController;
     }
-
 
     public void ActivateRoom(MapCellRoom room)
     {
@@ -167,7 +190,7 @@ public class MissionManager : MonoBehaviour
                 }
             case Activities.MissionRoom:
                 {
-                    _currentMission.ActivateMissionRoom();
+                    _currentMissionTask.ActivateMissionRoom();
                     break;
                 }
         }
@@ -194,13 +217,14 @@ public class MissionManager : MonoBehaviour
 
         battlefieldPreparer.CrteateFight(enemyband, obstacle, mapBackground);
     }
+
     private void ShowRoomReward()
     {
         rewardWindow.Show();
     }
     public void ShowMissionEnd()
     {
-        Debug.Log("ShowMissionEnd");
+        ShowHomeReturnWindow();
     }
 
     private void GetReward()
@@ -237,5 +261,34 @@ public class MissionManager : MonoBehaviour
     private void CheckIsAnimation()
     {
         Debug.Log(TurnController.IsNowAnimation);
+    }
+
+
+    private void BackFromMissionWin()
+    {
+        BaseProgression.Instance.SaveInfo();
+        SceneManager.LoadScene(Utilities.MainMenuSceneIndex);
+    }
+
+    private void ShowHomeReturnWindow()
+    {
+        homeReturnWindow.CancelButton.onClick.RemoveAllListeners();
+        homeReturnWindow.ConfirmButton.onClick.RemoveAllListeners();
+
+        if (_currentMissionTask.IsMissionCompleted())
+        {
+            //Are you sure back from mission, you will not get rewards?
+            homeReturnWindow.Description.text = "You win, do you want get back home?";
+            homeReturnWindow.CancelButton.onClick.AddListener(homeReturnWindow.Hide);
+            homeReturnWindow.ConfirmButton.onClick.AddListener(BackFromMissionWin);
+        }
+        else
+        {
+            homeReturnWindow.Description.text = "Are you sure back from mission, you will not get rewards?";
+            homeReturnWindow.CancelButton.onClick.AddListener(homeReturnWindow.Hide);
+            homeReturnWindow.ConfirmButton.onClick.AddListener(BackFromMissionDefeat);
+        }
+
+        homeReturnWindow.Show();
     }
 }
