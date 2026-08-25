@@ -46,12 +46,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6914630183eada419c4f5677ac57d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coverType: 0
+  IsFriend: 0
   MyCurrentCell: {fileID: 0}
-  <IsObstacle>k__BackingField: 1
-  currentWeapon: {fileID: 5028879031059171517}
-  speed: 1
-  maxSteps: 4
-  humanAnimator: {fileID: 3992697489456467168}
+  MyHumanStats:
+    CurrentLevel: 0
+    CurrentAmountOfExperience: 0
+    MaxHealth: 0
+    CurrentHealth: 0
+    MeleeSkill: 0
+    RangeSkill: 0
+    ModelPrefab: {fileID: 0}
+    HumanInventoryInfo:
+      Size: {x: 8, y: 6}
+      Items: []
+      EquipmentInfo:
+        HeadItem:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        BodyItem:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        AmuletItem1:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        AmuletItem2:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        QuickUseItem1:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        QuickUseItem2:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        MainHandItem:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+        OtherHandItem:
+          inventoryItemSO: {fileID: 0}
+          FirstCellPosition: {x: 0, y: 0}
+          direciton: 1
+          inventoryItemSOIndex: -1
+  moveActionSO: {fileID: 0}
+  _currentModel: {fileID: 0}
+  unitHealthUI: {fileID: 0}
 --- !u!114 &3992697489456467168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb6c685efd9ada45bd6f3cfd16e7f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultAnimatorController: {fileID: 0}
   animator: {fileID: 7571673317881394721}
 --- !u!1001 &5884771574709461671
 PrefabInstance:
@@ -148,18 +201,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3894bd76a5457a94ea6ecfe11269c8fd, type: 3}
---- !u!114 &5028879031059171517 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1468387079433939482, guid: 3894bd76a5457a94ea6ecfe11269c8fd,
-    type: 3}
-  m_PrefabInstance: {fileID: 5884771574709461671}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ac9c2b6c02a06478c22cfb149ab4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6007418721171700008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 212878572038642575, guid: 3894bd76a5457a94ea6ecfe11269c8fd,
@@ -227,7 +268,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: e5fac147c4e24a443b1b7245cc0d455c, type: 2}
+      objectReference: {fileID: 9100000, guid: a3b8ed451a57fef4a990281005f19b85, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

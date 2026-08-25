@@ -20,15 +20,16 @@ public class UnitInfo : ScriptableObject
     {
 
         HumanStats humanStats = new();
-            humanStats.CurrentLevel = 0;
-            humanStats.CurrentAmountOfExperience = 0;
+        humanStats.CurrentLevel = 0;
+        humanStats.CurrentAmountOfExperience = 0;
 
-            humanStats.HumanHealth = Random.Range(HumanHealthRange.x, HumanHealthRange.y);
+        humanStats.MaxHealth = Random.Range(HumanHealthRange.x, HumanHealthRange.y);
+        humanStats.CurrentHealth = humanStats.MaxHealth;
 
-            humanStats.MeleeSkill = Random.Range(MeleeSkillRange.x, MeleeSkillRange.y);
-            humanStats.RangeSkill = Random.Range(RangeSkillRange.x, RangeSkillRange.y);
+        humanStats.MeleeSkill = Random.Range(MeleeSkillRange.x, MeleeSkillRange.y);
+        humanStats.RangeSkill = Random.Range(RangeSkillRange.x, RangeSkillRange.y);
 
-            humanStats.ModelPrefab = null;//modelsForCreation[Random.Range(0, modelsForCreation.Count)];
+        humanStats.ModelPrefab = null;//modelsForCreation[Random.Range(0, modelsForCreation.Count)];
 
         var temp = new InventoryItemInfo();
         temp.CopyInfo(Weapon);

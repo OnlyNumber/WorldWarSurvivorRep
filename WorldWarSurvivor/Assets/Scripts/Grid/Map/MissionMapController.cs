@@ -23,6 +23,13 @@ public class MissionMapController
     private int _needCells;
     private int _currentCountOfCells;
 
+    int cachedCountOfCreatedCells;
+
+    public int CountOfCreatedCells
+    {
+        get => cachedCountOfCreatedCells;
+    }
+
     List<Vector2Int> Directions = new(){
             new Vector2Int(0,1),
             new Vector2Int(1,0),
@@ -47,12 +54,17 @@ public class MissionMapController
             for (int y = 0; y < CurrentMap.GridSize.y; y++)
             {
                 var cell = CurrentMap.GetCell(x, y);
-                if (_visitedCells.Contains(cell))
-                    continue;
-
                 cell.gameObject.SetActive(false);
             }
         }
+
+        foreach (var item in _visitedCells)
+        {
+            var cell = CurrentMap.GetCell(item.Coordinate);
+            cell.gameObject.SetActive(true);
+        }
+
+        cachedCountOfCreatedCells = _visitedCells.Count;
     }
 
     private void SetupMap()
@@ -97,7 +109,7 @@ public class MissionMapController
             return;
         }
     }
-    
+
     private bool VisitCell(MapCellRoom room, float value)
     {
 
@@ -169,5 +181,9 @@ public class MissionMapController
 
         }
     }
-    
+
+    public HashSet<MapCellRoom> GetAllCreatedRooms()
+    {
+        return _visitedCells;
+    }
 }

@@ -22,14 +22,14 @@ public class RangeUnitController : UnitController
 
     public override List<Action> CreateQueueOfActions()
     {
-        
+
 
         FindTarget();
         List<Action> actions = new();
 
         actions.Add(MoveToTarget);
         actions.Add(TryAttack);
-        
+
         return actions;
 
     }
@@ -38,14 +38,6 @@ public class RangeUnitController : UnitController
     {
         var targets = TurnController.GetUnits(true);
         MyCurrentTarget = (Human)targets.First();
-
-
-        Debug.Log("controllingUnit ==  " + controllingUnit.MyCurrentCell.Coordinate);
-
-
-
-        Debug.Log("MyCurrentTarget == " + MyCurrentTarget.MyCurrentCell.Coordinate);
-
 
         var checkPos = controllingUnit.MyCurrentCell.Coordinate;
 
@@ -76,7 +68,6 @@ public class RangeUnitController : UnitController
         var weapon = controllingUnit.MyHumanStats.HumanInventoryInfo.EquipmentInfo.MainHandItem;
         var targetCoordinate = MyCurrentTarget.MyCurrentCell.Coordinate;
 
-        //ChangeToVisibleDistance
         FogOfWar.FindVisibleCellsFromPosition(grid, targetCoordinate, out var positionsForAttack, (controllingUnit.abilityActions[weapon] as GunShootAction).GetAttackRange());
 
         float minDistance = Vector3.Distance(positionsForAttack.First().transform.position, controllingUnit.MyCurrentCell.transform.position); ;
@@ -86,7 +77,7 @@ public class RangeUnitController : UnitController
         {
             float distanceBetweenCells = Vector3.Distance(item.transform.position, controllingUnit.MyCurrentCell.transform.position);
 
-            if (distanceBetweenCells < minDistance)
+            if (distanceBetweenCells < minDistance && !item.IsObstacle)
             {
                 attackPosition = item;
                 minDistance = distanceBetweenCells;
@@ -97,6 +88,7 @@ public class RangeUnitController : UnitController
 
         var accessiblePosition = controllingUnit.GetMoveAccessibleCells();
         path.Reverse();
+
         foreach (var item in path)
         {
             if (accessiblePosition.Contains(item))
@@ -120,9 +112,9 @@ public class RangeUnitController : UnitController
         while (weaponAction.IsActionAccessible())
         {
             if (weaponAction.GetAccessibleCells().Contains(MyCurrentTarget.MyCurrentCell))
-            {
                 weaponAction.TargetCell(MyCurrentTarget.MyCurrentCell);
-            }
+            else
+                break;
         }
     }
 }

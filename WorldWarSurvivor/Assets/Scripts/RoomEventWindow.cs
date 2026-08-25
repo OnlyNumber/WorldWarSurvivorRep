@@ -5,11 +5,10 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 
-public class RoomEventWindow : MonoBehaviour
+public class RoomEventWindow : Window
 {
     public TMP_Text Description;
 
-    [SerializeField] private GameObject window;
     [SerializeField] private RectTransform placeForChoices;
     [SerializeField] private Button choiceButtonPrefab;
 
@@ -39,14 +38,14 @@ public class RoomEventWindow : MonoBehaviour
     }
 
 
-    public void Show()
+    public override void Show()
     {
-        window.SetActive(true);
+        base.Show();
     }
 
-    public void Hide()
+    public override void Hide()
     {
-        window.SetActive(false);
+        base.Hide();
         ClearChoices();
 
     }

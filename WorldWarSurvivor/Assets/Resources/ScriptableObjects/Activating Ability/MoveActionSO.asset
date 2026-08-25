@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MoveActionSO
   m_EditorClassIdentifier: 
   NameAction: Move
-  speed: 1
+  speed: 20

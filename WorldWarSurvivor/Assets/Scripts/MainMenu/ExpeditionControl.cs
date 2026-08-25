@@ -94,7 +94,7 @@ public class ExpeditionControl : MonoBehaviour
             humanUI.HumanImageButton.onClick.AddListener(() => OpenInventory(generatedHuman.HumanInventoryInfo));
 
             humanUI.CurrentLevel.text = generatedHuman.CurrentLevel.ToString();
-            humanUI.HumanHealth.text = generatedHuman.HumanHealth.ToString();
+            humanUI.HumanHealth.text = generatedHuman.MaxHealth.ToString();
 
             humanUI.MeleeSkill.text = generatedHuman.MeleeSkill.ToString();
             humanUI.RangeSkill.text = generatedHuman.RangeSkill.ToString();

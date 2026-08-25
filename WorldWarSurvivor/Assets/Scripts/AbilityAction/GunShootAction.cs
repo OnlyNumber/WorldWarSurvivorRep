@@ -100,8 +100,6 @@ public class GunShootAction : AbilityAction
         int DefenderSkillValue = (int)(((float)attacker.MyHumanStats.GetRangeDefendEffects()) * attacker.MyHumanStats.GetRangeDefendPercentEffects());
         DefenderSkillValue += CoverBonus(attacker, defender);
 
-        Debug.Log("Value " + randomValue + " Skill value " + (AttackerSkillValue - DefenderSkillValue));
-
         return randomValue < (AttackerSkillValue - DefenderSkillValue);
     }
 

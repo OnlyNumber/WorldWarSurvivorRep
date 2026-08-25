@@ -1,44 +1,21 @@
 {
-    "Roster": [],
-    "CurrentCommand": [
+    "Roster": [
         {
             "CurrentLevel": 0,
             "CurrentAmountOfExperience": 0,
-            "HumanHealth": 81,
-            "MeleeSkill": 39,
-            "RangeSkill": 99,
+            "MaxHealth": 96,
+            "CurrentHealth": 96,
+            "MeleeSkill": 47,
+            "RangeSkill": 48,
             "ModelPrefab": {
-                "instanceID": 0
+                "instanceID": 54090
             },
             "HumanInventoryInfo": {
                 "Size": {
                     "x": 8,
                     "y": 6
                 },
-                "Items": [
-                    {
-                        "inventoryItemSO": {
-                            "instanceID": 29026
-                        },
-                        "FirstCellPosition": {
-                            "x": 0,
-                            "y": 0
-                        },
-                        "direciton": 1,
-                        "inventoryItemSOIndex": 4
-                    },
-                    {
-                        "inventoryItemSO": {
-                            "instanceID": 35316
-                        },
-                        "FirstCellPosition": {
-                            "x": 0,
-                            "y": 4
-                        },
-                        "direciton": 0,
-                        "inventoryItemSOIndex": 2
-                    }
-                ],
+                "Items": [],
                 "EquipmentInfo": {
                     "HeadItem": {
                         "inventoryItemSO": {
@@ -108,13 +85,771 @@
                     },
                     "MainHandItem": {
                         "inventoryItemSO": {
-                            "instanceID": 29026
+                            "instanceID": 0
                         },
                         "FirstCellPosition": {
                             "x": 0,
-                            "y": 2
+                            "y": 0
                         },
                         "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        },
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 88,
+            "CurrentHealth": 88,
+            "MeleeSkill": 37,
+            "RangeSkill": 49,
+            "ModelPrefab": {
+                "instanceID": 54088
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        },
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 78,
+            "CurrentHealth": 78,
+            "MeleeSkill": 56,
+            "RangeSkill": 44,
+            "ModelPrefab": {
+                "instanceID": 54092
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        },
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 84,
+            "CurrentHealth": 84,
+            "MeleeSkill": 36,
+            "RangeSkill": 33,
+            "ModelPrefab": {
+                "instanceID": 54090
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        }
+    ],
+    "CurrentCommand": [
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 82,
+            "CurrentHealth": 42,
+            "MeleeSkill": 59,
+            "RangeSkill": 40,
+            "ModelPrefab": {
+                "instanceID": 54090
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 29040
+                        },
+                        "FirstCellPosition": {
+                            "x": 2,
+                            "y": 0
+                        },
+                        "direciton": 0,
+                        "inventoryItemSOIndex": 4
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        },
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 75,
+            "CurrentHealth": 75,
+            "MeleeSkill": 44,
+            "RangeSkill": 31,
+            "ModelPrefab": {
+                "instanceID": 54088
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 29040
+                        },
+                        "FirstCellPosition": {
+                            "x": 2,
+                            "y": 0
+                        },
+                        "direciton": 0,
+                        "inventoryItemSOIndex": 4
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        },
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 74,
+            "CurrentHealth": 74,
+            "MeleeSkill": 59,
+            "RangeSkill": 33,
+            "ModelPrefab": {
+                "instanceID": 54090
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 29040
+                        },
+                        "FirstCellPosition": {
+                            "x": 2,
+                            "y": 0
+                        },
+                        "direciton": 0,
+                        "inventoryItemSOIndex": 4
+                    },
+                    "OtherHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    }
+                }
+            }
+        },
+        {
+            "CurrentLevel": 0,
+            "CurrentAmountOfExperience": 0,
+            "MaxHealth": 79,
+            "CurrentHealth": 79,
+            "MeleeSkill": 42,
+            "RangeSkill": 44,
+            "ModelPrefab": {
+                "instanceID": 54090
+            },
+            "HumanInventoryInfo": {
+                "Size": {
+                    "x": 8,
+                    "y": 6
+                },
+                "Items": [],
+                "EquipmentInfo": {
+                    "HeadItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "BodyItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "AmuletItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem1": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "QuickUseItem2": {
+                        "inventoryItemSO": {
+                            "instanceID": 0
+                        },
+                        "FirstCellPosition": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "direciton": 1,
+                        "inventoryItemSOIndex": -1
+                    },
+                    "MainHandItem": {
+                        "inventoryItemSO": {
+                            "instanceID": 29040
+                        },
+                        "FirstCellPosition": {
+                            "x": 2,
+                            "y": 0
+                        },
+                        "direciton": 0,
                         "inventoryItemSOIndex": 4
                     },
                     "OtherHandItem": {
@@ -137,11 +872,67 @@
             "x": 10,
             "y": 20
         },
-        "Items": []
+        "Items": [
+            {
+                "inventoryItemSO": {
+                    "instanceID": 29040
+                },
+                "FirstCellPosition": {
+                    "x": 0,
+                    "y": 0
+                },
+                "direciton": 0,
+                "inventoryItemSOIndex": 4
+            },
+            {
+                "inventoryItemSO": {
+                    "instanceID": 29040
+                },
+                "FirstCellPosition": {
+                    "x": 2,
+                    "y": 0
+                },
+                "direciton": 0,
+                "inventoryItemSOIndex": 4
+            },
+            {
+                "inventoryItemSO": {
+                    "instanceID": 29040
+                },
+                "FirstCellPosition": {
+                    "x": 4,
+                    "y": 0
+                },
+                "direciton": 0,
+                "inventoryItemSOIndex": 4
+            },
+            {
+                "inventoryItemSO": {
+                    "instanceID": 29040
+                },
+                "FirstCellPosition": {
+                    "x": 0,
+                    "y": 8
+                },
+                "direciton": 1,
+                "inventoryItemSOIndex": 4
+            },
+            {
+                "inventoryItemSO": {
+                    "instanceID": 29040
+                },
+                "FirstCellPosition": {
+                    "x": 0,
+                    "y": 10
+                },
+                "direciton": 1,
+                "inventoryItemSOIndex": 4
+            }
+        ]
     },
     "CurrentMission": {
         "Map": 0,
-        "Type": 1,
+        "Type": 2,
         "LongOfMission": 3,
         "MoneyReward": 3000,
         "ItemReward": [

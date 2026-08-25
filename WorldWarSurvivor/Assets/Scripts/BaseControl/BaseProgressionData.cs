@@ -7,12 +7,11 @@ using UnityEngine;
 public class BaseProgressionData
 {
     public List<HumanStats> Roster = new();
-
     public List<HumanStats> CurrentCommand = new();
 
     public InventoryInfo PlayerInventory = new();
-
     public MissionData CurrentMission;
+    public string MissionBackgroundMap;
 
     public BaseProgressionData()
     {

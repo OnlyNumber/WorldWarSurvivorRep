@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Window : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected GameObject window;
 
-    // Update is called once per frame
-    void Update()
+
+    public virtual void Show()
     {
+        window.SetActive(true);
+    }
+    
+    public virtual void Hide()
+    {
+        window.SetActive(false);
         
     }
 }

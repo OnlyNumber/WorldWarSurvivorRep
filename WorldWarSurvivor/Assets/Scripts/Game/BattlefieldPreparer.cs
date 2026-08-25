@@ -22,7 +22,7 @@ public class BattlefieldPreparer : MonoBehaviour
     public Button EndPreparationButton;
 
     [SerializeField]
-    private EnemyBand enemyBand;
+    private EnemyBand enemyBandExample;
 
     public bool IsCreateDummy;
     public Test deleteLaterTest;
@@ -37,26 +37,28 @@ public class BattlefieldPreparer : MonoBehaviour
         selectPreparePosition.AccessibleCellsSize = AccessibleCellsSize;
     }
 
+
     #region Battlefield creation
-    public void CrteateFight()
+    //string battleObstacles = "CityObstacleData", string backgroundMap = "CityMap"
+    public void CrteateFight(EnemyBand enemyBand, string battleObstacles, string backgroundMap)
     {
         #region Map creation
 
         CreateGrid();
-        mapCreator.Create("CityObstacleData");
-        mapCreator.LoadMapFromJson("CityMap");
+        mapCreator.CreateObstacles(battleObstacles);
+        mapCreator.CreateMapBackground(backgroundMap);
 
         #endregion
 
-        CreateEnemyBand();
+        CreateEnemyBand(enemyBand);
 
         HideAllCells();
         CreatePlayerBand();
 
-
         if (IsCreateDummy)
             CreateDummy();
     }
+
     private void CreateGrid()
     {
         grid.CreateGrid(GridSize.x, GridSize.y);
@@ -81,13 +83,12 @@ public class BattlefieldPreparer : MonoBehaviour
         selectPreparePosition.MarkPlacement();
 
         foreach (var item in accesibleCells)
-        {
             item.Show();
-        }
 
     }
-    private void CreateEnemyBand()
+    private void CreateEnemyBand(EnemyBand enemyBand = null)
     {
+
         CurrentAmountOfDeadEnemies = 0;
         AmountOfEnemies = 0;
 
@@ -118,7 +119,10 @@ public class BattlefieldPreparer : MonoBehaviour
 
     public void ClearBattlefield()
     {
-        
+        TurnController.ClearAllObjects();
+        grid.ClearCells();
+        mapCreator.ClearMap();
+
     }
 
     private void CheckEnemiesCount()
@@ -132,7 +136,7 @@ public class BattlefieldPreparer : MonoBehaviour
 
     private void CreateDummy()
     {
-        Human human = TeamDefiner.CreateObject(grid, Vector2Int.one, gridObectPrefab, enemyBand.Band[0].GenerateHuman()) as Human;
+        Human human = TeamDefiner.CreateObject(grid, Vector2Int.one, gridObectPrefab, enemyBandExample.Band[0].GenerateHuman()) as Human;
         human.IsFriend = false;
         human.gameObject.name = "TrainingDummy";
     }

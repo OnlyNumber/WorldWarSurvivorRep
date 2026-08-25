@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class MissionDataWindow : MonoBehaviour
 {
-    private const int GameplayTestSceneIndex = 1;
-
 
     public TMP_Text MapText; 
     public TMP_Text TypeText; 
@@ -34,8 +32,7 @@ public class MissionDataWindow : MonoBehaviour
     private void StartExpedition()
     {
         BaseProgression.Instance.SaveInfo();
-
-        SceneManager.LoadScene(GameplayTestSceneIndex);
+        SceneManager.LoadScene(Utilities.GameplayTestSceneIndex);
     }
 
     #region ShowHide

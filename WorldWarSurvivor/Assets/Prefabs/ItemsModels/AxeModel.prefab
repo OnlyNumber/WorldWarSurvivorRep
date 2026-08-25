@@ -48,7 +48,7 @@ MonoBehaviour:
   OffsetRotation: {x: 5.9348965, y: 91.59774, z: 284.596}
   OffsetPosition: {x: 10.7, y: 3.37, z: -2.6}
   CurrentEffect: {fileID: 0}
-  runtimeAnimatorController: {fileID: 9100000, guid: e5fac147c4e24a443b1b7245cc0d455c,
+  runtimeAnimatorController: {fileID: 9100000, guid: fda1e64fe00c69242bdfe96d655f40c4,
     type: 2}
 --- !u!1001 &4654088761411159372
 PrefabInstance:

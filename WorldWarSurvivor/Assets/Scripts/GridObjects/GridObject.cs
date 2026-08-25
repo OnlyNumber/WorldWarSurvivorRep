@@ -17,7 +17,7 @@ public abstract class GridObject : MonoBehaviour, IDisposable
     public virtual void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
         myGrid = grid;
-
+        TurnController.AddGridObject(this);
     }
 
     public virtual void ShowWindowOfUnit()
@@ -34,6 +34,8 @@ public abstract class GridObject : MonoBehaviour, IDisposable
     public virtual void Dispose()
     {
         OnDestroyGridObject?.Invoke();
+        TurnController.RemoveGridObject(this);
+
         Destroy(gameObject);
     }
 

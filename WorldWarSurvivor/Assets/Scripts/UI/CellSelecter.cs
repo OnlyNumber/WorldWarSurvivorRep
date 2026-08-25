@@ -43,7 +43,7 @@ public class CellSelecter : MonoBehaviour
     private GameObject currentTargetIndicatorPrefab;
 
     private GameObject _currentIndicator;
-    Sequence currentSequence;
+    private Sequence _currentSequence;
 
     private void Start()
     {
@@ -60,9 +60,9 @@ public class CellSelecter : MonoBehaviour
         _currentIndicator = Instantiate(currentTargetIndicatorPrefab);
         _currentIndicator.SetActive(false);
 
-        currentSequence = DOTween.Sequence();
+        _currentSequence = DOTween.Sequence();
 
-        currentSequence
+        _currentSequence
         .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y + 0.5f, 0.5f))
         .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y - 0.5f, 0.5f))
         .SetLoops(-1, LoopType.Restart);
@@ -142,13 +142,13 @@ public class CellSelecter : MonoBehaviour
         _currentIndicator.transform.parent = CurrentObject.transform;
         _currentIndicator.transform.localPosition = new Vector3(0, 2f, 0);
 
-        currentSequence = DOTween.Sequence();
+        _currentSequence = DOTween.Sequence();
 
         float up = _currentIndicator.transform.localPosition.y + 0.3f;
         float down = _currentIndicator.transform.localPosition.y;
 
 
-        currentSequence
+        _currentSequence
         .SetLoops(-1, LoopType.Restart)
         .Append(_currentIndicator.transform.DOLocalMoveY(up, 1f).SetEase(Ease.Linear))
         .Append(_currentIndicator.transform.DOLocalMoveY(down, 1f).SetEase(Ease.Linear));
@@ -159,7 +159,7 @@ public class CellSelecter : MonoBehaviour
 
     public void KillCurrentObjectIndicator()
     {
-        currentSequence.Kill();
+        _currentSequence.Kill();
 
         _currentIndicator.SetActive(false);
         CurrentObject = null;
@@ -226,6 +226,11 @@ public class CellSelecter : MonoBehaviour
         }
     }
 
+    private void OnDestroy() {
+        _currentSequence.Kill(true);
+        
+    }
+    
 }
 public enum SelectRegime
 {

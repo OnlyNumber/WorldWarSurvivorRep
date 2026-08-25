@@ -1,31 +1,113 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MissionManager : MonoBehaviour
 {
+    public const string Path_To_Data = "Assets/Resources/ScriptableObjects/MissionData";
+    public const string Resources_Path_To_Data = "ScriptableObjects/MissionData";
 
-    [SerializeField] private MissionMapController missionMapController = new();
-    [SerializeField] private CommandMover commandMover;
+
+    #region Windows 
     [SerializeField] private GameObject mapWindow;
     [SerializeField] private RoomEventWindow roomEventWindow;
+    [SerializeField] private RewardWindow rewardWindow;
+    [SerializeField] private ConfirmWindow confirmWindow;
+    #endregion
+    [SerializeField] private MissionMapController missionMapController = new();
+    [SerializeField] private CommandMover commandMover;
     [SerializeField] private BattlefieldPreparer battlefieldPreparer;
+
+    [SerializeField] private EnemyBand[] enemyBands;
+    [SerializeField] private string[] mapObstacles;
+    [SerializeField] private string mapBackground;
+
+    private string mapName;
+
+    private MissionTask _currentMission;
 
     private void Start()
     {
         StartCoroutine(Utilities.WaitAndRun(SetupMissionMap, 0.2f));
-        battlefieldPreparer.OnAllEnemiesDead += BackToMapAfterFight;
+
+        battlefieldPreparer.OnAllEnemiesDead += ShowRoomReward;
+
+        rewardWindow.GetRewardButton.onClick.AddListener(GetReward);
+        rewardWindow.GetRewardButton.onClick.AddListener(BackToMapAfterFight);
+
+        confirmWindow.CancelButton.onClick.AddListener(confirmWindow.Hide);
+        confirmWindow.ConfirmButton.onClick.AddListener(BackFromMissionDefeat);
     }
 
     public void SetupMissionMap()
     {
-        missionMapController.SetLongOfMap(BaseProgression.Instance.PlayerData.CurrentMission.LongOfMission);
-        Debug.Log(BaseProgression.Instance.PlayerData.CurrentMission.LongOfMission);
-        missionMapController.CreateMap();
-        commandMover.MoveToThisRoom(missionMapController.GetStartCell());
 
+        missionMapController.SetLongOfMap(BaseProgression.Instance.PlayerData.CurrentMission.LongOfMission);
+        missionMapController.CreateMap();
+
+        mapName = GetBackgroundMap(BaseProgression.Instance.PlayerData.CurrentMission);
+
+        enemyBands = LoadEnemyBands<EnemyBand>(Resources_Path_To_Data + "/" + mapName + "/Bands");
+        mapObstacles = GetMapObstacles(Path_To_Data + "/" + mapName + "/Obstacles");
+        mapBackground = Directory.GetFiles(Path_To_Data + "/" + mapName, "*.json")[0];
+        _currentMission = GetMission();
+
+
+        commandMover.MoveToThisRoom(missionMapController.GetStartCell());
         commandMover.OnMovingToRoom += ActivateRoom;
     }
+
+    private string GetBackgroundMap(MissionData missionData)
+    {
+        switch (missionData.Map)
+        {
+            case MissionMap.Soviet:
+                return "Soviet";
+            case MissionMap.German:
+                return "German";
+            case MissionMap.American:
+                return "American";
+        }
+
+        return null;
+    }
+
+    private string[] GetMapObstacles(string enemyBandsPath)
+    {
+        var names = Directory.GetFiles(enemyBandsPath,"*.json");
+
+        return names; 
+    }
+
+    private T[] LoadEnemyBands<T>(string enemyBandsPath) where T : UnityEngine.Object
+    {
+        var bands = Resources.LoadAll<T>(enemyBandsPath);
+
+        return bands;
+    }
+
+    private MissionTask GetMission()
+    {
+        //Do something
+        //enemyBands
+
+        return null;
+    }
+
+    public void AddOnMovingToRoom(System.Action<MapCellRoom> action)
+    {
+        commandMover.OnMovingToRoom += action;
+    }
+
+    public MissionMapController GetMissionMapController()
+    {
+        return missionMapController;
+    }
+
+
     public void ActivateRoom(MapCellRoom room)
     {
         switch (room.activity)
@@ -48,7 +130,7 @@ public class MissionManager : MonoBehaviour
 
                     var choice = new Choice();
                     choice.Text = "Ready your weapons.";
-                    choice.ChoiceAction = CreateABattle;
+                    choice.ChoiceAction = CreateRandomBattle;
 
                     roomEventWindow.CreateChoices(choice);
                     roomEventWindow.Show();
@@ -83,21 +165,57 @@ public class MissionManager : MonoBehaviour
                     roomEventWindow.Show();
                     break;
                 }
+            case Activities.MissionRoom:
+                {
+                    _currentMission.ActivateMissionRoom();
+                    break;
+                }
         }
     }
-    private void CreateABattle()
+
+    #region Battle
+    private void CreateRandomBattle()
     {
         roomEventWindow.Hide();
         HideMap();
-        battlefieldPreparer.CrteateFight();
+
+        var enemyBand = enemyBands[Random.Range(0, enemyBands.Length)];
+        var obstacle = mapObstacles[Random.Range(0, mapObstacles.Length)];
+
+        battlefieldPreparer.CrteateFight(enemyBand, obstacle, mapBackground);
+    }
+
+    public void CreateMissionBattle(EnemyBand enemyband)
+    {
+        roomEventWindow.Hide();
+        HideMap();
+
+        var obstacle = mapObstacles[Random.Range(0, mapObstacles.Length)];
+
+        battlefieldPreparer.CrteateFight(enemyband, obstacle, mapBackground);
+    }
+    private void ShowRoomReward()
+    {
+        rewardWindow.Show();
+    }
+    public void ShowMissionEnd()
+    {
+        Debug.Log("ShowMissionEnd");
+    }
+
+    private void GetReward()
+    {
+        battlefieldPreparer.ClearBattlefield();
     }
 
     private void BackToMapAfterFight()
     {
         battlefieldPreparer.ClearBattlefield();
-        //ShowMap();
 
+        ShowMap();
+        rewardWindow.Hide();
     }
+    #endregion
 
     private void ShowMap()
     {
@@ -107,5 +225,17 @@ public class MissionManager : MonoBehaviour
     {
         mapWindow.gameObject.SetActive(false);
 
+    }
+
+    private void BackFromMissionDefeat()
+    {
+        BaseProgression.Instance.SaveInfo();
+        SceneManager.LoadScene(Utilities.MainMenuSceneIndex);
+    }
+
+    [ContextMenu("CheckIsAnimation")]
+    private void CheckIsAnimation()
+    {
+        Debug.Log(TurnController.IsNowAnimation);
     }
 }

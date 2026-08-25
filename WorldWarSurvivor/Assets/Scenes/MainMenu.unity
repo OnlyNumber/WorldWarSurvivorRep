@@ -7019,14 +7019,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryItemInfos:
-  - inventoryItemSO: {fileID: 11400000, guid: 821cb8d35ca960a47973c15effb9870d, type: 2}
-    FirstCellPosition: {x: 0, y: 0}
-    direciton: 0
-    inventoryItemSOIndex: -1
-  - inventoryItemSO: {fileID: 11400000, guid: ac84e5da9520b2a4ea9691e042fa88b2, type: 2}
-    FirstCellPosition: {x: 0, y: 0}
-    direciton: 0
-    inventoryItemSOIndex: -1
+  - {fileID: 11400000, guid: 821cb8d35ca960a47973c15effb9870d, type: 2}
+  - {fileID: 11400000, guid: ac84e5da9520b2a4ea9691e042fa88b2, type: 2}
   ItemIndex: 0
 --- !u!1001 &1288785461
 PrefabInstance:

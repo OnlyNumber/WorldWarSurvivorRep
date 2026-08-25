@@ -26,5 +26,6 @@ public enum Activities
      Nothing,
      Battle,
      Shop,
-     Event
+     Event,
+     MissionRoom
 }
