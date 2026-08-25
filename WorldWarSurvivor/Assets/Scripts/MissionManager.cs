@@ -61,8 +61,6 @@ public class MissionManager : MonoBehaviour
         _currentMissionTask = new DiscoveryRoomsMiission();
         _currentMissionTask.Initialize(this);
 
-        SetNoActivities();
-
         commandMover.MoveToThisRoom(missionMapController.GetStartCell());
         commandMover.OnMovingToRoom += ActivateRoom;
     }
