@@ -13,6 +13,10 @@ public class BaseProgressionData
     public MissionData CurrentMission;
     public string MissionBackgroundMap;
 
+    public bool IsMissionCompleted;
+
+    public int Money;
+
     public BaseProgressionData()
     {
         PlayerInventory.Size.x = 10;

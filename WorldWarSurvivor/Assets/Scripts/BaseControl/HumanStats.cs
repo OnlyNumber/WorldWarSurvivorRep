@@ -16,6 +16,7 @@ public class HumanStats : GridObjectStats
     public int MeleeSkill;
     public int RangeSkill;
 
+    public int SkinIndex;
     public GameObject ModelPrefab;
 
     public HumanInventoryInfo HumanInventoryInfo = new();

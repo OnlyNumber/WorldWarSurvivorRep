@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class ChooseMap : MonoBehaviour
 {
-
+    public const string ResourcesItemsPath = "ScriptableObjects/Items";
 
     //private int CurrentMap;
     #region  UI
@@ -18,6 +18,10 @@ public class ChooseMap : MonoBehaviour
     public GameObject ChooseMapWindow;
     public MissionDataWindow MissionWindow;
     public Camera ChooseMapCamera;
+
+    [SerializeField] private RectTransform ItemsLayout;
+    [SerializeField] private Image ItemImagePrefabs;
+    private List<Image> _itemsForReward = new();
 
     #endregion
 
@@ -53,17 +57,31 @@ public class ChooseMap : MonoBehaviour
 
     private void ShowMissionRewards(MissionData mission)
     {
-
         BaseProgression.Instance.PlayerData.CurrentMission = mission;
+        
+        foreach (var item in _itemsForReward)
+            Destroy(item.gameObject);
+
+        _itemsForReward.Clear();
+
+        foreach (var item in BaseProgression.Instance.PlayerData.CurrentMission.ItemReward)
+        {
+            if (item == null)
+                Debug.Log("item == null");
+
+            var im = Instantiate(ItemImagePrefabs, ItemsLayout);
+            im.sprite = item.ItemImage;
+            _itemsForReward.Add(im);
+        }
+
         MissionWindow.SetMission(mission);
         MissionWindow.ShowWindow();
-        
+
 
     }
 
     private void CreateMissionButtons()
     {
-
         for (int mapIndex = 0; mapIndex < MapParents.Count; mapIndex++)
         {
             int missionCount = UnityEngine.Random.Range(MissionsCountRange.x, MissionsCountRange.y);
@@ -83,8 +101,6 @@ public class ChooseMap : MonoBehaviour
                 currentButtonList.Add(currentButton);
                 missionDatas.Add(currentButton, missionData);
             }
-
-
         }
     }
 
@@ -102,13 +118,16 @@ public class ChooseMap : MonoBehaviour
         missionData.LongOfMission = (MissionLong)UnityEngine.Random.Range(0, (int)MissionLong.Count);
         missionData.MoneyReward = MoneyRewardForMission * (int)missionData.LongOfMission;
         missionData.ItemReward.Add(FindItemForReward());
+        missionData.ItemReward.Add(FindItemForReward());
 
         return missionData;
     }
 
     private InventoryItemSO FindItemForReward()
     {
-        return null;
+        var inventoryItems = Resources.LoadAll<InventoryItemSO>(ResourcesItemsPath);
+
+        return inventoryItems[UnityEngine.Random.Range(0, inventoryItems.Length)];
     }
 }
 

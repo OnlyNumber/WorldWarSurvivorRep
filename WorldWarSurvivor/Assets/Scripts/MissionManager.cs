@@ -33,6 +33,7 @@ public class MissionManager : MonoBehaviour
     #endregion
 
     private MissionTask _currentMissionTask;
+    private MapCellRoom _currentRoom;
 
     private void Start()
     {
@@ -131,18 +132,19 @@ public class MissionManager : MonoBehaviour
 
     public void ActivateRoom(MapCellRoom room)
     {
+        _currentRoom = room;
         switch (room.activity)
         {
             case Activities.Nothing:
                 {
-                    roomEventWindow.Description.text = "You see only the ruins of a past peaceful life.";
+                    /*roomEventWindow.Description.text = "You see only the ruins of a past peaceful life.";
 
                     var choice = new Choice();
                     choice.Text = "Let's move on.";
                     choice.ChoiceAction = roomEventWindow.Hide;
 
                     roomEventWindow.CreateChoices(choice);
-                    roomEventWindow.Show();
+                    roomEventWindow.Show();*/
                     break;
                 }
             case Activities.Battle:
@@ -176,11 +178,15 @@ public class MissionManager : MonoBehaviour
 
                     var choice1 = new Choice();
                     choice1.Text = "Pick the apples";
-                    choice1.ChoiceAction = roomEventWindow.Hide;
+                    choice1.ChoiceAction += roomEventWindow.Hide;
+                    choice1.ChoiceAction += () => _currentRoom.activity = Activities.Nothing;
+
 
                     var choice2 = new Choice();
                     choice2.Text = "Сut down a tree";
-                    choice2.ChoiceAction = roomEventWindow.Hide;
+                    choice2.ChoiceAction += roomEventWindow.Hide;
+                    choice2.ChoiceAction += () => _currentRoom.activity = Activities.Nothing;
+
 
                     roomEventWindow.CreateChoices(choice1, choice2);
                     roomEventWindow.Show();
@@ -218,6 +224,7 @@ public class MissionManager : MonoBehaviour
 
     private void ShowRoomReward()
     {
+        _currentRoom.activity = Activities.Nothing;
         rewardWindow.Show();
     }
     public void ShowMissionEnd()
@@ -264,6 +271,7 @@ public class MissionManager : MonoBehaviour
 
     private void BackFromMissionWin()
     {
+        BaseProgression.Instance.PlayerData.IsMissionCompleted = true;
         BaseProgression.Instance.SaveInfo();
         SceneManager.LoadScene(Utilities.MainMenuSceneIndex);
     }
@@ -275,7 +283,6 @@ public class MissionManager : MonoBehaviour
 
         if (_currentMissionTask.IsMissionCompleted())
         {
-            //Are you sure back from mission, you will not get rewards?
             homeReturnWindow.Description.text = "You win, do you want get back home?";
             homeReturnWindow.CancelButton.onClick.AddListener(homeReturnWindow.Hide);
             homeReturnWindow.ConfirmButton.onClick.AddListener(BackFromMissionWin);

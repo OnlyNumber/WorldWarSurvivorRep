@@ -7,6 +7,7 @@ public class MapCellRoom : Cell
 {
      public Image RoomBackground;
      public Image roomIcon;
+     public Image FogOfWar;
      public Activities activity = Activities.Nothing;
      public bool IsCreated = false;
      public RectTransform MyRectTransform;
@@ -16,9 +17,12 @@ public class MapCellRoom : Cell
      {
           this.activity = activity;
           this.roomIcon.sprite = roomIcon;
-
      }
-     
+
+     public void SetForOgWar(bool isFog)
+     {
+          FogOfWar.gameObject.SetActive(isFog);
+     }     
 }
 
 public enum Activities
