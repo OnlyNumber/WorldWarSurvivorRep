@@ -18,7 +18,7 @@ public class Test : MonoBehaviour
         foreach (var item in items)
         {
             var info = new InventoryItemInfo(item);
-            if (InventorySystem.Instance.AutoPlaceItem(container.GetContainer(), info))
+            if (Utilities.AutoPlaceItem(container.GetContainer(), info))
                 Debug.Log("Completed");
             else
                 Debug.Log("Not placed");

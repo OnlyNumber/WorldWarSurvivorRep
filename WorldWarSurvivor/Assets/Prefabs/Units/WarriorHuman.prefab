@@ -52,7 +52,8 @@ MonoBehaviour:
   MyHumanStats:
     CurrentLevel: 0
     CurrentAmountOfExperience: 0
-    HumanHealth: 0
+    MaxHealth: 0
+    CurrentHealth: 0
     MeleeSkill: 0
     RangeSkill: 0
     ModelPrefab: {fileID: 0}
@@ -314,7 +315,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: e5fac147c4e24a443b1b7245cc0d455c, type: 2}
+      objectReference: {fileID: 9100000, guid: a3b8ed451a57fef4a990281005f19b85, type: 2}
     - target: {fileID: 95218715033358026, guid: f11597d739665a54992b8339873fd7bc,
         type: 3}
       propertyPath: m_ApplyRootMotion

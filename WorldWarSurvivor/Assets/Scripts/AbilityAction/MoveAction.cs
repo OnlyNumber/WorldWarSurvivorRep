@@ -12,7 +12,7 @@ public class MoveAction : AbilityAction
 
     private Transform cachedTransform;
 
-    private float Speed = 1;
+    private float Speed = 20;
 
     private const float DistanceBetweenPoints = 0.1f;
 

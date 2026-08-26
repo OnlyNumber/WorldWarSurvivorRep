@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
 
     public BoardGrid boardGrid;
 
-    private UnitController meleeUnitController;
+    private UnitController _unitController;
 
     List<Action> unitActions = new();
 
@@ -41,12 +41,15 @@ public class EnemyController : MonoBehaviour
 
     private void ActivateObject()
     {
-        unitActions = meleeUnitController.CreateQueueOfActions();
+        unitActions = _unitController.CreateQueueOfActions();
         StartCoroutine(CreateVisibilityOfThinking());
     }
 
     private IEnumerator CreateVisibilityOfThinking()
     {
+        if (unitActions == null || unitActions.Count == 0)
+            EndTurn();
+            
         int index = 0;
 
         do
@@ -63,6 +66,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private bool check() { return !TurnController.IsNowAnimation; }
+
     public void EndTurn()
     {
         unitActions.Clear();
@@ -73,11 +77,11 @@ public class EnemyController : MonoBehaviour
     {
         //In future define will be more complex
         if (CurrentObject.gameObject.name.Contains("Dummy"))
-            meleeUnitController = new TrainingDummy();
+            _unitController = new TrainingDummy();
         else
-            meleeUnitController = new RangeUnitController();
+            _unitController = new RangeUnitController();
 
-        meleeUnitController.Initialize(CurrentObject as Human, boardGrid);
+        _unitController.Initialize(CurrentObject as Human, boardGrid);
     }
 
 

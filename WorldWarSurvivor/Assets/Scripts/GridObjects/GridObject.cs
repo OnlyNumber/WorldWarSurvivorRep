@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GridObject : MonoBehaviour
+public abstract class GridObject : MonoBehaviour, IDisposable
 {
     //public BoardCell MyCurrentCell;
 
@@ -12,10 +12,12 @@ public abstract class GridObject : MonoBehaviour
 
     public CoverType coverType;
 
+    public Action OnDestroyGridObject;
+
     public virtual void Initialize(BoardGrid grid, BoardCell cell, GridObjectStats gridObjectStats)
     {
         myGrid = grid;
-
+        TurnController.AddGridObject(this);
     }
 
     public virtual void ShowWindowOfUnit()
@@ -31,6 +33,9 @@ public abstract class GridObject : MonoBehaviour
 
     public virtual void Dispose()
     {
+        OnDestroyGridObject?.Invoke();
+        TurnController.RemoveGridObject(this);
+
         Destroy(gameObject);
     }
 

@@ -47,7 +47,7 @@ public class RecruitControl : MonoBehaviour
             var humanUI = Instantiate(HumanUIPrefab, ParentForRecruitList);
 
             humanUI.CurrentLevel.text = generatedHuman.CurrentLevel.ToString();
-            humanUI.HumanHealth.text = generatedHuman.HumanHealth.ToString();
+            humanUI.HumanHealth.text = generatedHuman.MaxHealth.ToString();
 
             humanUI.MeleeSkill.text = generatedHuman.MeleeSkill.ToString();
             humanUI.RangeSkill.text = generatedHuman.RangeSkill.ToString();
@@ -87,13 +87,15 @@ public class RecruitControl : MonoBehaviour
             CurrentLevel = 0,
             CurrentAmountOfExperience = 0,
 
-            HumanHealth = Random.Range(70, 100),
+            MaxHealth = Random.Range(70, 100),
 
             MeleeSkill = Random.Range(30, 60),
             RangeSkill = Random.Range(30, 60),
 
             ModelPrefab = modelsForCreation[Random.Range(0, modelsForCreation.Count)]
         };
+
+            humanStats.CurrentHealth = humanStats.MaxHealth;
 
         return humanStats;
     }

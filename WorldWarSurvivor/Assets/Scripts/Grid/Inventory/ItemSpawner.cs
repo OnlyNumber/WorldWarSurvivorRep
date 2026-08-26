@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    public List<InventoryItemInfo> inventoryItemInfos;
+    public List<InventoryItemSO> inventoryItemInfos;
 
     public int ItemIndex;
 
     [ContextMenu("Spawn")]
     public void Spawn()
     {
-        InventorySystem.Instance.SpawnItem(inventoryItemInfos[ItemIndex]);
+        var item = new InventoryItemInfo(inventoryItemInfos[ItemIndex]);
+        InventorySystem.Instance.SpawnItem(item);
     }
 }

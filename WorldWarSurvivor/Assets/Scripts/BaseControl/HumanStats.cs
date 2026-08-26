@@ -10,11 +10,13 @@ public class HumanStats : GridObjectStats
 
     public int CurrentAmountOfExperience;
 
-    public int HumanHealth;
+    public int MaxHealth;
+    public int CurrentHealth;
 
     public int MeleeSkill;
     public int RangeSkill;
 
+    public int SkinIndex;
     public GameObject ModelPrefab;
 
     public HumanInventoryInfo HumanInventoryInfo = new();

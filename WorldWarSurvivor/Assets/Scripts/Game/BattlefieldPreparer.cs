@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 //Task of this class start game. If i can t play game from start, that mean class doesn t work
-public class GamePreparer : MonoBehaviour
+public class BattlefieldPreparer : MonoBehaviour
 {
     public BoardGrid grid;
     public MapCreator mapCreator;
@@ -24,46 +22,47 @@ public class GamePreparer : MonoBehaviour
     public Button EndPreparationButton;
 
     [SerializeField]
-    private EnemyBand enemyBand;
+    private EnemyBand enemyBandExample;
 
     public bool IsCreateDummy;
-
-    public bool IsCreateEnemyBand;
-
-
     public Test deleteLaterTest;
+    private int CurrentAmountOfDeadEnemies = 0;
+    private int AmountOfEnemies = 0;
+    public System.Action OnAllEnemiesDead;
 
     private void Start()
     {
         EndPreparationButton.onClick.AddListener(EndPreparation);
 
         selectPreparePosition.AccessibleCellsSize = AccessibleCellsSize;
+    }
+
+
+    #region Battlefield creation
+    //string battleObstacles = "CityObstacleData", string backgroundMap = "CityMap"
+    public void CrteateFight(EnemyBand enemyBand, string battleObstacles, string backgroundMap)
+    {
         #region Map creation
 
         CreateGrid();
-        mapCreator.Create("CityObstacleData");
-        mapCreator.LoadMapFromJson("CityMap");
-        
-        deleteLaterTest.CreateContainer();
+        mapCreator.CreateObstacles(battleObstacles);
+        mapCreator.CreateMapBackground(backgroundMap);
 
         #endregion
-        if (IsCreateEnemyBand)
-            CreateEnemyBand();
+
+        CreateEnemyBand(enemyBand);
+
         HideAllCells();
         CreatePlayerBand();
-
 
         if (IsCreateDummy)
             CreateDummy();
     }
 
-    [ContextMenu("Create")]
     private void CreateGrid()
     {
         grid.CreateGrid(GridSize.x, GridSize.y);
     }
-
-    [ContextMenu("CreateBand")]
     private void CreatePlayerBand()
     {
         var accesibleCells = selectPreparePosition.FindAccessibleCellsForFirends().ToList();
@@ -84,15 +83,15 @@ public class GamePreparer : MonoBehaviour
         selectPreparePosition.MarkPlacement();
 
         foreach (var item in accesibleCells)
-        {
             item.Show();
-        }
 
     }
-
-    [ContextMenu("CreateEnemyBand")]
-    private void CreateEnemyBand()
+    private void CreateEnemyBand(EnemyBand enemyBand = null)
     {
+
+        CurrentAmountOfDeadEnemies = 0;
+        AmountOfEnemies = 0;
+
         if (enemyBand == null)
             return;
 
@@ -110,16 +109,34 @@ public class GamePreparer : MonoBehaviour
                 human = TeamDefiner.CreateObject(grid, cell.Coordinate, gridObectPrefab, item.GenerateHuman()) as Human;
                 human.IsFriend = false;
                 human.gameObject.name = "Enemy warrior";
+                human.OnDestroyGridObject += CheckEnemiesCount;
+                AmountOfEnemies++;
 
             } while (human == null);
         }
+    }
+    #endregion
 
-        //TeamDefiner.CreateObject(grid, EnemySpawnPoint, enemyGridObectPrefab);
+    public void ClearBattlefield()
+    {
+        TurnController.ClearAllObjects();
+        grid.ClearCells();
+        mapCreator.ClearMap();
+
+    }
+
+    private void CheckEnemiesCount()
+    {
+        CurrentAmountOfDeadEnemies++;
+
+        if (CurrentAmountOfDeadEnemies >= AmountOfEnemies)
+            OnAllEnemiesDead?.Invoke();
+
     }
 
     private void CreateDummy()
     {
-        Human human = TeamDefiner.CreateObject(grid, Vector2Int.one, gridObectPrefab, enemyBand.Band[0].GenerateHuman()) as Human;
+        Human human = TeamDefiner.CreateObject(grid, Vector2Int.one, gridObectPrefab, enemyBandExample.Band[0].GenerateHuman()) as Human;
         human.IsFriend = false;
         human.gameObject.name = "TrainingDummy";
     }
@@ -127,14 +144,9 @@ public class GamePreparer : MonoBehaviour
     private void HideAllCells()
     {
         for (int x = 0; x < grid.GridSize.x; x++)
-        {
             for (int y = 0; y < grid.GridSize.y; y++)
-            {
                 grid.GetCell(x, y).FullHide();
-            }
-        }
     }
-
 
     private void EndPreparation()
     {
@@ -144,23 +156,6 @@ public class GamePreparer : MonoBehaviour
         selectPreparePosition.enabled = false;
         FogOfWar.UpdateAllVisibleCells(grid);
 
-
         TurnController.SetNextTurn();
-    }
-
-    public Transform point;
-
-    [ContextMenu("CheckPosition")]
-    private void CheckPosition()
-    {
-        foreach (var item in FogOfWar.positions(point.position))
-        {
-            item.transform.SetParent(point);
-        }
-
-        FogOfWar.positions(point.position);
-
-
-        //TeamDefiner.CreateObject(grid, EnemySpawnPoint, enemyGridObectPrefab); ;
     }
 }

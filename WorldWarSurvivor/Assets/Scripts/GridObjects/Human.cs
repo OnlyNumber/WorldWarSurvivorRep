@@ -74,6 +74,7 @@ public class Human : ActingObject
     private void ChangeHealthUI()
     {
         unitHealthUI.SetBar(HealthSystem.CurrentHealth + " / " + HealthSystem.MaxHealth, (float)HealthSystem.CurrentHealth / (float)HealthSystem.MaxHealth);
+        MyHumanStats.CurrentHealth = HealthSystem.CurrentHealth;
     }
 
     private void UpdateVision()
@@ -87,7 +88,7 @@ public class Human : ActingObject
 
         MyHumanStats = (HumanStats)gridObjectStats;
 
-        HealthSystem.Initialize(20, 20);
+        HealthSystem.Initialize(MyHumanStats.MaxHealth, MyHumanStats.CurrentHealth);
         HealthSystem.OnHealthChange += DeathCheck;
 
         CreateActions();

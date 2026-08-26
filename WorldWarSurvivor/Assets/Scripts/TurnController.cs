@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class TurnController
 {
     //private static int _currentTurn;
+    private static HashSet<GridObject> AllGridObjects = new();
 
     public static int CurrentTurn
     {
@@ -12,23 +14,22 @@ public static class TurnController
         private set;
     }
 
-    private static List<ActingObject> currentMovingObjects = new();
-
+    private static HashSet<ActingObject> currentMovingObjects = new();
     private static List<ActingObject> actingObjects = new();
-
     private static Queue<ActingObject> currentQueue = new();
 
     public static bool IsNowAnimation => currentMovingObjects.Count > 0;
-
     public static Action OnEndedAnimation;
+    public static Action OnRemovingObject;
 
+    #region MovingAnimation
     public static void AddMovingObject(ActingObject animatingObject)
     {
         currentMovingObjects.Add(animatingObject);
     }
-
     public static void RemoveMovingObject(ActingObject animatingObject)
     {
+
         currentMovingObjects.Remove(animatingObject);
 
         if (!IsNowAnimation)
@@ -36,17 +37,41 @@ public static class TurnController
             OnEndedAnimation?.Invoke();
         }
     }
+    #endregion
 
+    #region Acting Object
     public static void AddActingObject(ActingObject animatingObject)
     {
         actingObjects.Add(animatingObject);
         currentQueue.Clear();
         SortAndCreateQueue();
     }
-
     public static void RemoveActingObject(ActingObject animatingObject)
     {
         actingObjects.Remove(animatingObject);
+        OnRemovingObject?.Invoke();
+    }
+    #endregion
+
+    public static void AddGridObject(GridObject gridObject)
+    {
+        AllGridObjects.Add(gridObject);
+    }
+    public static void RemoveGridObject(GridObject gridObject)
+    {
+        AllGridObjects.Remove(gridObject);
+    }
+
+    public static void ClearAllObjects()
+    {
+        var list = AllGridObjects.ToList();
+
+        foreach (var item in list)
+            item.Dispose();
+
+        actingObjects.Clear();
+        currentQueue.Clear();
+        currentMovingObjects.Clear();
     }
 
     public static void SortAndCreateQueue()
