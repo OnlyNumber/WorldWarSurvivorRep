@@ -7,9 +7,9 @@ public class DiscoveryRoomsMiission : MissionTask
     private HashSet<MapCellRoom> mapCellRooms = new();
     int countOfRooms;
 
-    public override void Initialize(MissionManager missionManager)
+    public override void Initialize(MissionManager missionManager, string mapName)
     {
-        base.Initialize(missionManager);
+        base.Initialize(missionManager, mapName);
 
         missionManager.AddOnMovingToRoom(TryAddToList);
         countOfRooms = missionManager.GetMissionMapController().CountOfCreatedCells;
@@ -21,11 +21,6 @@ public class DiscoveryRoomsMiission : MissionTask
             return true;
 
         return false;
-    }
-
-    public override void ShowMissionProgress()
-    {
-        throw new System.NotImplementedException();
     }
 
     private void TryAddToList(MapCellRoom mapCellRoom)

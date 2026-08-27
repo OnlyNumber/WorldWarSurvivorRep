@@ -14,13 +14,10 @@ public class GunShootAction : AbilityAction
 
     private Human CurrentHuman;
 
-    private VisualEffects _particlePrefab;
-
     public GunShootAction(ActionSO actionSO) : base(actionSO)
     {
         var gunShootSO = actionSO as ShootActionSO;
 
-        _particlePrefab = gunShootSO.ShootParticlePrefab;
         _damage = gunShootSO.Damage;
         _attackRange = gunShootSO.AttackRange;
         _attackEnergyCost = gunShootSO.AttackEnergyCost;
@@ -32,16 +29,19 @@ public class GunShootAction : AbilityAction
         this.myGrid = myGrid;
 
         CurrentHuman = CurrentActingObject as Human;
-        CurrentHuman.AddAnimationAction(Animations.Attack, 0.9f, EndAttack);
+        CurrentHuman.AddAnimationAction(Animations.Attack, 1f, EndAttack);
     }
 
     public override void Dispose()
     {
-        CurrentHuman.RemoveAnimationAction(Animations.Attack, 0.9f, EndAttack);
+        CurrentHuman.RemoveAnimationAction(Animations.Attack, 1f, EndAttack);
     }
 
     public override HashSet<BoardCell> GetAccessibleCells(Vector2Int CellPosition)
     {
+        if (CurrentHuman.CurrentEnergy < _attackEnergyCost)
+            return null;
+
         HashSet<BoardCell> targets = new();
         FogOfWar.FindVisibleCellsFromPosition(myGrid, CellPosition, out var cells, _attackRange);
 
@@ -65,7 +65,8 @@ public class GunShootAction : AbilityAction
 
     public override void TargetCell(BoardCell attackingCell)
     {
-        CurrentHuman.ChangeEnergy(-_attackEnergyCost);
+        if (!CurrentHuman.ChangeEnergy(-_attackEnergyCost))
+            return;
 
         TurnController.AddMovingObject(CurrentHuman);
         CurrentHuman.SetCurrentAnimation(Animations.Attack);
@@ -157,9 +158,6 @@ public class GunShootAction : AbilityAction
     private void EndAttack()
     {
         TurnController.RemoveMovingObject(CurrentHuman);
-        CurrentHuman.SetCurrentAnimation(Animations.Idle);
-        CurrentHuman.StartCoroutine(Utilities.WaitAndRun(() => CurrentHuman.SetCurrentAnimation(Animations.Idle), 0.2f));
-
         CurrentHuman.SetCurrentAnimation(Animations.Idle);
     }
 

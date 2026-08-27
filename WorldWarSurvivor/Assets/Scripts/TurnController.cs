@@ -14,7 +14,8 @@ public static class TurnController
         private set;
     }
 
-    private static HashSet<ActingObject> currentMovingObjects = new();
+    //TODO: Move back to private later
+    public static HashSet<ActingObject> currentMovingObjects = new();
     private static List<ActingObject> actingObjects = new();
     private static Queue<ActingObject> currentQueue = new();
 
@@ -29,6 +30,19 @@ public static class TurnController
     }
     public static void RemoveMovingObject(ActingObject animatingObject)
     {
+        currentMovingObjects.Remove(animatingObject);
+
+        if (!IsNowAnimation)
+        {
+            OnEndedAnimation?.Invoke();
+        }
+
+        //BaseProgression.Instance.StartCoroutine(Removing(animatingObject));
+    }
+
+    private static System.Collections.IEnumerator Removing(ActingObject animatingObject)
+    {
+        yield return new WaitForSeconds(0.3f);
 
         currentMovingObjects.Remove(animatingObject);
 

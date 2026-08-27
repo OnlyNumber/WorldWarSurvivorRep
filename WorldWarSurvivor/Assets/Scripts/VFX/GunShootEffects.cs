@@ -18,7 +18,7 @@ public class GunShootEffects : VisualEffects
     public override void ActivateEffect()
     {
         base.ActivateEffect();
-        Debug.Log("Activate effect");
+//        Debug.Log("Activate effect");
         FireEffect.Play(true);
         
         StartCoroutine(BurstFire());

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Utilities : MonoBehaviour
 {
+    public const string Path_To_Data = "Assets/Resources/ScriptableObjects/MissionData";
+    public const string Resources_Path_To_Data = "ScriptableObjects/MissionData";
+
     public const int GameplayTestSceneIndex = 1;
     public const int MainMenuSceneIndex = 0;
 

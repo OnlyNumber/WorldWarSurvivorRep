@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class HumanAnimator : MonoBehaviour
 {
-    private const float CheckDelay = 0.1f;
-
     private const string ATTACK_ANIMATION_NAME = "Attack";
     private const string WALK_ANIMATION_NAME = "Walk";
     private const string Idle_ANIMATION_NAME = "Idle";
@@ -18,6 +16,8 @@ public class HumanAnimator : MonoBehaviour
     public Animator animator;
 
     private Coroutine checkAnimation;
+    private Animations LastAnimation;
+
 
     public void SetAnimator(RuntimeAnimatorController runtimeAnimatorController)
     {
@@ -45,10 +45,16 @@ public class HumanAnimator : MonoBehaviour
         }
 
         if (checkAnimation != null)
+        {
+           Debug.Log("Stop coroutine " + LastAnimation); 
             StopCoroutine(checkAnimation);
+        }
+
+        LastAnimation = animation;
 
         if (animationActions.ContainsKey(animation))
             checkAnimation = StartCoroutine(CheckAnimations(animation, animator.GetCurrentAnimatorClipInfo(0).Length));
+
     }
 
     public void AddAnimationAction(Animations animation, float percentTime, Action action)
@@ -69,20 +75,12 @@ public class HumanAnimator : MonoBehaviour
 
     private IEnumerator CheckAnimations(Animations animation, float animationLength)
     {
-
-
         float timer = 0;
 
         List<(float, Action)> actions = new();
 
         foreach (var item in animationActions[animation])
             actions.Add(item);
-
-        for (int i = 0; i < actions.Count; i++)
-        {
-            if (actions[i].Item1 == 0)
-                Debug.Log("Check");
-        }
 
         do
         {
@@ -109,19 +107,19 @@ public class HumanAnimator : MonoBehaviour
     [ContextMenu("Idle")]
     protected void Idle()
     {
-        animator.CrossFade(Idle_ANIMATION_NAME, 0);
+        animator.Play(Idle_ANIMATION_NAME, 0);
     }
 
     [ContextMenu("Walk")]
     protected void Walk()
     {
-        animator.CrossFade(WALK_ANIMATION_NAME, 0);
+        animator.Play(WALK_ANIMATION_NAME, 0);
     }
 
     [ContextMenu("Attack")]
     protected void Attack()
     {
-        animator.CrossFade(ATTACK_ANIMATION_NAME, 0);
+        animator.Play(ATTACK_ANIMATION_NAME, 0);
     }
 
     #endregion

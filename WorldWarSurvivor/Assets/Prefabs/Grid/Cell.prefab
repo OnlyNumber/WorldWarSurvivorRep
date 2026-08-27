@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2329395148390808812}
   - component: {fileID: 2848968876518607957}
   - component: {fileID: 8647975109578336571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 6578462999275040504}
   - component: {fileID: 3242487038446642679}
   - component: {fileID: 3677563143833312646}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 2911326868226212047}
   - component: {fileID: 2791778926091688043}
   - component: {fileID: 6739822009755890158}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 4047133233266018789}
   - component: {fileID: 8771125418339080399}
   - component: {fileID: 5958757579216128288}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 7909618890512621685}
   - component: {fileID: 1225666284898523808}
   - component: {fileID: 5612304395678421533}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FullHide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 4753709939193343237}
   - component: {fileID: 6029981870983691833}
   - component: {fileID: 4317478060310635990}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 3312962866739203052}
   - component: {fileID: 2004895610793338482}
   - component: {fileID: 8684417405165426889}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7953099704775837335}
   - component: {fileID: 771044296747280652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,7 +802,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3131501783563517373}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

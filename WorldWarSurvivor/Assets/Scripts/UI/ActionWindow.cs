@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActionWindow : MonoBehaviour
+public class ActionWindow : Window
 {
     [SerializeField] private RectTransform actionButtonsPlace;
     [SerializeField] private RectTransform InfoTextPlace;
@@ -17,7 +17,6 @@ public class ActionWindow : MonoBehaviour
 
     public Button EndTurnButton;
     public Button InventoryButton;
-
 
     public static ActionWindow Instance;
 

@@ -34,15 +34,17 @@ public class CellSelecter : MonoBehaviour
 
     public static CellSelecter Instance;
 
+    [SerializeField] private LayerMask cellLayer;
+
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material passMaterial;
 
     public Action OnChangingAction;
 
     [SerializeField]
-    private GameObject currentTargetIndicatorPrefab;
+    private UnitIndicator currentTargetIndicatorPrefab;
 
-    private GameObject _currentIndicator;
+    private UnitIndicator _currentIndicator;
     private Sequence _currentSequence;
 
     private void Start()
@@ -58,14 +60,7 @@ public class CellSelecter : MonoBehaviour
         OnChangingAction += MarkAccesibleCells;
 
         _currentIndicator = Instantiate(currentTargetIndicatorPrefab);
-        _currentIndicator.SetActive(false);
-
-        _currentSequence = DOTween.Sequence();
-
-        _currentSequence
-        .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y + 0.5f, 0.5f))
-        .Append(_currentIndicator.transform.DOLocalMoveY(_currentIndicator.transform.localPosition.y - 0.5f, 0.5f))
-        .SetLoops(-1, LoopType.Restart);
+        //_currentIndicator.SetActive(false);
 
         TurnController.OnEndedAnimation += UpdateAfterAction;
     }
@@ -87,6 +82,8 @@ public class CellSelecter : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && CurrentObject != null)
         {
+
+            //            Debug.Log("TurnController.IsNowAnimation " + TurnController.IsNowAnimation);
             //switch (selectRegime)
             //{
             /*case SelectRegime.GridObjectSelect:
@@ -137,42 +134,26 @@ public class CellSelecter : MonoBehaviour
     {
         CurrentObject = gridObject;
 
-        #region  SetIndicator
-        _currentIndicator.SetActive(true);
-        _currentIndicator.transform.parent = CurrentObject.transform;
-        _currentIndicator.transform.localPosition = new Vector3(0, 2f, 0);
-
-        _currentSequence = DOTween.Sequence();
-
-        float up = _currentIndicator.transform.localPosition.y + 0.3f;
-        float down = _currentIndicator.transform.localPosition.y;
-
-
-        _currentSequence
-        .SetLoops(-1, LoopType.Restart)
-        .Append(_currentIndicator.transform.DOLocalMoveY(up, 1f).SetEase(Ease.Linear))
-        .Append(_currentIndicator.transform.DOLocalMoveY(down, 1f).SetEase(Ease.Linear));
-        #endregion
+        _currentIndicator.SetIndicator(gridObject.gameObject, new Vector3(0, 2f, 0));
 
         ShowCell(CurrentObject);
     }
 
     public void KillCurrentObjectIndicator()
     {
-        _currentSequence.Kill();
-
-        _currentIndicator.SetActive(false);
+        _currentIndicator.TurnOffIndicator();
         CurrentObject = null;
     }
 
     public void CellSelectForAction()
     {
-        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || UICheck.IsPointerOverUIElement())
+        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, cellLayer) || UICheck.IsPointerOverUIElement())
             return;
 
         var cell = grid.GetCellFromWorldPosition(hit.point);
 
-        if (!currentAction[CurrentActionIndex].Item2.Contains(cell))
+        if (currentAction[CurrentActionIndex].Item2 != null &&
+         !currentAction[CurrentActionIndex].Item2.Contains(cell))
             return;
 
         currentAction[CurrentActionIndex].Item1.Invoke(cell);
@@ -226,11 +207,12 @@ public class CellSelecter : MonoBehaviour
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         _currentSequence.Kill(true);
-        
+
     }
-    
+
 }
 public enum SelectRegime
 {

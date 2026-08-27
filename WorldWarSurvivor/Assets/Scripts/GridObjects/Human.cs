@@ -146,10 +146,16 @@ public class Human : ActingObject
         }
     }
 
-    public void ChangeEnergy(int energyChange)
+    public bool ChangeEnergy(int energyChange)
     {
-        Debug.Log("Change energy " + energyChange);
+        //        Debug.Log("Change energy " + energyChange);
+        if (CurrentEnergy + energyChange < 0)
+            return false;
+
         CurrentEnergy += energyChange;
+        Mathf.Clamp(CurrentEnergy, 0, MaxAmountOfEnergy);
+
+        return true;
     }
 
     public override void ShowWindowOfUnit()
@@ -197,7 +203,7 @@ public class Human : ActingObject
         {
             moveActionSO.NameAction
         };
-        
+
         if (openContainerAction.GetAccessibleCells().Count > 0)
         {
             actionText.Add("Open container");
@@ -221,7 +227,7 @@ public class Human : ActingObject
             moveAction.IsActionAccessible()
         };
 
-        
+
         if (openContainerAction.GetAccessibleCells().Count > 0)
             checkActionList.Add(openContainerAction.IsActionAccessible());
 
@@ -235,6 +241,12 @@ public class Human : ActingObject
         return checkActionList;
     }
 
+    [ContextMenu("Death")]
+    private void Death()
+    {
+        Dispose();
+    }
+    
     private void DeathCheck()
     {
         if (HealthSystem.CurrentHealth <= 0)

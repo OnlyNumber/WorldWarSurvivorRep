@@ -22,9 +22,9 @@ public class MapCreator : MonoBehaviour
 
     public void CreateObstacles(string pathOfMap)
     {
-        //string json = File.ReadAllText(GetMapDataDirectory() + "/" + pathOfMap + ".json");
+
         string json = File.ReadAllText(pathOfMap);
-        
+
         MapData mapData = JsonUtility.FromJson<MapData>(json);
 
         foreach (var item in mapData.placedObjects)
@@ -41,9 +41,10 @@ public class MapCreator : MonoBehaviour
                 {
                     _cachedAvailableObstaclePrefabs.Add(prefab);
                 }
+
             }
 
-            if (prefab != null)
+            if (prefab == null)
                 continue;
 
             Vector3 spawnPos = GridToWorldPosition(data.gridPosition);
@@ -66,7 +67,7 @@ public class MapCreator : MonoBehaviour
 
     public void CreateMapBackground(string pathOfMap)
     {
-//        string json = File.ReadAllText(GetMapDataDirectory() + "/" + pathOfMap + ".json");
+        //        string json = File.ReadAllText(GetMapDataDirectory() + "/" + pathOfMap + ".json");
         string json = File.ReadAllText(pathOfMap);
 
         MapData mapData = JsonUtility.FromJson<MapData>(json);
@@ -138,7 +139,6 @@ public class MapCreator : MonoBehaviour
 
     public void ClearMap()
     {
-        Debug.Log("_allCreatedObjects " + _allCreatedObjects.Count);
         var listsSpawned = spawnedObjects.Values.ToList();
 
         foreach (var list in listsSpawned)
