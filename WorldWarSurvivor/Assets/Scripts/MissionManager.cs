@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,8 @@ public class MissionManager : MonoBehaviour
     private MissionTask _currentMissionTask;
     private MapCellRoom _currentRoom;
 
+    public Action<MapCellRoom> OnShowRewardFromFight;
+
     private void Start()
     {
         StartCoroutine(Utilities.WaitAndRun(SetupMissionMap, 0.2f));
@@ -64,8 +67,7 @@ public class MissionManager : MonoBehaviour
 
 
         _currentMissionTask = GetMission();
-        _currentMissionTask = new DiscoveryRoomsMiission();
-        _currentMissionTask.Initialize(this);
+        _currentMissionTask.Initialize(this, mapName);
 
         commandMover.MoveToThisRoom(missionMapController.GetStartCell());
         commandMover.OnMovingToRoom += ActivateRoom;
@@ -211,8 +213,8 @@ public class MissionManager : MonoBehaviour
         roomEventWindow.Hide();
         HideMap();
 
-        var enemyBand = enemyBands[Random.Range(0, enemyBands.Length)];
-        var obstacle = mapObstacles[Random.Range(0, mapObstacles.Length)];
+        var enemyBand = enemyBands[UnityEngine.Random.Range(0, enemyBands.Length)];
+        var obstacle = mapObstacles[UnityEngine.Random.Range(0, mapObstacles.Length)];
 
         battlefieldPreparer.CrteateFight(enemyBand, obstacle, mapBackground);
     }
@@ -222,13 +224,14 @@ public class MissionManager : MonoBehaviour
         roomEventWindow.Hide();
         HideMap();
 
-        var obstacle = mapObstacles[Random.Range(0, mapObstacles.Length)];
+        var obstacle = mapObstacles[UnityEngine.Random.Range(0, mapObstacles.Length)];
 
         battlefieldPreparer.CrteateFight(enemyband, obstacle, mapBackground);
     }
 
     private void ShowRoomReward()
     {
+        OnShowRewardFromFight?.Invoke(_currentRoom);
         _currentRoom.activity = Activities.Nothing;
         rewardWindow.Show();
     }

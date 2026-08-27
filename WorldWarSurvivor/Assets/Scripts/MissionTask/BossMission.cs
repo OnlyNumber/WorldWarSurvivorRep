@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class BossMission : MissionTask
 {
-    private EnemyBand bossFightBand;
+    private EnemyBand[] _bossFightBands;
+    private MapCellRoom _fightRoom;
+    private bool _isMissionCompleted;
 
-    public override void Initialize(MissionManager missionManager)
+
+    public override void Initialize(MissionManager missionManager, string mapName)
     {
-        base.Initialize(missionManager);
+        base.Initialize(missionManager, mapName);
 
         AddBossMission();
-        //missionManager.AddOnMovingToRoom(TryAddToList);
+
+        Resources.Load<EnemyBand>(Utilities.Resources_Path_To_Data + "/" + mapName + "/Bands/BossBands");
+        missionManager.OnShowRewardFromFight += CheckReward;
+
     }
 
     public void AddBossMission()
@@ -24,24 +30,29 @@ public class BossMission : MissionTask
                 fightRooms.Add(room);
         }
 
-        fightRooms[Random.Range(0, fightRooms.Count)].activity = Activities.MissionRoom;
+        _fightRoom = fightRooms[Random.Range(0, fightRooms.Count)];
+        _fightRoom.activity = Activities.MissionRoom;
     }
 
     public override bool IsMissionCompleted()
     {
-        throw new System.NotImplementedException();
+        return _isMissionCompleted;
     }
 
-    public override void ShowMissionProgress()
+
+    public void CheckReward(MapCellRoom room)
     {
-        throw new System.NotImplementedException();
+        _isMissionCompleted = room == _fightRoom;
+        if (IsMissionCompleted())
+            missionManager.ShowMissionEnd();
+
     }
 
     public override void ActivateMissionRoom()
     {
         base.ActivateMissionRoom();
 
-        missionManager.CreateMissionBattle(bossFightBand);
+        missionManager.CreateMissionBattle(_bossFightBands[0]);
 
     }
 }
