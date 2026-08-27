@@ -73,7 +73,7 @@ public class MoveAction : AbilityAction
             compareCell = item;
         }
 
-        Debug.Log("diagonal " + diagonalCells);
+        //Debug.Log("diagonal " + diagonalCells);
 
         int totalCost = diagonalCells * DiagonalWalkCost + (path.Count - diagonalCells) * StraightWalkCosst;
 
@@ -91,7 +91,6 @@ public class MoveAction : AbilityAction
             return new Vector2Int(x, y);
         }
     }
-
 
     private IEnumerator MovingAnimation(List<BoardCell> cells, BoardCell endPosition)
     {

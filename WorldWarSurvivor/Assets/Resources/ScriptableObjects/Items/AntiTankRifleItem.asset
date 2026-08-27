@@ -15,9 +15,14 @@ MonoBehaviour:
   UniqueIndex: 5
   <ActiveItem>k__BackingField: {fileID: 11400000, guid: 40ee69ab0b82b854eb754c1ceca6493a,
     type: 2}
-  <ItemImage>k__BackingField: {fileID: 21300000, guid: 3ec1003942a963642b0bfcf43ef02dc1,
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: e98fbbc81ed5e2044a7bb10abe5a9d21,
     type: 3}
   <itemType>k__BackingField: 0
   <Size>k__BackingField: {x: 8, y: 2}
-  ItemPrefab: {fileID: 0}
   Model: {fileID: 0}
+  visualEffect: {fileID: 0}
+  whichAnimation: 0
+  TimeOfVisualEffect: 0
+  offsetForEffect: {x: 0, y: 0, z: 0}
+  offsetForRotation: {x: 0, y: 0, z: 0}
+  BodyOrItem: 1

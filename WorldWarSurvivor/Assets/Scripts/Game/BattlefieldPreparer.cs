@@ -18,8 +18,9 @@ public class BattlefieldPreparer : MonoBehaviour
     [SerializeField]
     private SelectPreparePosition selectPreparePosition;
 
-    public GameObject PreparationWindow;
-    public Button EndPreparationButton;
+    public PreparationWindow PreparationWindow;
+    public ActionWindow ActionWindow;
+
 
     [SerializeField]
     private EnemyBand enemyBandExample;
@@ -32,9 +33,11 @@ public class BattlefieldPreparer : MonoBehaviour
 
     private void Start()
     {
-        EndPreparationButton.onClick.AddListener(EndPreparation);
+        PreparationWindow.EndPreparationButton.onClick.AddListener(EndPreparation);
 
         selectPreparePosition.AccessibleCellsSize = AccessibleCellsSize;
+
+        OnAllEnemiesDead += ActionWindow.Hide;
     }
 
 
@@ -57,6 +60,8 @@ public class BattlefieldPreparer : MonoBehaviour
 
         if (IsCreateDummy)
             CreateDummy();
+
+        PreparationWindow.Show();
     }
 
     private void CreateGrid()
@@ -150,7 +155,8 @@ public class BattlefieldPreparer : MonoBehaviour
 
     private void EndPreparation()
     {
-        PreparationWindow.SetActive(false);
+        PreparationWindow.Hide();
+        ActionWindow.Show();
 
         selectPreparePosition.ClearGrid();
         selectPreparePosition.enabled = false;

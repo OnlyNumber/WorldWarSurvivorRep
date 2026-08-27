@@ -56,8 +56,13 @@ public class MissionManager : MonoBehaviour
         mapName = GetBackgroundMap(BaseProgression.Instance.PlayerData.CurrentMission);
 
         enemyBands = LoadEnemyBands<EnemyBand>(Resources_Path_To_Data + "/" + mapName + "/Bands");
-        mapObstacles = GetMapObstacles(Path_To_Data + "/" + mapName + "/Obstacles");
+        mapObstacles = Directory.GetFiles(Path_To_Data + "/" + mapName + "/Obstacles", "*.json");
         mapBackground = Directory.GetFiles(Path_To_Data + "/" + mapName, "*.json")[0];
+
+        //Debug.Log("Backgrounds " + Directory.GetFiles(Path_To_Data + "/" + mapName, "*.json").Length);
+        //Debug.Log("Obstacles " + Directory.GetFiles(Path_To_Data + "/" + mapName + "/Obstacles", "*.json").Length);
+
+
         _currentMissionTask = GetMission();
         _currentMissionTask = new DiscoveryRoomsMiission();
         _currentMissionTask.Initialize(this);

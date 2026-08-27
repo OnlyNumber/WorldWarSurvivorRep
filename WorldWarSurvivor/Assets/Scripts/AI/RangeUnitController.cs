@@ -43,10 +43,10 @@ public class RangeUnitController : UnitController
 
         checkPos.x++;
 
-        if (AStarPathfinding.FindPath(grid, controllingUnit.MyCurrentCell.Coordinate, MyCurrentTarget.MyCurrentCell.Coordinate) == null)
+        /*if (AStarPathfinding.FindPath(grid, controllingUnit.MyCurrentCell.Coordinate, MyCurrentTarget.MyCurrentCell.Coordinate) == null)
         {
             Debug.Log("AStarPathfinding.FindPath(grid, controllingUnit.MyCurrentCell.Coordinate, MyCurrentTarget.MyCurrentCell.Coordinate) == null");
-        }
+        }*/
 
         int distanceToTarget = AStarPathfinding.FindPath(grid, controllingUnit.MyCurrentCell.Coordinate, MyCurrentTarget.MyCurrentCell.Coordinate, true).Count;
 
