@@ -1507,6 +1507,52 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2088844573232007139}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1039047071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1039047072}
+  - component: {fileID: 1039047073}
+  m_Layer: 0
+  m_Name: CameraMovement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1039047072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039047071}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3399974509844511336}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1039047073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039047071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd0c71349d990d944b1b6caab0147b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  CameraTransform: {fileID: 6960050285342242186}
 --- !u!4 &1050738817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4590097771050542, guid: 1ca6bb63aa99bc64bac38b317e404eff,
@@ -4023,6 +4069,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 5347924009230002571}
   <CurrentObject>k__BackingField: {fileID: 0}
+  cellLayer:
+    serializedVersion: 2
+    m_Bits: 0
   defaultMaterial: {fileID: 2100000, guid: b0d95737f07e55b4b9186c8444c5f3b9, type: 2}
   passMaterial: {fileID: 2100000, guid: 036cd50b65c45fe43a2f9605b96f46f4, type: 2}
   currentTargetIndicatorPrefab: {fileID: 7696861876598977317, guid: 9e2601b23b4c2b44aa464c900c21f8fe,
@@ -5845,6 +5894,7 @@ Transform:
   - {fileID: 252168329}
   - {fileID: 888561922}
   - {fileID: 489771852}
+  - {fileID: 1039047072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3497075464772990198
