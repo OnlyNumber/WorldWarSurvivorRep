@@ -15,7 +15,7 @@ public class BossMission : MissionTask
 
         AddBossMission();
 
-        Resources.Load<EnemyBand>(Utilities.Resources_Path_To_Data + "/" + mapName + "/Bands/BossBands");
+        _bossFightBands = Resources.LoadAll<EnemyBand>(Utilities.Resources_Path_To_Data + "/" + mapName + "/Bands/BossBands");
         missionManager.OnShowRewardFromFight += CheckReward;
 
     }

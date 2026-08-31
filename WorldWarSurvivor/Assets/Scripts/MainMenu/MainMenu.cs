@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
 
     public ExpeditionControl ExpeditionControl;
 
+    public MenuButton CurrentButton;
 
     private void Start()
     {
@@ -24,8 +25,29 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
+        if (CurrentButton != null)
+            CurrentButton.PropsOutline.OutlineWidth = 0;
+        ActivateOutline();
+
         if (Input.GetMouseButtonDown(0))
             ActivateMenuAction();
+    }
+
+    private void ActivateOutline()
+    {
+        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity) || UICheck.IsPointerOverUIElement())
+        {
+            return;
+        }
+
+        var button = hit.collider.GetComponentInParent<MenuButton>();
+
+        if (button == null)
+            return;
+
+        CurrentButton = button;
+
+        CurrentButton.PropsOutline.OutlineWidth = 2;
     }
 
     private void ActivateMenuAction()
@@ -81,8 +103,7 @@ public class MainMenu : MonoBehaviour
 
     private void OpenExit()
     {
-        Debug.Log("OpenExit");
-
+        ExitGame();
     }
 
     private void ExitGame()

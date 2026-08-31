@@ -1552,6 +1552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  speedMultiplyer: 0
   CameraTransform: {fileID: 6960050285342242186}
 --- !u!4 &1050738817 stripped
 Transform:
@@ -4071,7 +4072,7 @@ MonoBehaviour:
   <CurrentObject>k__BackingField: {fileID: 0}
   cellLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   defaultMaterial: {fileID: 2100000, guid: b0d95737f07e55b4b9186c8444c5f3b9, type: 2}
   passMaterial: {fileID: 2100000, guid: 036cd50b65c45fe43a2f9605b96f46f4, type: 2}
   currentTargetIndicatorPrefab: {fileID: 7696861876598977317, guid: 9e2601b23b4c2b44aa464c900c21f8fe,
